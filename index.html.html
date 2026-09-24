@@ -731,13 +731,13 @@
 <!-- APRENDER / ARTÍCULOS -->
 <section id="articulos" class="border-t border-line bg-surface2">
   <div class="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-    <div class="flex flex-wrap items-end justify-between gap-6 mb-4">
+    <p class="font-mono text-xs text-accent tracking-widest mb-3">ARTÍCULOS.</p>
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
       <h2 class="reveal text-3xl sm:text-4xl font-medium leading-snug">Entendé el tema a fondo<span class="text-accent">.</span></h2>
       <a href="#" id="open-todos-articulos" class="btn-pop inline-flex items-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:brightness-110 transition shrink-0">
         Ver más
       </a>
     </div>
-    <p class="text-muted max-w-2xl mb-12">Piezas cortas para entender de dónde sale realmente el gasto.</p>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <article class="reveal hover-card hover-zoom rounded-2xl overflow-hidden border border-line bg-surface" style="transition-delay:0.00s">
@@ -1931,6 +1931,13 @@
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">El entrenamiento es carísimo de una sola vez (GPT-3 usó cerca de 700.000 litros de agua), pero como después se usa millones de veces por día, el consumo acumulado del uso diario termina siendo mucho mayor con el tiempo.</p>
       </details>
+      <details class="faq-row" data-cat="impacto">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿Esa agua se pierde para siempre?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Gran parte se evapora en las torres de refrigeración y no vuelve directamente a la red de distribución local, aunque sigue formando parte del ciclo del agua a una escala más amplia. El problema real es la presión que eso pone sobre el agua disponible en la zona, no que "desaparezca" del planeta.</p>
+      </details>
 
       <details class="faq-row hidden" data-cat="cifras">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
@@ -1960,6 +1967,13 @@
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">Porque no hay forma de saber en qué centro de datos específico se procesa tu consulta: las empresas no lo revelan. Usamos promedios publicados en vez de simular una ubicación que no podemos verificar.</p>
       </details>
+      <details class="faq-row hidden" data-cat="cifras">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿La calculadora suma el agua indirecta (la de generar la electricidad) o solo la directa?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Suma las dos: el agua directa de refrigeración (rango de UC Riverside) y una estimación de agua indirecta a partir de los litros por kWh que insumen las plantas generadoras. Por eso el resultado siempre es más alto que si solo se contara la refrigeración del centro de datos.</p>
+      </details>
 
       <details class="faq-row hidden" data-cat="articulos">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
@@ -1982,6 +1996,20 @@
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">Sí, mientras cites la fuente. Si vas a citar una cifra puntual, es mejor citar directamente el estudio original que aparece en "Fuentes".</p>
       </details>
+      <details class="faq-row hidden" data-cat="articulos">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿Por qué algunas fuentes citadas están en inglés?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Porque algunos de los estudios técnicos más rigurosos (como el paper de UC Riverside o los análisis de IEEE Spectrum) no tienen versión en español. Preferimos linkear directo a la fuente original en inglés antes que a una traducción de segunda mano que puede perder precisión.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="articulos">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿Qué diferencia hay entre un artículo del sitio y una fuente?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Los artículos son nuestra síntesis: explican un tema con nuestras palabras. Las fuentes, en cambio, son los estudios, informes o notas originales en los que se basa esa síntesis. Si querés verificar un dato puntual, conviene ir siempre a la fuente.</p>
+      </details>
 
       <details class="faq-row hidden" data-cat="juego">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
@@ -1996,6 +2024,27 @@
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">Es un juego narrativo aparte, donde gestionás un centro de datos de IA y tomás decisiones sobre su huella hídrica. Usa su propia metodología (basada en Google/Gemini), distinta a la de esta calculadora.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="juego">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿El simulador tiene un único final?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">No, tiene varios finales posibles —desde "Centro de datos sostenible" hasta "Crisis hídrica"— según cómo manejes el agua, la energía renovable y la reputación pública a lo largo de la partida. Al terminar también te muestra un ranking con cinco puntajes distintos, no un solo número.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="juego">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿Necesito crear una cuenta para jugar?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">No. Es completamente anónimo: no pedimos registro y tu progreso se guarda localmente en tu propio navegador, no en un servidor.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="juego">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿El simulador tiene distintos niveles de dificultad?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Sí: Fácil, Normal y Difícil. Cada nivel cambia el presupuesto inicial y la velocidad con la que crece la demanda de consultas, para que puedas volver a jugar con una estrategia distinta.</p>
       </details>
 
       <details class="faq-row hidden" data-cat="sitio">
@@ -2019,6 +2068,20 @@
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">Porque todavía no existen estudios consolidados y confiables sobre su consumo. Preferimos no mostrar un número hasta tener una fuente sólida.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="sitio">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿El sitio guarda o comparte mis datos personales?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">No. El sitio no pide registro ni recolecta datos personales. Lo único que se guarda es tu progreso en la Calculadora o el Cuestionario, y queda almacenado localmente en tu propio navegador.</p>
+      </details>
+      <details class="faq-row hidden" data-cat="sitio">
+        <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
+          ¿Puedo sugerir un tema para un artículo nuevo?
+          <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Sí, escribinos desde "Sugerí una fuente", en la sección Fuentes, y contanos qué tema te gustaría que cubramos.</p>
       </details>
     </div>
   </div>
