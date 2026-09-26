@@ -4,6 +4,25 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sed de Datos — El costo oculto de la inteligencia artificial</title>
+<meta name="description" content="Calculá cuánta agua y electricidad gasta tu uso de inteligencia artificial, entendé de dónde sale ese costo real y probá administrar tu propio centro de datos en SequIA, el simulador.">
+
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn, Telegram, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sed de Datos">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="Sed de Datos — El costo oculto de la inteligencia artificial">
+<meta property="og:description" content="Calculá cuánta agua y electricidad gasta tu uso de IA, entendé de dónde sale ese costo y probá administrar tu propio centro de datos en SequIA.">
+<meta property="og:image" content="https://sed-de-datos.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://sed-de-datos.vercel.app/">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sed de Datos — El costo oculto de la inteligencia artificial">
+<meta name="twitter:description" content="Calculá cuánta agua y electricidad gasta tu uso de IA y probá administrar tu propio centro de datos en SequIA.">
+<meta name="twitter:image" content="https://sed-de-datos.vercel.app/og-image.png">
+
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -48,7 +67,7 @@
      contenido a su propia capa de apilamiento por arriba, salvo los
      elementos que ya son fixed por diseño (panel de nav, overlay, botón
      de volver arriba) y los scripts. */
-  body > *:not(#dot-canvas):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#fuentes-modal):not(#fuentes-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#comofunciona-modal):not(#comofunciona-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(script) {
+  body > *:not(#dot-canvas):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#en-practica-modal):not(#en-practica-overlay):not(#fuentes-modal):not(#fuentes-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#comofunciona-modal):not(#comofunciona-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(script) {
     position: relative;
     z-index: 1;
   }
@@ -356,9 +375,19 @@
         <a href="#fuentes" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Fuentes</a>
       </div>
 
+      <a href="#acerca" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Nosotros</a>
       <a href="#calculadora" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Calculadora</a>
       <a href="#quiz" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Cuestionario</a>
-      <a href="#acerca" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Nosotros</a>
+
+      <button class="nav-group-toggle nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium flex items-center justify-between hover:text-accent transition">
+        SequIA
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-subitems">
+        <a href="#jugar" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Sobre SequIA</a>
+        <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Jugar ahora ↗</a>
+      </div>
+
       <a href="#faq" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Preguntas frecuentes</a>
     </nav>
   </div>
@@ -439,17 +468,8 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
 
-    <div class="flex justify-end gap-2 mb-3">
-      <button id="cf-prev" aria-label="Anterior" class="btn-pop w-11 h-11 rounded-xl bg-orange flex items-center justify-center hover:brightness-110 transition disabled:opacity-30" disabled>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button id="cf-next" aria-label="Siguiente" class="btn-pop w-11 h-11 rounded-xl bg-orange flex items-center justify-center hover:brightness-110 transition disabled:opacity-30">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
-    </div>
-
-    <div id="cf-track" class="flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2 -mx-5 px-5 sm:-mx-8 sm:px-8">
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.00s">
+    <div id="cf-track" class="grid gap-5 sm:grid-cols-3">
+      <div class="cf-card card hover-card hover-zoom reveal p-6" style="transition-delay:0.00s">
         <p class="font-mono text-xs text-muted mb-3">01</p>
         <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
           <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="24" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="18" cy="18" r="4" fill="#2952E3"/></svg>
@@ -458,7 +478,7 @@
         <h3 class="hover-title font-semibold text-base mb-2">Agua directa</h3>
         <p class="text-muted text-sm leading-relaxed">Ese procesamiento genera calor: muchos centros de datos usan agua para refrigerar sus equipos, entre 10 y 25 ml por consulta (UC Riverside).</p>
       </div>
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.08s">
+      <div class="cf-card card hover-card hover-zoom reveal p-6" style="transition-delay:0.08s">
         <p class="font-mono text-xs text-muted mb-3">02</p>
         <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
           <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="18" r="10" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="18" cy="34" r="10" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="34" cy="34" r="10" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="26" cy="18" r="2" fill="#2952E3"/></svg>
@@ -467,7 +487,7 @@
         <h3 class="hover-title font-semibold text-base mb-2">Agua indirecta</h3>
         <p class="text-muted text-sm leading-relaxed">Generar esa electricidad también tiene su costo: una planta térmica puede usar entre 0,5 y 2,5 litros de agua por cada kWh producido.</p>
       </div>
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.16s">
+      <div class="cf-card card hover-card hover-zoom reveal p-6" style="transition-delay:0.16s">
         <p class="font-mono text-xs text-muted mb-3">03</p>
         <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
           <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="24" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="26" cy="26" r="16" stroke="#E4DFD3" stroke-width="1.5"/></svg>
@@ -475,33 +495,6 @@
         </span>
         <h3 class="hover-title font-semibold text-base mb-2">Electricidad directa</h3>
         <p class="text-muted text-sm leading-relaxed">Los servidores necesitan energía para "pensar" la respuesta. Una consulta típica a ChatGPT usa alrededor de 0,34 Wh, según OpenAI.</p>
-      </div>
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.24s">
-        <p class="font-mono text-xs text-muted mb-3">04</p>
-        <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
-          <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="24" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="26" cy="26" r="17" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="26" cy="26" r="10" stroke="#FF6A00" stroke-width="1.5"/></svg>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="relative"><path d="M20 6L9 17l-5-5"/></svg>
-        </span>
-        <h3 class="hover-title font-semibold text-base mb-2">Entrenar vs. usar</h3>
-        <p class="text-muted text-sm leading-relaxed">Entrenar GPT-3 una sola vez consumió cerca de 700.000 litros de agua. Usarlo después es más barato, pero se multiplica por millones.</p>
-      </div>
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.32s">
-        <p class="font-mono text-xs text-muted mb-3">05</p>
-        <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
-          <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="24" stroke="#E4DFD3" stroke-width="1.5" stroke-dasharray="3 4"/><circle cx="36" cy="16" r="2.5" fill="#2952E3"/></svg>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2952E3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="relative"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-        </span>
-        <h3 class="hover-title font-semibold text-base mb-2">Imágenes y video</h3>
-        <p class="text-muted text-sm leading-relaxed">Generar una imagen con IA puede usar entre 2 y 5 litros de agua: mucho más que una consulta de texto corta.</p>
-      </div>
-      <div class="cf-card card hover-card hover-zoom reveal p-6 shrink-0 w-72 snap-start" style="transition-delay:0.40s">
-        <p class="font-mono text-xs text-muted mb-3">06</p>
-        <span class="zoom-target relative w-14 h-14 flex items-center justify-center mb-4">
-          <svg class="absolute" width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="24" stroke="#E4DFD3" stroke-width="1.5"/><circle cx="26" cy="8" r="2.5" fill="#2952E3"/></svg>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="relative"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 17h.01"/></svg>
-        </span>
-        <h3 class="hover-title font-semibold text-base mb-2">¿Se puede reducir?</h3>
-        <p class="text-muted text-sm leading-relaxed">Ubicar centros de datos en climas fríos y reportar el consumo real son medidas que ya se están discutiendo en la industria.</p>
       </div>
     </div>
   </div>
@@ -519,7 +512,11 @@
       Aprender más
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
-    <a href="#fuentes" class="group inline-flex items-center gap-2 text-orange font-semibold text-sm">
+    <a href="#en-practica" class="group inline-flex items-center gap-2 text-orange font-semibold text-sm">
+      En la práctica
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a href="#fuentes" class="group inline-flex items-center gap-2 text-accent font-semibold text-sm">
       Ver fuentes
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
@@ -567,8 +564,8 @@
       </div>
 
       <div>
-        <p class="font-mono text-xs text-accent tracking-widest mb-3">SE LLENA MIENTRAS VOS BAJÁS.</p>
-        <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8">El agua se acumula. No aparece de golpe.</h2>
+        <p class="font-mono text-xs text-accent tracking-widest mb-3">SE ACUMULA MIENTRAS VOS SEGUÍS BAJANDO.</p>
+        <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8">El agua no llega de golpe: se va sumando consulta a consulta.</h2>
         <div class="space-y-3 text-sm">
           <p class="vaso-milestone flex items-center justify-between border-b border-line pb-2 transition-colors" data-min="0" data-max="25">
             <span>0 → 25 consultas a IA</span><span class="text-muted">hasta 375 ml</span>
@@ -581,31 +578,6 @@
           </p>
         </div>
       </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INFOGRAFÍA: ESCALA VISUAL -->
-<section class="relative overflow-hidden" style="background: #06264A;">
-  <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-  <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-    <p class="font-mono text-xs tracking-widest mb-3" style="color:#7FB8F0;">EN LA PRÁCTICA.</p>
-    <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug max-w-2xl mb-4 text-white">Una imagen generada por IA equivale a <span id="ratio-counter" class="text-orange font-semibold">0</span> consultas de texto, en agua.</h2>
-    <p class="reveal text-white/60 max-w-2xl mb-14">~15 ml de agua directa por consulta de texto, contra ~3,5 L por imagen generada.</p>
-
-    <div class="grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center">
-      <!-- 1 imagen -->
-      <div class="reveal flex flex-col items-center text-center shrink-0">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="#FF6A00" class="big-drop mb-3"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
-        <p class="text-white font-semibold text-sm">1 imagen generada</p>
-        <p class="text-white/50 text-xs mt-1">≈ 3,5 litros de agua</p>
-      </div>
-
-      <!-- grilla de consultas de texto -->
-      <div>
-        <div id="drop-grid" class="flex flex-wrap gap-2 mb-4"></div>
-        <p class="text-white/50 text-xs">Cada gota representa 4 consultas de texto · <span id="drop-total">233</span> consultas en total</p>
       </div>
     </div>
   </div>
@@ -669,11 +641,6 @@
               <li>Tipo de consulta (texto o imagen)</li>
               <li>Infraestructura de referencia (promedios publicados)</li>
             </ul>
-            <div class="grid grid-cols-3 gap-2 text-[11px] font-mono pt-3 border-t border-line">
-              <div><span class="block text-ink font-semibold mb-0.5">Fuente</span><span class="text-muted">OpenAI, UC Riverside</span></div>
-              <div><span class="block text-ink font-semibold mb-0.5">Año</span><span class="text-muted">2023–2024</span></div>
-              <div><span class="block text-ink font-semibold mb-0.5">Metodología</span><span class="text-muted">Rango medio publicado</span></div>
-            </div>
           </div>
           <details class="calc-why">
             <summary class="cursor-pointer list-none px-5 py-3.5 flex items-center justify-between gap-2 text-xs font-semibold text-accent bg-surface hover:bg-accentbg transition">
@@ -737,32 +704,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- JUGAR / SIMULADOR -->
-<section id="jugar" class="relative overflow-hidden" style="background: #06264A;">
-  <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-  <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24 grid lg:grid-cols-2 gap-14 items-center">
-    <div class="relative">
-      <div class="rounded-2xl h-64 sm:h-96 bg-surface overflow-hidden">
-        <img src="jugar-servidor.jpg" alt="Servidores de un centro de datos" class="w-full h-full object-cover">
-      </div>
-      <div class="hidden sm:block absolute -bottom-8 -right-8 w-40 sm:w-52 aspect-[16/9] rounded-xl overflow-hidden shadow-2xl border-4" style="border-color: #06264A;">
-        <img src="jugar-codigo.jpg" alt="Código gestionando la infraestructura del centro de datos" class="w-full h-full object-cover">
-      </div>
-    </div>
-    <div>
-      <p class="font-mono text-xs text-white/60 tracking-widest mb-3">AHORA TE TOCA A VOS.</p>
-      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-5 text-white">¿Podrías administrar un centro de datos?</h2>
-      <p class="text-white/70 leading-relaxed mb-1.5">Ahora que viste qué hay detrás de una consulta, probá tomar las decisiones que mantienen funcionando una IA.</p>
-      <p class="text-white/70 leading-relaxed mb-6">Elegí cómo enfriar, qué energía usar, cuánto invertir y cómo responder al aumento de demanda.</p>
-      <p class="text-white font-semibold mb-8">¿Qué priorizarías?</p>
-      <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="group btn-pop btn-glow inline-flex items-center gap-2.5 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-xl hover:brightness-110 transition" style="background: linear-gradient(90deg, #06264A, #2952E3);">
-        🎮 Entrar al simulador
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
     </div>
   </div>
 </section>
@@ -961,6 +902,32 @@
   </div>
 </section>
 
+<!-- JUGAR / SIMULADOR -->
+<section id="jugar" class="border-t border-line relative overflow-hidden">
+  <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24 grid lg:grid-cols-2 gap-14 items-center">
+    <div class="relative">
+      <div class="rounded-2xl h-64 sm:h-96 bg-surface overflow-hidden border border-line">
+        <img src="jugar-servidor.jpg" alt="Servidores de un centro de datos" class="w-full h-full object-cover">
+      </div>
+      <div class="hidden sm:block absolute -bottom-8 -right-8 w-40 sm:w-52 aspect-[16/9] rounded-xl overflow-hidden shadow-2xl border-4" style="border-color: #F7F4EE;">
+        <img src="jugar-codigo.jpg" alt="Código gestionando la infraestructura del centro de datos" class="w-full h-full object-cover">
+      </div>
+    </div>
+    <div>
+      <p class="font-mono text-xs text-accent tracking-widest mb-3">AHORA TE TOCA A VOS.</p>
+      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-2 text-ink">¿Podrías administrar un centro de datos?</h2>
+      <p class="font-mono text-xs text-orange tracking-widest mb-5">SEQUIA · EL SIMULADOR DE SED DE DATOS</p>
+      <p class="text-muted leading-relaxed mb-1.5">Ahora que viste qué hay detrás de una consulta, probá tomar las decisiones que mantienen funcionando una IA.</p>
+      <p class="text-muted leading-relaxed mb-6">Elegí cómo enfriar, qué energía usar, cuánto invertir y cómo responder al aumento de demanda.</p>
+      <p class="text-ink font-semibold mb-8">¿Qué priorizarías?</p>
+      <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="group btn-pop btn-glow inline-flex items-center gap-2.5 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-xl hover:brightness-110 transition" style="background: linear-gradient(90deg, #06264A, #2952E3);">
+        🎮 Entrar a SequIA
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- NOSOTROS -->
 <section id="acerca" class="relative overflow-hidden" style="background: #06264A;">
   <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
@@ -994,6 +961,35 @@
   </div>
 </section>
 
+<!-- EN LA PRÁCTICA (modal, no visible en el flujo normal de la página) -->
+<div id="en-practica-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+<div id="en-practica-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+  <div class="rounded-2xl max-w-3xl w-full my-4 relative overflow-hidden p-6 sm:p-10" style="background: #06264A;">
+    <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+    <button id="close-en-practica" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/25 text-white flex items-center justify-center hover:border-orange hover:text-orange transition z-10">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="relative pr-12">
+      <p class="font-mono text-xs tracking-widest mb-3" style="color:#7FB8F0;">EN LA PRÁCTICA.</p>
+      <h2 class="text-2xl sm:text-3xl font-medium leading-snug max-w-2xl mb-4 text-white">Una imagen generada por IA equivale a <span id="ratio-counter-modal" class="text-orange font-semibold">0</span> consultas de texto, en agua.</h2>
+      <p class="text-white/60 max-w-2xl mb-10">~15 ml de agua directa por consulta de texto, contra ~3,5 L por imagen generada.</p>
+
+      <div class="grid sm:grid-cols-[auto_1fr] gap-8 sm:gap-10 items-center">
+        <div class="flex flex-col items-center text-center shrink-0">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="#FF6A00" class="big-drop mb-3"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
+          <p class="text-white font-semibold text-sm">1 imagen generada</p>
+          <p class="text-white/50 text-xs mt-1">≈ 3,5 litros de agua</p>
+        </div>
+        <div>
+          <div id="drop-grid-modal" class="flex flex-wrap gap-2 mb-4"></div>
+          <p class="text-white/50 text-xs">Cada gota representa 4 consultas de texto · <span id="drop-total-modal">233</span> consultas en total</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FUENTES (modal, no visible en el flujo normal de la página) -->
 <div id="fuentes-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="fuentes-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
@@ -1005,15 +1001,13 @@
     <div class="flex items-end justify-between mb-10 gap-4 pr-12">
       <div>
         <p class="font-mono text-xs text-accent tracking-widest mb-3">FUENTES.</p>
-        <h2 class="text-2xl sm:text-3xl font-medium leading-snug">De dónde salen estos números.</h2>
+        <h2 class="text-2xl sm:text-3xl font-medium leading-snug">De dónde salen nuestros números.</h2>
       </div>
       <a href="#faq" class="group hidden sm:inline-flex items-center gap-2 text-accent font-semibold text-sm shrink-0">
         Ver preguntas frecuentes
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
-
-    <p class="text-muted mb-6 max-w-2xl">Priorizamos coberturas en español para que puedas leerlas vos mismo. Las dos únicas fuentes técnicas originales están en inglés, y lo aclaramos.</p>
 
     <div class="divide-y divide-line border-t border-b border-line">
       <a href="https://www.xataka.com.co/robotica-e-ia/inteligencia-artificial-tambien-tiene-sed-alto-consumo-agua-detras-boom-tecnologico" target="_blank" rel="noopener" class="flex items-center justify-between py-5 group transition-transform duration-200 hover:translate-x-1.5" data-title="Xataka: La IA también tiene sed" data-snippet="Nota en español sobre el consumo de agua detrás del boom de la inteligencia artificial.">
@@ -1078,12 +1072,12 @@
             <input id="sf-titulo" name="Titulo" type="text" required class="w-full rounded-lg px-4 py-3 text-ink border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
           </div>
           <div>
-            <label for="sf-medio" class="block font-mono text-xs text-white/60 tracking-wide mb-2">MEDIO, AUTOR/A O INSTITUCIÓN (OBLIGATORIO)</label>
-            <input id="sf-medio" name="Medio" type="text" required class="w-full rounded-lg px-4 py-3 text-ink border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+            <label for="sf-medio" class="block font-mono text-xs text-white/60 tracking-wide mb-2">MEDIO, AUTOR/A O INSTITUCIÓN (OPCIONAL)</label>
+            <input id="sf-medio" name="Medio" type="text" class="w-full rounded-lg px-4 py-3 text-ink border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
           </div>
           <div>
-            <label for="sf-link" class="block font-mono text-xs text-white/60 tracking-wide mb-2">ENLACE (OPCIONAL)</label>
-            <input id="sf-link" name="Enlace" type="url" placeholder="https://" class="w-full rounded-lg px-4 py-3 text-ink border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
+            <label for="sf-link" class="block font-mono text-xs text-white/60 tracking-wide mb-2">ENLACE (OBLIGATORIO)</label>
+            <input id="sf-link" name="Enlace" type="url" required placeholder="https://" class="w-full rounded-lg px-4 py-3 text-ink border-0 focus:outline-none focus:ring-2 focus:ring-white/50">
           </div>
           <div>
             <label for="sf-comentario" class="block font-mono text-xs text-white/60 tracking-wide mb-2">POR QUÉ LO RECOMENDÁS (OPCIONAL)</label>
@@ -1095,7 +1089,6 @@
               Enviar sugerencia
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
-            <p class="text-white/50 text-xs">Se abre tu programa de correo</p>
           </div>
         </form>
       </div>
@@ -1928,7 +1921,7 @@
       <button data-cat="impacto" class="faq-pill active btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre el impacto ambiental</button>
       <button data-cat="cifras" class="faq-pill btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre las cifras y la calculadora</button>
       <button data-cat="articulos" class="faq-pill btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre los artículos y las fuentes</button>
-      <button data-cat="juego" class="faq-pill btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre el Cuestionario y el juego</button>
+      <button data-cat="juego" class="faq-pill btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre el Cuestionario y SequIA</button>
       <button data-cat="sitio" class="faq-pill btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre el sitio</button>
     </div>
 
@@ -1994,10 +1987,10 @@
       </details>
       <details class="faq-row hidden" data-cat="cifras">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
-          Vi otra cifra distinta en el simulador "Sed de Datos", ¿cuál es la correcta?
+          Vi otra cifra distinta en SequIA, ¿cuál es la correcta?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
-        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Ninguna de las dos está "mal". Esta calculadora se basa en OpenAI y UC Riverside; el simulador del juego usa la metodología que Google publicó específicamente para Gemini, que da números más bajos (0,26 ml de agua directa por consulta, por ejemplo). Son compañías y modelos distintos, medidos con supuestos distintos sobre hardware y refrigeración — por eso conviene mirar siempre de qué estudio sale cada número, más que memorizar una única cifra.</p>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Ninguna de las dos está "mal". Esta calculadora se basa en OpenAI y UC Riverside; SequIA usa la metodología que Google publicó específicamente para Gemini, que da números más bajos (0,26 ml de agua directa por consulta, por ejemplo). Son compañías y modelos distintos, medidos con supuestos distintos sobre hardware y refrigeración — por eso conviene mirar siempre de qué estudio sale cada número, más que memorizar una única cifra.</p>
       </details>
       <details class="faq-row hidden" data-cat="cifras">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
@@ -2059,14 +2052,14 @@
       </details>
       <details class="faq-row hidden" data-cat="juego">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
-          ¿Qué es el simulador "Sed de Datos"?
+          ¿Qué es SequIA?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
-        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Es un juego narrativo aparte, donde gestionás un centro de datos de IA y tomás decisiones sobre su huella hídrica. Usa su propia metodología (basada en Google/Gemini), distinta a la de esta calculadora.</p>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">Es el simulador narrativo de Sed de Datos: un juego aparte donde gestionás un centro de datos de IA y tomás decisiones sobre su huella hídrica. Usa su propia metodología (basada en Google/Gemini), distinta a la de esta calculadora.</p>
       </details>
       <details class="faq-row hidden" data-cat="juego">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
-          ¿El simulador tiene un único final?
+          ¿SequIA tiene un único final?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">No, tiene varios finales posibles —desde "Centro de datos sostenible" hasta "Crisis hídrica"— según cómo manejes el agua, la energía renovable y la reputación pública a lo largo de la partida. Al terminar también te muestra un ranking con cinco puntajes distintos, no un solo número.</p>
@@ -2080,7 +2073,7 @@
       </details>
       <details class="faq-row hidden" data-cat="juego">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
-          ¿El simulador tiene distintos niveles de dificultad?
+          ¿SequIA tiene distintos niveles de dificultad?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
         <p class="text-muted text-sm leading-relaxed mt-3 px-5">Sí: Fácil, Normal y Difícil. Cada nivel cambia el presupuesto inicial y la velocidad con la que crece la demanda de consultas, para que puedas volver a jugar con una estrategia distinta.</p>
@@ -2166,7 +2159,7 @@
           <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white hover:bg-orange hover:text-white hover:border-orange transition">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
           </a>
-          <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" aria-label="Jugar Sed de Datos" title="Jugar Sed de Datos" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white hover:bg-accent hover:text-white hover:border-accent transition">
+          <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" aria-label="Jugar SequIA" title="Jugar SequIA" class="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white hover:bg-accent hover:text-white hover:border-accent transition">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2.5s6 6.7 6 11a6 6 0 1 1-12 0c0-4.3 6-11 6-11z"/>
               <path d="M8.6 13.3h6.8M8.6 16.2h6.8M11 10.3v7.9M14.4 10.3v7.9" stroke-width="1.1"/>
@@ -2204,62 +2197,6 @@
     }
     window.addEventListener('scroll', updateHeroFade, { passive: true });
     updateHeroFade();
-  })();
-
-  // ---- Infografía: grilla de gotas + contador animado ----
-  (function () {
-    const dropGrid = document.getElementById('drop-grid');
-    const ratioCounter = document.getElementById('ratio-counter');
-    if (!dropGrid || !ratioCounter) return;
-
-    const TOTAL_QUERIES = 233;
-    const QUERIES_PER_DROP = 4;
-    const dropCount = Math.round(TOTAL_QUERIES / QUERIES_PER_DROP);
-
-    for (let i = 0; i < dropCount; i++) {
-      const drop = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      drop.setAttribute('width', '18');
-      drop.setAttribute('height', '18');
-      drop.setAttribute('viewBox', '0 0 24 24');
-      drop.setAttribute('fill', '#4FD6FF');
-      drop.classList.add('water-drop');
-      drop.style.transitionDelay = `${i * 0.018}s`;
-      drop.innerHTML = '<path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/>';
-      drop.addEventListener('transitionend', function onEnd(e) {
-        if (e.propertyName === 'transform') {
-          drop.style.transitionDelay = '0s';
-          drop.removeEventListener('transitionend', onEnd);
-        }
-      });
-      dropGrid.appendChild(drop);
-    }
-
-    let played = false;
-    function playInfographic() {
-      if (played) return;
-      played = true;
-      dropGrid.querySelectorAll('svg').forEach(drop => drop.classList.add('revealed'));
-      const duration = 1400;
-      const start = performance.now();
-      function tick(now) {
-        const progress = Math.min(1, (now - start) / duration);
-        ratioCounter.textContent = Math.round(progress * TOTAL_QUERIES);
-        if (progress < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
-
-    const infographicSection = dropGrid.closest('section');
-    if ('IntersectionObserver' in window) {
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) { playInfographic(); obs.unobserve(entry.target); }
-        });
-      }, { threshold: 0.3 });
-      obs.observe(infographicSection);
-    } else {
-      playInfographic();
-    }
   })();
 
   // ---- Revelado al hacer scroll ----
@@ -2378,9 +2315,11 @@
   navOverlay.addEventListener('click', closeNavPanel);
   document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', closeNavPanel));
 
-  document.querySelector('.nav-group-toggle').addEventListener('click', function () {
-    this.classList.toggle('open');
-    this.nextElementSibling.classList.toggle('open');
+  document.querySelectorAll('.nav-group-toggle').forEach(toggle => {
+    toggle.addEventListener('click', function () {
+      this.classList.toggle('open');
+      this.nextElementSibling.classList.toggle('open');
+    });
   });
 
   // ---- Modal de Cómo funciona (accesible solo desde los links, no está en el flujo de la página) ----
@@ -2436,6 +2375,68 @@
   closeFuentes.addEventListener('click', closeFuentesModal);
   fuentesOverlay.addEventListener('click', closeFuentesModal);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFuentesModal(); });
+
+  // ---- Modal de En la práctica (accesible solo desde el link, no está en el flujo de la página) ----
+  const enPracticaModal = document.getElementById('en-practica-modal');
+  const enPracticaOverlay = document.getElementById('en-practica-overlay');
+  const closeEnPractica = document.getElementById('close-en-practica');
+  const dropGridModal = document.getElementById('drop-grid-modal');
+  const ratioCounterModal = document.getElementById('ratio-counter-modal');
+
+  if (dropGridModal && ratioCounterModal) {
+    const EP_TOTAL_QUERIES = 233;
+    const EP_QUERIES_PER_DROP = 4;
+    const epDropCount = Math.round(EP_TOTAL_QUERIES / EP_QUERIES_PER_DROP);
+    for (let i = 0; i < epDropCount; i++) {
+      const drop = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      drop.setAttribute('width', '18');
+      drop.setAttribute('height', '18');
+      drop.setAttribute('viewBox', '0 0 24 24');
+      drop.setAttribute('fill', '#4FD6FF');
+      drop.classList.add('water-drop');
+      drop.style.transitionDelay = `${i * 0.018}s`;
+      drop.innerHTML = '<path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/>';
+      dropGridModal.appendChild(drop);
+    }
+    var playEnPracticaInfographic = function () {
+      dropGridModal.querySelectorAll('svg').forEach(drop => drop.classList.remove('revealed'));
+      ratioCounterModal.textContent = '0';
+      requestAnimationFrame(() => {
+        dropGridModal.querySelectorAll('svg').forEach(drop => drop.classList.add('revealed'));
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min(1, (now - start) / duration);
+          ratioCounterModal.textContent = Math.round(progress * EP_TOTAL_QUERIES);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    };
+  }
+
+  function openEnPractica() {
+    closeNavPanel();
+    enPracticaModal.classList.remove('opacity-0', 'pointer-events-none');
+    enPracticaOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = 'hidden';
+    enPracticaModal.scrollTop = 0;
+    if (typeof playEnPracticaInfographic === 'function') playEnPracticaInfographic();
+  }
+  function closeEnPracticaModal() {
+    enPracticaModal.classList.add('opacity-0', 'pointer-events-none');
+    enPracticaOverlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('a[href="#en-practica"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openEnPractica();
+    });
+  });
+  closeEnPractica.addEventListener('click', closeEnPracticaModal);
+  enPracticaOverlay.addEventListener('click', closeEnPracticaModal);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeEnPracticaModal(); });
 
   // ---- Modal del artículo: Geopolítica del Agua Digital ----
   const geoModal = document.getElementById('geopolitica-modal');
@@ -2518,7 +2519,7 @@
       impacto: 'Sobre el impacto ambiental',
       cifras: 'Sobre las cifras y la calculadora',
       articulos: 'Sobre los artículos y las fuentes',
-      juego: 'Sobre el Cuestionario y el juego',
+      juego: 'Sobre el Cuestionario y SequIA',
       sitio: 'Sobre el sitio'
     };
 
@@ -2844,6 +2845,7 @@
   [
     [cfModal, closeComoFunciona],
     [fuentesModal, closeFuentesModal],
+    [enPracticaModal, closeEnPracticaModal],
     [geoModal, closeGeoArticle],
     [todosModal, closeTodosArticulos],
     [cnModal, closeCnArticle],
@@ -2900,7 +2902,9 @@
   const searchIndex = [
     { title: 'Cómo funciona: tres gastos de un prompt', id: 'como-funciona', snippet: 'Electricidad directa, agua directa y agua indirecta.' },
     { title: 'Calculadora de consumo', id: 'calculadora', snippet: 'Calculá cuánta agua y electricidad gastás con texto o imágenes.' },
+    { title: 'En la práctica: imagen vs. texto', id: 'en-la-practica', snippet: 'Una imagen generada equivale a 233 consultas de texto, en agua.' },
     { title: 'Cuestionario: ¿qué tan grande es tu huella?', id: 'quiz', snippet: 'Respondé 5 preguntas y descubrí tu resultado.' },
+    { title: 'SequIA: el simulador de Sed de Datos', id: 'jugar', snippet: 'Administrá un centro de datos de IA y tomá las decisiones que definen su huella hídrica.' },
     { title: 'Cómo refrigeran los centros de datos', id: 'articulos', snippet: 'Agua, aire o inmersión: el costo ambiental de cada técnica.' },
     { title: 'Geopolítica del Agua Digital', id: 'geopolitica', snippet: 'Dónde están los data centers y por qué importan las cuencas locales.' },
     { title: 'Agua directa vs. agua indirecta', id: 'articulos', snippet: 'La cara oculta de la energía: el segundo grifo que casi nunca se contabiliza.' },
@@ -2935,6 +2939,8 @@
           openFuentes();
         } else if (btn.dataset.target === 'como-funciona') {
           openComoFunciona();
+        } else if (btn.dataset.target === 'en-la-practica') {
+          openEnPractica();
         } else if (btn.dataset.target === 'geopolitica') {
           openGeoArticle();
         } else if (btn.dataset.target === 'sesgo-origen') {
@@ -3074,39 +3080,6 @@
     update();
   })();
 
-
-  // ---- Carrusel Cómo funciona ----
-  const cfTrack = document.getElementById('cf-track');
-  const cfPrev = document.getElementById('cf-prev');
-  const cfNext = document.getElementById('cf-next');
-  const cfCardWidth = () => cfTrack.querySelector('.cf-card').offsetWidth + 20;
-  let cfTimer;
-
-  function updateCfButtons() {
-    cfPrev.disabled = cfTrack.scrollLeft <= 4;
-    cfNext.disabled = cfTrack.scrollLeft >= cfTrack.scrollWidth - cfTrack.clientWidth - 4;
-  }
-
-  function cfAdvance() {
-    if (cfTrack.scrollLeft >= cfTrack.scrollWidth - cfTrack.clientWidth - 4) {
-      cfTrack.scrollTo({ left: 0, behavior: 'smooth' });
-    } else {
-      cfTrack.scrollBy({ left: cfCardWidth(), behavior: 'smooth' });
-    }
-  }
-
-  function cfResetTimer() {
-    clearInterval(cfTimer);
-    cfTimer = setInterval(cfAdvance, 4000);
-  }
-
-  cfPrev.addEventListener('click', () => { cfTrack.scrollBy({ left: -cfCardWidth(), behavior: 'smooth' }); cfResetTimer(); });
-  cfNext.addEventListener('click', () => { cfTrack.scrollBy({ left: cfCardWidth(), behavior: 'smooth' }); cfResetTimer(); });
-  cfTrack.addEventListener('scroll', updateCfButtons);
-  cfTrack.addEventListener('mouseenter', () => clearInterval(cfTimer));
-  cfTrack.addEventListener('mouseleave', cfResetTimer);
-  updateCfButtons();
-  cfResetTimer();
 
   // ---- Cuestionario ----
   const quizQuestions = document.getElementById('quiz-questions');
