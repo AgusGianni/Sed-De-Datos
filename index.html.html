@@ -28,7 +28,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -47,6 +47,7 @@
         fontFamily: {
           sans: ['Inter', 'sans-serif'],
           mono: ['"IBM Plex Mono"', 'monospace'],
+          serif: ['"Newsreader"', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
         },
       }
     }
@@ -56,6 +57,14 @@
   html { scroll-behavior: smooth; }
   body { background: #F7F4EE; }
   ::selection { background: #2952E3; color: #F7F4EE; }
+
+  /* Cuerpo de los artículos largos (el "grueso" del texto del sitio):
+     una serif pensada para lectura en pantalla, más cómoda en párrafos
+     extensos que la sans de interfaz. Se aplica a todo el artículo,
+     botones/CTAs incluidos, para mantener una sola tipografía. */
+  .prose-article {
+    font-family: "Newsreader", Georgia, Cambria, "Times New Roman", Times, serif;
+  }
 
   .dot-grid {
     background-image: radial-gradient(#2952E3 1.8px, transparent 1.8px);
@@ -67,7 +76,7 @@
      contenido a su propia capa de apilamiento por arriba, salvo los
      elementos que ya son fixed por diseño (panel de nav, overlay, botón
      de volver arriba) y los scripts. */
-  body > *:not(#dot-canvas):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#en-practica-modal):not(#en-practica-overlay):not(#fuentes-modal):not(#fuentes-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#comofunciona-modal):not(#comofunciona-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(script) {
+  body > *:not(#dot-canvas):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#en-practica-modal):not(#en-practica-overlay):not(#fuentes-modal):not(#fuentes-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#comofunciona-modal):not(#comofunciona-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(#escala-global-modal):not(#escala-global-overlay):not(#fake-news-modal):not(#fake-news-overlay):not(#trampa-escala-modal):not(#trampa-escala-overlay):not(script) {
     position: relative;
     z-index: 1;
   }
@@ -296,6 +305,15 @@
 
   .faq-pill.active { background: #2952E3; color: #FFFFFF; border-color: #2952E3; }
   .esg-item[open] .esg-chevron { transform: rotate(180deg); }
+  .mito-item[open] .mito-chevron { transform: rotate(180deg); }
+  .mito-item summary::-webkit-details-marker { display: none; }
+
+  .mde-range { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.15); outline: none; cursor: pointer; }
+  .mde-range::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #4FD6FF; cursor: pointer; border: 3px solid #06264A; box-shadow: 0 0 0 2px rgba(79,214,255,0.4); }
+  .mde-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #4FD6FF; cursor: pointer; border: 3px solid #06264A; box-shadow: 0 0 0 2px rgba(79,214,255,0.4); }
+  .mde-range::-moz-range-track { height: 6px; border-radius: 999px; background: rgba(255,255,255,0.15); }
+  @keyframes mdePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,106,0,0.35); } 50% { box-shadow: 0 0 0 10px rgba(255,106,0,0); } }
+  #mde-card.mde-alert { animation: mdePulse 1.4s ease-out infinite; }
   .calc-why summary::-webkit-details-marker { display: none; }
   .calc-why[open] .calc-why-chevron { transform: rotate(180deg); }
   .calc-why-chevron { transition: transform 0.2s ease; }
@@ -393,6 +411,26 @@
   </div>
 </aside>
 
+<!-- CONTADOR EN VIVO: lluvia de agua que se acumula -->
+<section id="lluvia-en-vivo" class="relative h-[calc(100vh-81px)] min-h-[520px] max-h-[820px] overflow-hidden border-b border-line">
+  <canvas id="puddle-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+  <div class="relative z-10 px-5 sm:px-8 pt-8 sm:pt-10 max-w-[15rem] sm:max-w-xs">
+    <div class="flex items-center gap-2 mb-1.5">
+      <span class="relative flex h-2 w-2 shrink-0">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+      </span>
+      <p class="font-mono text-[10px] sm:text-[11px] text-muted tracking-widest uppercase">En vivo</p>
+    </div>
+    <p class="text-4xl sm:text-6xl font-serif font-bold text-accent leading-none tabular-nums mb-1.5"><span id="live-water-counter">0</span></p>
+    <p class="text-sm sm:text-base text-ink/80 leading-tight">Litros de agua utilizados por IA desde que abriste la página</p>
+    <!-- Link a "A escala global" retirado junto con el modal (ver comentario cerca de la calculadora). Reactivar sumando de nuevo esta línea:
+    <p class="text-xs text-muted mt-4"><a href="#escala-global" class="text-accent font-semibold hover:underline">Ver cómo se calcula →</a></p>
+    -->
+  </div>
+</section>
+
 <!-- HERO -->
 <section id="inicio" class="relative max-w-5xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-24 overflow-hidden">
   <div class="hidden md:block absolute -right-24 top-1/2 -translate-y-1/2 opacity-[0.85] pointer-events-none" style="width:640px;">
@@ -417,14 +455,6 @@
           </a>
         </div>
       </div>
-
-      <div class="shrink-0 text-right">
-        <p class="font-serif text-4xl sm:text-5xl text-ink leading-none"><span id="hero-progress-count">0</span> / <span id="hero-progress-total">8</span></p>
-        <p class="font-mono text-[10px] tracking-widest text-muted mt-1.5">ARTÍCULOS EXPLORADOS</p>
-        <div class="w-28 sm:w-36 h-[3px] rounded-full mt-3 ml-auto overflow-hidden" style="background:#E4DFD3;">
-          <div id="hero-progress-bar" class="h-full rounded-full transition-all duration-500" style="background:#FF6A00; width:0%;"></div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -437,7 +467,7 @@
   <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24 grid lg:grid-cols-2 gap-14 items-center">
     <div>
       <p class="font-mono text-xs text-white/60 tracking-widest mb-3">POR QUÉ SED DE DATOS.</p>
-      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-5 text-white">Sed de Datos está para mostrar el costo ambiental oculto de usar inteligencia artificial.</h2>
+      <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-5 text-white">Sed de Datos está para mostrar el costo ambiental oculto de usar inteligencia artificial.</h2>
       <p class="text-white/70 leading-relaxed">
         Cada vez que envías un prompt, miles de procesadores en centros de datos consumen electricidad y requieren millones de litros de agua para refrigerarse. Ese impacto no se ve en la pantalla, pero existe. Creamos este espacio para dimensionar esa huella invisible con datos rigurosos y herramientas al alcance de todos.
       </p>
@@ -461,7 +491,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">CÓMO FUNCIONA.</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug max-w-2xl mb-4 pr-12">Tres gastos distintos se activan con un mismo prompt.</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug max-w-2xl mb-4 pr-12">Tres gastos distintos se activan con un mismo prompt.</h2>
     <p class="text-muted max-w-2xl mb-4">Cuando escribís algo en un chatbot, se activan procesos que consumen recursos en más de un lugar a la vez.</p>
     <a href="#calculadora" class="group inline-flex items-center gap-2 text-accent font-semibold text-sm mb-12">
       Calculá tu propio consumo
@@ -505,7 +535,7 @@
 <!-- STATS -->
 <section class="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
   <p class="font-mono text-xs text-accent tracking-widest mb-3">POR QUÉ IMPORTA.</p>
-  <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug max-w-2xl mb-4">Un gasto invisible, pero real.</h2>
+  <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug max-w-2xl mb-4">Un gasto invisible, pero real.</h2>
   <p class="text-muted max-w-2xl mb-4">No se trata de dejar de usar IA, sino de entender el costo ambiental que normalmente no vemos.</p>
   <div class="flex flex-wrap items-center gap-x-8 gap-y-2 mb-8">
     <a href="#como-funciona" class="group inline-flex items-center gap-2 text-accent font-semibold text-sm">
@@ -524,19 +554,19 @@
 
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-line rounded-2xl overflow-hidden border border-line">
     <div class="reveal bg-surface p-8" style="transition-delay:0.0s">
-      <p class="text-3xl sm:text-4xl font-semibold text-orange">10–25 ml</p>
+      <p class="text-3xl sm:text-4xl font-serif font-bold text-orange">10–25 ml</p>
       <p class="text-muted text-sm mt-2">agua directa por consulta de texto a una IA</p>
     </div>
     <div class="reveal bg-surface p-8" style="transition-delay:0.1s">
-      <p class="text-3xl sm:text-4xl font-semibold text-orange">2–5 L</p>
+      <p class="text-3xl sm:text-4xl font-serif font-bold text-orange">2–5 L</p>
       <p class="text-muted text-sm mt-2">agua por imagen generada con una IA</p>
     </div>
     <div class="reveal bg-surface p-8" style="transition-delay:0.2s">
-      <p class="text-3xl sm:text-4xl font-semibold text-accent">0,34 Wh</p>
+      <p class="text-3xl sm:text-4xl font-serif font-bold text-accent">0,34 Wh</p>
       <p class="text-muted text-sm mt-2">por consulta de texto a una IA</p>
     </div>
     <div class="reveal bg-surface p-8" style="transition-delay:0.3s">
-      <p class="text-3xl sm:text-4xl font-semibold text-accent">0,5–2,5 L</p>
+      <p class="text-3xl sm:text-4xl font-serif font-bold text-accent">0,5–2,5 L</p>
       <p class="text-muted text-sm mt-2">agua por kWh generado</p>
     </div>
   </div>
@@ -565,7 +595,7 @@
 
       <div>
         <p class="font-mono text-xs text-accent tracking-widest mb-3">SE ACUMULA MIENTRAS VOS SEGUÍS BAJANDO.</p>
-        <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8">El agua no llega de golpe: se va sumando consulta a consulta.</h2>
+        <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-8">El agua no llega de golpe: se va sumando consulta a consulta.</h2>
         <div class="space-y-3 text-sm">
           <p class="vaso-milestone flex items-center justify-between border-b border-line pb-2 transition-colors" data-min="0" data-max="25">
             <span>0 → 25 consultas a IA</span><span class="text-muted">hasta 375 ml</span>
@@ -590,52 +620,53 @@
     <div class="hidden xl:block absolute -right-24 -top-24 opacity-[0.35] pointer-events-none" style="width:420px;">
       <svg class="globe-graphic" viewBox="0 0 620 620" width="620" height="620" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="310.0" cy="310.0" r="241.8" stroke="#4FD6FF" stroke-width="1" stroke-dasharray="3 7" opacity="0.40" fill="none"/><circle cx="310.0" cy="310.0" r="301.3" stroke="#4FD6FF" stroke-width="1" stroke-dasharray="1 5" opacity="0.31" fill="none"/><circle cx="310.0" cy="310.0" r="362.7" stroke="#4FD6FF" stroke-width="1" stroke-dasharray="3 7" opacity="0.22" fill="none"/><circle class="radar-ping" cx="310.0" cy="310.0" r="186.0" stroke="#FF6A00" stroke-width="1.4" fill="none" style="transform-origin:310.0px 310.0px; animation-delay:0.0s;"/><circle class="radar-ping" cx="310.0" cy="310.0" r="186.0" stroke="#FF6A00" stroke-width="1.4" fill="none" style="transform-origin:310.0px 310.0px; animation-delay:1.6s;"/><g class="globe-spin" style="transform-origin:310.0px 310.0px;"><ellipse cx="310.0" cy="310.0" rx="40.9" ry="186.0" stroke="#4FD6FF" stroke-width="0.7" opacity="0.45" fill="none"/><ellipse cx="310.0" cy="310.0" rx="83.7" ry="186.0" stroke="#4FD6FF" stroke-width="0.7" opacity="0.45" fill="none"/><ellipse cx="310.0" cy="310.0" rx="126.5" ry="186.0" stroke="#4FD6FF" stroke-width="0.7" opacity="0.45" fill="none"/><ellipse cx="310.0" cy="310.0" rx="167.4" ry="186.0" stroke="#4FD6FF" stroke-width="0.7" opacity="0.45" fill="none"/><circle cx="244.5" cy="180.1" r="0.7" fill="#4FD6FF" opacity="0.47"/><circle cx="340.8" cy="462.4" r="0.7" fill="#4FD6FF" opacity="0.28"/><circle cx="285.3" cy="150.0" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="146.0" cy="334.3" r="0.7" fill="#4FD6FF" opacity="0.56"/><circle cx="338.7" cy="271.6" r="0.7" fill="#4FD6FF" opacity="0.73"/><circle cx="331.1" cy="173.5" r="0.7" fill="#4FD6FF" opacity="0.37"/><circle cx="336.4" cy="332.4" r="0.7" fill="#4FD6FF" opacity="0.59"/><circle cx="340.4" cy="361.7" r="0.7" fill="#4FD6FF" opacity="0.41"/><circle cx="333.9" cy="354.3" r="1.1" fill="#4FD6FF" opacity="0.48"/><circle cx="413.1" cy="297.2" r="0.9" fill="#4FD6FF" opacity="0.63"/><circle cx="235.5" cy="419.5" r="0.7" fill="#4FD6FF" opacity="0.50"/><circle cx="154.5" cy="235.7" r="0.9" fill="#4FD6FF" opacity="0.38"/><circle cx="395.4" cy="231.1" r="0.7" fill="#4FD6FF" opacity="0.64"/><circle cx="314.4" cy="185.4" r="1.1" fill="#4FD6FF" opacity="0.35"/><circle cx="280.9" cy="481.9" r="0.9" fill="#4FD6FF" opacity="0.21"/><circle cx="250.5" cy="254.3" r="1.1" fill="#4FD6FF" opacity="0.45"/><circle cx="224.4" cy="383.3" r="0.9" fill="#4FD6FF" opacity="0.23"/><circle cx="429.8" cy="229.9" r="0.9" fill="#4FD6FF" opacity="0.35"/><circle cx="132.4" cy="295.8" r="0.7" fill="#4FD6FF" opacity="0.24"/><circle cx="307.7" cy="205.2" r="0.7" fill="#4FD6FF" opacity="0.34"/><circle cx="272.0" cy="465.1" r="0.7" fill="#4FD6FF" opacity="0.39"/><circle cx="291.1" cy="328.4" r="1.1" fill="#4FD6FF" opacity="0.70"/><circle cx="445.4" cy="227.6" r="0.9" fill="#4FD6FF" opacity="0.36"/><circle cx="378.0" cy="265.5" r="0.7" fill="#4FD6FF" opacity="0.33"/><circle cx="189.6" cy="210.3" r="1.1" fill="#4FD6FF" opacity="0.28"/><circle cx="433.2" cy="191.8" r="0.7" fill="#4FD6FF" opacity="0.29"/><circle cx="279.8" cy="261.4" r="0.7" fill="#4FD6FF" opacity="0.51"/><circle cx="380.9" cy="315.8" r="0.7" fill="#4FD6FF" opacity="0.52"/><circle cx="293.9" cy="448.0" r="1.1" fill="#4FD6FF" opacity="0.60"/><circle cx="272.1" cy="270.6" r="1.1" fill="#4FD6FF" opacity="0.47"/><circle cx="201.7" cy="184.4" r="0.7" fill="#4FD6FF" opacity="0.32"/><circle cx="162.1" cy="334.8" r="0.9" fill="#4FD6FF" opacity="0.41"/><circle cx="352.3" cy="150.2" r="1.1" fill="#4FD6FF" opacity="0.27"/><circle cx="179.3" cy="217.8" r="0.9" fill="#4FD6FF" opacity="0.33"/><circle cx="300.4" cy="166.9" r="1.1" fill="#4FD6FF" opacity="0.40"/><circle cx="302.7" cy="240.0" r="0.9" fill="#4FD6FF" opacity="0.29"/><circle cx="399.4" cy="302.0" r="0.7" fill="#4FD6FF" opacity="0.54"/><circle cx="258.6" cy="380.7" r="0.9" fill="#4FD6FF" opacity="0.65"/><circle cx="383.0" cy="221.1" r="0.7" fill="#4FD6FF" opacity="0.37"/><circle cx="256.3" cy="206.9" r="0.9" fill="#4FD6FF" opacity="0.45"/><circle cx="360.8" cy="352.1" r="0.7" fill="#4FD6FF" opacity="0.61"/><circle cx="423.9" cy="428.4" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="198.4" cy="307.3" r="0.7" fill="#4FD6FF" opacity="0.53"/><circle cx="417.9" cy="299.7" r="0.9" fill="#4FD6FF" opacity="0.29"/><circle cx="290.4" cy="472.6" r="0.9" fill="#4FD6FF" opacity="0.58"/><circle cx="298.9" cy="249.6" r="0.7" fill="#4FD6FF" opacity="0.46"/><circle cx="302.4" cy="366.9" r="0.7" fill="#4FD6FF" opacity="0.63"/><circle cx="268.5" cy="388.7" r="0.7" fill="#4FD6FF" opacity="0.31"/><circle cx="285.4" cy="360.5" r="1.1" fill="#4FD6FF" opacity="0.27"/><circle cx="296.3" cy="400.5" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="424.0" cy="178.4" r="1.1" fill="#4FD6FF" opacity="0.51"/><circle cx="368.5" cy="254.4" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="394.2" cy="162.2" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="285.4" cy="448.3" r="0.7" fill="#4FD6FF" opacity="0.54"/><circle cx="310.4" cy="408.1" r="1.1" fill="#4FD6FF" opacity="0.36"/><circle cx="399.3" cy="457.9" r="1.1" fill="#4FD6FF" opacity="0.44"/><circle cx="313.9" cy="448.7" r="0.7" fill="#4FD6FF" opacity="0.53"/><circle cx="412.7" cy="179.7" r="0.7" fill="#4FD6FF" opacity="0.24"/><circle cx="331.0" cy="245.3" r="1.1" fill="#4FD6FF" opacity="0.48"/><circle cx="415.7" cy="163.5" r="0.7" fill="#4FD6FF" opacity="0.40"/><circle cx="160.4" cy="292.2" r="0.7" fill="#4FD6FF" opacity="0.20"/><circle cx="288.9" cy="351.9" r="0.7" fill="#4FD6FF" opacity="0.49"/><circle cx="381.7" cy="292.3" r="1.1" fill="#4FD6FF" opacity="0.48"/><circle cx="312.9" cy="216.1" r="0.9" fill="#4FD6FF" opacity="0.46"/><circle cx="199.4" cy="290.5" r="1.1" fill="#4FD6FF" opacity="0.39"/><circle cx="288.5" cy="151.0" r="0.7" fill="#4FD6FF" opacity="0.28"/><circle cx="203.1" cy="236.6" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="473.5" cy="363.4" r="0.9" fill="#4FD6FF" opacity="0.33"/><circle cx="272.2" cy="305.3" r="0.7" fill="#4FD6FF" opacity="0.75"/><circle cx="184.1" cy="284.5" r="0.9" fill="#4FD6FF" opacity="0.42"/><circle cx="280.7" cy="256.7" r="0.9" fill="#4FD6FF" opacity="0.27"/><circle cx="131.2" cy="330.1" r="0.7" fill="#4FD6FF" opacity="0.35"/><circle cx="267.0" cy="316.5" r="0.7" fill="#4FD6FF" opacity="0.38"/><circle cx="209.0" cy="450.0" r="0.9" fill="#4FD6FF" opacity="0.21"/><circle cx="224.6" cy="172.2" r="0.9" fill="#4FD6FF" opacity="0.36"/><circle cx="275.0" cy="323.6" r="1.1" fill="#4FD6FF" opacity="0.50"/><circle cx="384.6" cy="157.3" r="0.7" fill="#4FD6FF" opacity="0.20"/><circle cx="282.2" cy="150.9" r="0.7" fill="#4FD6FF" opacity="0.57"/><circle cx="445.0" cy="292.8" r="1.1" fill="#4FD6FF" opacity="0.34"/><circle cx="468.7" cy="223.6" r="0.7" fill="#4FD6FF" opacity="0.23"/><circle cx="221.4" cy="191.4" r="0.9" fill="#4FD6FF" opacity="0.58"/><circle cx="321.6" cy="200.6" r="0.7" fill="#4FD6FF" opacity="0.41"/><circle cx="224.6" cy="423.0" r="0.7" fill="#4FD6FF" opacity="0.61"/><circle cx="329.0" cy="194.5" r="1.1" fill="#4FD6FF" opacity="0.41"/><circle cx="284.8" cy="308.1" r="1.1" fill="#4FD6FF" opacity="0.68"/><circle cx="204.0" cy="209.4" r="0.7" fill="#4FD6FF" opacity="0.27"/><circle cx="274.5" cy="253.3" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="451.3" cy="284.2" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="447.8" cy="373.4" r="0.7" fill="#4FD6FF" opacity="0.31"/><circle cx="381.7" cy="140.8" r="0.9" fill="#4FD6FF" opacity="0.25"/><circle cx="289.8" cy="221.9" r="0.9" fill="#4FD6FF" opacity="0.67"/><circle cx="239.2" cy="256.6" r="1.1" fill="#4FD6FF" opacity="0.21"/><circle cx="155.2" cy="227.8" r="0.7" fill="#4FD6FF" opacity="0.44"/><circle cx="222.3" cy="157.4" r="0.7" fill="#4FD6FF" opacity="0.34"/><circle cx="270.6" cy="235.5" r="0.7" fill="#4FD6FF" opacity="0.52"/><circle cx="341.8" cy="320.9" r="1.1" fill="#4FD6FF" opacity="0.63"/><circle cx="408.3" cy="392.1" r="0.9" fill="#4FD6FF" opacity="0.41"/><circle cx="393.4" cy="363.3" r="1.1" fill="#4FD6FF" opacity="0.23"/><circle cx="397.0" cy="426.1" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="431.4" cy="341.3" r="0.7" fill="#4FD6FF" opacity="0.59"/><circle cx="361.0" cy="480.9" r="1.1" fill="#4FD6FF" opacity="0.33"/><circle cx="331.8" cy="357.5" r="0.7" fill="#4FD6FF" opacity="0.54"/><circle cx="420.7" cy="402.4" r="0.7" fill="#4FD6FF" opacity="0.40"/><circle cx="369.3" cy="148.6" r="0.9" fill="#4FD6FF" opacity="0.47"/><circle cx="425.0" cy="438.8" r="0.7" fill="#4FD6FF" opacity="0.27"/><circle cx="209.8" cy="365.8" r="1.1" fill="#4FD6FF" opacity="0.41"/><circle cx="359.4" cy="197.8" r="0.9" fill="#4FD6FF" opacity="0.47"/><circle cx="218.5" cy="400.5" r="0.7" fill="#4FD6FF" opacity="0.33"/><circle cx="224.0" cy="374.0" r="1.1" fill="#4FD6FF" opacity="0.52"/><circle cx="232.2" cy="316.2" r="1.1" fill="#4FD6FF" opacity="0.44"/><circle cx="328.3" cy="239.9" r="1.1" fill="#4FD6FF" opacity="0.26"/><circle cx="130.5" cy="294.7" r="1.1" fill="#4FD6FF" opacity="0.50"/><circle cx="402.1" cy="221.4" r="0.9" fill="#4FD6FF" opacity="0.36"/><circle cx="453.9" cy="385.6" r="1.1" fill="#4FD6FF" opacity="0.28"/><circle cx="270.6" cy="183.2" r="1.1" fill="#4FD6FF" opacity="0.61"/><circle cx="274.8" cy="394.5" r="1.1" fill="#4FD6FF" opacity="0.41"/><circle cx="241.6" cy="436.6" r="0.9" fill="#4FD6FF" opacity="0.19"/><circle cx="468.6" cy="389.2" r="0.9" fill="#4FD6FF" opacity="0.53"/><circle cx="269.1" cy="447.6" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="405.1" cy="441.8" r="0.7" fill="#4FD6FF" opacity="0.30"/><circle cx="434.5" cy="230.3" r="0.7" fill="#4FD6FF" opacity="0.58"/><circle cx="485.2" cy="286.3" r="0.9" fill="#4FD6FF" opacity="0.30"/><circle cx="416.1" cy="283.1" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="328.3" cy="391.7" r="1.1" fill="#4FD6FF" opacity="0.24"/><circle cx="291.7" cy="404.0" r="0.9" fill="#4FD6FF" opacity="0.51"/><circle cx="304.6" cy="463.2" r="0.7" fill="#4FD6FF" opacity="0.42"/><circle cx="299.7" cy="251.8" r="0.9" fill="#4FD6FF" opacity="0.37"/><circle cx="275.1" cy="212.8" r="1.1" fill="#4FD6FF" opacity="0.43"/><circle cx="168.5" cy="363.3" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="328.7" cy="292.5" r="1.1" fill="#4FD6FF" opacity="0.42"/><circle cx="283.0" cy="327.8" r="0.7" fill="#4FD6FF" opacity="0.36"/><circle cx="251.2" cy="157.9" r="0.9" fill="#4FD6FF" opacity="0.28"/><circle cx="425.1" cy="199.2" r="1.1" fill="#4FD6FF" opacity="0.19"/><circle cx="266.4" cy="401.5" r="0.9" fill="#4FD6FF" opacity="0.31"/><circle cx="249.8" cy="147.1" r="0.9" fill="#4FD6FF" opacity="0.29"/><circle cx="170.8" cy="311.3" r="0.7" fill="#4FD6FF" opacity="0.46"/><circle cx="267.1" cy="364.2" r="0.9" fill="#4FD6FF" opacity="0.43"/><circle cx="387.9" cy="457.2" r="1.1" fill="#4FD6FF" opacity="0.37"/><circle cx="216.4" cy="164.6" r="0.7" fill="#4FD6FF" opacity="0.24"/><circle cx="474.2" cy="392.5" r="1.1" fill="#4FD6FF" opacity="0.43"/><circle cx="335.8" cy="138.0" r="0.7" fill="#4FD6FF" opacity="0.46"/><circle cx="357.0" cy="320.5" r="0.7" fill="#4FD6FF" opacity="0.45"/><circle cx="161.0" cy="235.7" r="0.7" fill="#4FD6FF" opacity="0.56"/><circle cx="268.4" cy="207.2" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="227.6" cy="241.7" r="0.7" fill="#4FD6FF" opacity="0.59"/><circle cx="300.8" cy="211.3" r="1.1" fill="#4FD6FF" opacity="0.32"/><circle cx="386.1" cy="238.4" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="453.2" cy="364.7" r="0.7" fill="#4FD6FF" opacity="0.22"/><circle cx="372.3" cy="468.2" r="0.7" fill="#4FD6FF" opacity="0.27"/><circle cx="382.8" cy="391.2" r="1.1" fill="#4FD6FF" opacity="0.37"/><circle cx="197.7" cy="420.5" r="0.7" fill="#4FD6FF" opacity="0.49"/><circle cx="240.0" cy="429.0" r="0.7" fill="#4FD6FF" opacity="0.29"/><circle cx="222.6" cy="454.8" r="1.1" fill="#4FD6FF" opacity="0.23"/><circle cx="351.0" cy="457.5" r="0.7" fill="#4FD6FF" opacity="0.39"/><circle cx="270.4" cy="203.2" r="0.7" fill="#4FD6FF" opacity="0.64"/><circle cx="278.5" cy="388.1" r="1.1" fill="#4FD6FF" opacity="0.30"/><circle cx="470.6" cy="246.5" r="1.1" fill="#4FD6FF" opacity="0.25"/><circle cx="264.8" cy="263.1" r="0.7" fill="#4FD6FF" opacity="0.39"/><circle cx="154.0" cy="280.3" r="0.7" fill="#4FD6FF" opacity="0.55"/><circle cx="265.4" cy="410.0" r="1.1" fill="#4FD6FF" opacity="0.35"/><circle cx="156.6" cy="386.4" r="1.1" fill="#4FD6FF" opacity="0.26"/><circle cx="195.8" cy="259.5" r="0.7" fill="#4FD6FF" opacity="0.59"/><circle cx="359.0" cy="216.3" r="1.1" fill="#4FD6FF" opacity="0.49"/><circle cx="219.6" cy="402.0" r="0.9" fill="#4FD6FF" opacity="0.59"/><circle cx="259.0" cy="248.6" r="0.7" fill="#4FD6FF" opacity="0.67"/><circle cx="221.5" cy="390.6" r="0.9" fill="#4FD6FF" opacity="0.34"/><circle cx="234.6" cy="392.4" r="0.7" fill="#4FD6FF" opacity="0.47"/><circle cx="300.8" cy="479.9" r="1.1" fill="#4FD6FF" opacity="0.56"/><circle cx="427.1" cy="173.4" r="0.7" fill="#4FD6FF" opacity="0.37"/><circle cx="422.6" cy="398.7" r="0.7" fill="#4FD6FF" opacity="0.54"/><circle cx="349.9" cy="245.9" r="0.9" fill="#4FD6FF" opacity="0.37"/><circle cx="415.6" cy="345.6" r="1.1" fill="#4FD6FF" opacity="0.44"/><circle cx="404.1" cy="216.0" r="0.7" fill="#4FD6FF" opacity="0.22"/><circle cx="303.2" cy="326.6" r="1.1" fill="#4FD6FF" opacity="0.33"/><circle cx="222.5" cy="155.3" r="1.1" fill="#4FD6FF" opacity="0.22"/><circle cx="188.4" cy="173.5" r="0.7" fill="#4FD6FF" opacity="0.36"/><circle cx="402.2" cy="439.1" r="0.7" fill="#4FD6FF" opacity="0.46"/><circle cx="414.1" cy="233.3" r="0.9" fill="#4FD6FF" opacity="0.32"/><circle cx="262.7" cy="398.6" r="0.7" fill="#4FD6FF" opacity="0.30"/><circle cx="193.1" cy="211.6" r="0.7" fill="#4FD6FF" opacity="0.30"/><circle cx="245.4" cy="271.3" r="0.7" fill="#4FD6FF" opacity="0.70"/><circle cx="365.7" cy="161.4" r="0.7" fill="#4FD6FF" opacity="0.38"/><circle cx="162.1" cy="300.6" r="1.1" fill="#4FD6FF" opacity="0.53"/><circle cx="233.2" cy="168.3" r="0.7" fill="#4FD6FF" opacity="0.26"/><circle cx="470.0" cy="262.5" r="1.1" fill="#4FD6FF" opacity="0.53"/><circle cx="348.3" cy="412.3" r="0.7" fill="#4FD6FF" opacity="0.51"/><circle cx="163.4" cy="345.8" r="0.7" fill="#4FD6FF" opacity="0.45"/><circle cx="137.9" cy="250.5" r="0.9" fill="#4FD6FF" opacity="0.19"/><circle cx="428.6" cy="276.1" r="0.9" fill="#4FD6FF" opacity="0.36"/><circle cx="308.4" cy="303.9" r="1.1" fill="#4FD6FF" opacity="0.47"/><circle cx="371.0" cy="181.5" r="0.7" fill="#4FD6FF" opacity="0.42"/><circle cx="272.0" cy="224.9" r="0.9" fill="#4FD6FF" opacity="0.67"/><circle cx="279.4" cy="143.1" r="0.9" fill="#4FD6FF" opacity="0.48"/><circle cx="278.0" cy="130.8" r="0.9" fill="#4FD6FF" opacity="0.47"/><circle cx="363.7" cy="269.4" r="0.7" fill="#4FD6FF" opacity="0.42"/><circle cx="285.5" cy="182.2" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="275.1" cy="452.4" r="0.7" fill="#4FD6FF" opacity="0.38"/><circle cx="177.0" cy="424.0" r="0.9" fill="#4FD6FF" opacity="0.34"/><circle cx="398.3" cy="187.9" r="0.7" fill="#4FD6FF" opacity="0.33"/><circle cx="317.9" cy="468.3" r="1.1" fill="#4FD6FF" opacity="0.23"/><circle cx="404.3" cy="418.7" r="0.9" fill="#4FD6FF" opacity="0.53"/><circle cx="486.9" cy="303.6" r="1.1" fill="#4FD6FF" opacity="0.20"/><circle cx="156.1" cy="389.0" r="0.7" fill="#4FD6FF" opacity="0.45"/><circle cx="362.2" cy="442.7" r="0.7" fill="#4FD6FF" opacity="0.46"/><circle cx="432.5" cy="192.1" r="1.1" fill="#4FD6FF" opacity="0.27"/><circle cx="257.6" cy="179.6" r="0.7" fill="#4FD6FF" opacity="0.61"/><circle cx="139.3" cy="333.2" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="372.5" cy="244.6" r="1.1" fill="#4FD6FF" opacity="0.40"/><circle cx="328.6" cy="357.3" r="1.1" fill="#4FD6FF" opacity="0.38"/><circle cx="238.7" cy="216.7" r="0.9" fill="#4FD6FF" opacity="0.38"/><circle cx="290.2" cy="287.1" r="1.1" fill="#4FD6FF" opacity="0.25"/><circle cx="297.1" cy="290.2" r="1.1" fill="#4FD6FF" opacity="0.57"/><circle cx="435.2" cy="425.5" r="0.7" fill="#4FD6FF" opacity="0.34"/><circle cx="171.8" cy="284.2" r="1.1" fill="#4FD6FF" opacity="0.23"/><circle cx="311.6" cy="368.4" r="0.7" fill="#4FD6FF" opacity="0.25"/><circle cx="154.6" cy="396.9" r="0.7" fill="#4FD6FF" opacity="0.48"/><circle cx="144.2" cy="311.5" r="0.7" fill="#4FD6FF" opacity="0.34"/><circle cx="352.5" cy="381.6" r="0.7" fill="#4FD6FF" opacity="0.27"/><circle cx="489.2" cy="307.0" r="0.7" fill="#4FD6FF" opacity="0.55"/><circle cx="379.2" cy="392.2" r="0.9" fill="#4FD6FF" opacity="0.31"/></g><ellipse cx="310.0" cy="310.0" rx="186.0" ry="65.1" stroke="#4FD6FF" stroke-width="0.7" opacity="0.35" fill="none"/><ellipse cx="310.0" cy="310.0" rx="186.0" ry="130.2" stroke="#4FD6FF" stroke-width="0.7" opacity="0.35" fill="none"/><circle cx="310.0" cy="310.0" r="186.0" stroke="#4FD6FF" stroke-width="1.3" opacity="0.6" fill="none"/><path d="M462.4 251.3 L576.6 207.3" stroke="#FF6A00" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="576.6" cy="207.3" r="3.5" fill="#FF6A00" style="animation-delay:0.0s;"/><path d="M494.2 295.8 L648.2 283.9" stroke="#4FD6FF" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="648.2" cy="283.9" r="3.5" fill="#4FD6FF" style="animation-delay:0.3s;"/><path d="M484.8 345.0 L645.9 377.2" stroke="#FFFFFF" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="645.9" cy="377.2" r="3.5" fill="#FFFFFF" style="animation-delay:0.6s;"/><path d="M434.5 386.0 L527.8 443.0" stroke="#FF6A00" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="527.8" cy="443.0" r="3.5" fill="#FF6A00" style="animation-delay:0.8999999999999999s;"/><path d="M135.2 275.0 L-10.9 245.8" stroke="#4FD6FF" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="-10.9" cy="245.8" r="3.5" fill="#4FD6FF" style="animation-delay:1.2s;"/><path d="M190.4 231.6 L80.2 159.4" stroke="#FFFFFF" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="80.2" cy="159.4" r="3.5" fill="#FFFFFF" style="animation-delay:1.5s;"/><path d="M130.3 336.5 L-4.4 356.3" stroke="#FF6A00" stroke-width="1" opacity="0.55"/><circle class="node-pulse" cx="-4.4" cy="356.3" r="3.5" fill="#FF6A00" style="animation-delay:1.7999999999999998s;"/><circle cx="672.7" cy="310.0" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="658.6" cy="410.0" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="617.6" cy="502.2" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="552.7" cy="579.5" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="469.0" cy="636.0" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="373.0" cy="667.2" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="272.1" cy="670.7" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="174.1" cy="646.3" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="86.7" cy="595.8" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="16.6" cy="523.2" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="-30.8" cy="434.1" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="-51.8" cy="335.3" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="-44.8" cy="234.6" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="-10.2" cy="139.7" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="49.1" cy="58.0" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="128.6" cy="-4.1" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="222.3" cy="-41.9" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="322.7" cy="-52.5" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="422.1" cy="-34.9" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="512.8" cy="9.3" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="587.8" cy="76.9" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="641.3" cy="162.5" r="1.2" fill="#4FD6FF" opacity="0.3"/><circle cx="669.2" cy="259.5" r="1.2" fill="#4FD6FF" opacity="0.3"/></svg>
     </div>
-    <div class="relative max-w-2xl mx-auto">
+    <div class="relative max-w-4xl mx-auto">
       <p class="font-mono text-xs text-white/60 tracking-widest mb-3">CALCULADORA.</p>
-      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-10 text-white">¿Cuánto gastás vos?</h2>
+      <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-10 text-white">¿Cuánto gastás vos?</h2>
 
-      <div class="card p-6 sm:p-10">
-        <div class="flex gap-2 mb-6">
-          <button data-mode="texto" class="mode-btn active flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Texto</button>
-          <button data-mode="imagen" class="mode-btn flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Imagen</button>
+      <div class="grid lg:grid-cols-[1.35fr_1fr] gap-6 items-start">
+        <div class="card p-6 sm:p-10">
+          <div class="flex gap-2 mb-6">
+            <button data-mode="texto" class="mode-btn active flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Texto</button>
+            <button data-mode="imagen" class="mode-btn flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Imagen</button>
+          </div>
+
+          <div class="bg-surface2 rounded-2xl p-5 mb-6 border border-line">
+            <div class="flex justify-between items-baseline mb-4">
+              <label for="slider-queries" id="slider-label" class="text-xs font-bold text-ink">CONSULTAS DE TEXTO POR DÍA</label>
+              <span id="queries-label" class="font-mono text-ink font-bold">20</span>
+            </div>
+            <input type="range" id="slider-queries" min="1" max="200" step="1" value="20">
+            <div class="flex justify-between text-[11px] text-muted mt-2 font-mono"><span id="slider-min">1</span><span id="slider-max">200</span></div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div class="bg-accentbg rounded-2xl p-5">
+              <p class="text-xs font-bold text-accent mb-1">AGUA TOTAL · POR DÍA</p>
+              <p id="water-result" class="bump text-3xl font-semibold">0,31 L</p>
+              <p class="text-xs text-accent/70 mt-1">directa + indirecta</p>
+            </div>
+            <div class="bg-accentbg rounded-2xl p-5">
+              <p class="text-xs font-bold text-accent mb-1">ELECTRICIDAD · POR DÍA</p>
+              <p id="energy-result" class="bump text-3xl font-semibold">6,8 Wh</p>
+              <p id="energy-sub" class="text-xs text-accent/70 mt-1">≈ <span id="energy-month">204 Wh</span> al mes</p>
+            </div>
+          </div>
+
+          <div class="bg-surface2 rounded-2xl p-5 border border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div id="water-breakdown" class="flex items-center gap-4 text-xs text-muted">
+              <span>Directa: <span id="water-direct" class="font-mono text-ink font-semibold">0,30 L</span></span>
+              <span>Indirecta: <span id="water-indirect" class="font-mono text-ink font-semibold">0,01 L</span></span>
+            </div>
+            <p class="text-xs text-muted">Equivale a <span id="glasses" class="font-mono text-accent font-semibold">1</span> vaso de agua (250 ml) por día</p>
+          </div>
         </div>
 
-        <div class="bg-surface2 rounded-2xl p-5 mb-6 border border-line">
-          <div class="flex justify-between items-baseline mb-4">
-            <label for="slider-queries" id="slider-label" class="text-xs font-bold text-ink">CONSULTAS DE TEXTO POR DÍA</label>
-            <span id="queries-label" class="font-mono text-ink font-bold">20</span>
-          </div>
-          <input type="range" id="slider-queries" min="1" max="200" step="1" value="20">
-          <div class="flex justify-between text-[11px] text-muted mt-2 font-mono"><span id="slider-min">1</span><span id="slider-max">200</span></div>
-        </div>
-
-        <div class="grid sm:grid-cols-2 gap-4 mb-4">
-          <div class="bg-accentbg rounded-2xl p-5">
-            <p class="text-xs font-bold text-accent mb-1">AGUA TOTAL · POR DÍA</p>
-            <p id="water-result" class="bump text-3xl font-semibold">0,31 L</p>
-            <p class="text-xs text-accent/70 mt-1">directa + indirecta</p>
-          </div>
-          <div class="bg-accentbg rounded-2xl p-5">
-            <p class="text-xs font-bold text-accent mb-1">ELECTRICIDAD · POR DÍA</p>
-            <p id="energy-result" class="bump text-3xl font-semibold">6,8 Wh</p>
-            <p id="energy-sub" class="text-xs text-accent/70 mt-1">≈ <span id="energy-month">204 Wh</span> al mes</p>
-          </div>
-        </div>
-
-        <div class="bg-surface2 rounded-2xl p-5 border border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div id="water-breakdown" class="flex items-center gap-4 text-xs text-muted">
-            <span>Directa: <span id="water-direct" class="font-mono text-ink font-semibold">0,30 L</span></span>
-            <span>Indirecta: <span id="water-indirect" class="font-mono text-ink font-semibold">0,01 L</span></span>
-          </div>
-          <p class="text-xs text-muted">Equivale a <span id="glasses" class="font-mono text-accent font-semibold">1</span> vaso de agua (250 ml) por día</p>
-        </div>
-
-        <div class="mt-5 rounded-2xl border border-line overflow-hidden">
-          <div class="p-5 bg-surface2">
-            <p class="text-xs font-bold text-muted mb-1 tracking-wide">TU ESTIMACIÓN</p>
+        <div class="card overflow-hidden flex flex-col">
+          <div class="p-6 sm:p-8 bg-surface2">
             <p class="text-sm text-ink font-semibold mb-4">Es una estimación, no una medición directa.</p>
             <p class="text-[11px] font-bold text-muted mb-2 tracking-wide">SE CALCULÓ A PARTIR DE:</p>
-            <ul class="text-xs text-muted space-y-1.5 mb-4 list-disc pl-4">
+            <ul class="text-xs text-muted space-y-1.5 list-disc pl-4">
               <li>Consumo energético estimado por consulta</li>
               <li>Factor hídrico de generación eléctrica</li>
               <li>Tipo de consulta (texto o imagen)</li>
@@ -643,20 +674,79 @@
             </ul>
           </div>
           <details class="calc-why">
-            <summary class="cursor-pointer list-none px-5 py-3.5 flex items-center justify-between gap-2 text-xs font-semibold text-accent bg-surface hover:bg-accentbg transition">
+            <summary class="cursor-pointer list-none px-6 sm:px-8 py-3.5 flex items-center justify-between gap-2 text-xs font-semibold text-accent bg-surface hover:bg-accentbg transition">
               ¿Por qué este número puede cambiar?
               <svg class="calc-why-chevron shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
             </summary>
-            <div class="px-5 pb-5 pt-1 bg-surface">
+            <div class="px-6 sm:px-8 pb-5 pt-1 bg-surface">
               <p class="text-xs text-muted leading-relaxed mb-3">Cada empresa mide con su propio hardware, su propio sistema de refrigeración y su propia ubicación geográfica. Que Google, Microsoft u OpenAI publiquen números distintos entre sí no significa que alguno esté mintiendo: miden modelos y centros de datos diferentes, en climas distintos, con metodologías que todavía no están estandarizadas a nivel de la industria.</p>
               <p id="calc-note" class="text-[11px] text-muted leading-relaxed"></p>
             </div>
           </details>
+          <!-- Botón "Ver a escala global" retirado junto con el modal (ver comentario más abajo, donde estaba el modal). Reactivar sumando de nuevo este bloque:
+          <div class="p-6 sm:p-8 bg-surface border-t border-line mt-auto">
+            <a href="#escala-global" class="w-full btn-pop inline-flex items-center justify-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-3.5 rounded-xl hover:brightness-110 transition">
+              Ver a escala global
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+          -->
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!--
+MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comentado por si hay que volver a cargarlo.
+<div id="escala-global-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+<div id="escala-global-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+  <div class="rounded-2xl max-w-4xl w-full my-4 relative overflow-hidden p-6 sm:p-10" style="background: #06264A;">
+    <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+    <button id="close-escala-global" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/25 text-white flex items-center justify-center hover:border-orange hover:text-orange transition z-10">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="relative pr-12">
+      <p class="font-mono text-xs tracking-widest mb-3" style="color:#7FB8F0;">A ESCALA GLOBAL.</p>
+      <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug max-w-2xl mb-4 text-white">Ya calculaste tu huella. Ahora multiplicala por el mundo entero.</h2>
+      <p class="text-white/60 max-w-2xl mb-10">Según datos difundidos por OpenAI, ChatGPT recibe alrededor de 2.500 millones de mensajes de texto por día en todo el mundo<sup><a href="#nota-escala-global" id="nota-escala-global-ref" class="hover:underline" style="color:#7FB8F0;">[1]</a></sup>. Aplicando los mismos promedios de agua por consulta que usa la calculadora, así se ve esa cifra acumulada.</p>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/5 overflow-hidden text-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#4FD6FF" class="mb-4 mx-auto block"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
+          <p class="font-mono text-xs text-white/40 mb-2">CADA HORA</p>
+          <p class="text-lg sm:text-xl font-serif font-bold text-white leading-tight"><span class="whitespace-nowrap">1.616</span> m³</p>
+          <p class="text-white/50 text-sm mt-2">más de la mitad de una pileta olímpica</p>
+        </div>
+        <div class="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/5 overflow-hidden text-center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#4FD6FF" class="mb-4 mx-auto block"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
+          <p class="font-mono text-xs text-white/40 mb-2">CADA DÍA</p>
+          <p class="text-lg sm:text-xl font-serif font-bold text-white leading-tight"><span class="whitespace-nowrap">38.775</span> m³</p>
+          <p class="text-white/50 text-sm mt-2">≈ 15,5 piletas olímpicas</p>
+        </div>
+        <div class="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/5 overflow-hidden text-center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#4FD6FF" class="mb-4 mx-auto block"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
+          <p class="font-mono text-xs text-white/40 mb-2">CADA MES</p>
+          <p class="text-lg sm:text-xl font-serif font-bold text-white leading-tight"><span class="whitespace-nowrap">1.163.250</span> m³</p>
+          <p class="text-white/50 text-sm mt-2">≈ 465 piletas olímpicas</p>
+        </div>
+        <div class="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/5 overflow-hidden text-center">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#4FD6FF" class="mb-4 mx-auto block"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg>
+          <p class="font-mono text-xs text-white/40 mb-2">CADA AÑO</p>
+          <p class="text-lg sm:text-xl font-serif font-bold text-white leading-tight"><span class="whitespace-nowrap">14.152.875</span> m³</p>
+          <p class="text-white/50 text-sm mt-2">≈ 5.661 piletas olímpicas</p>
+        </div>
+      </div>
+
+      <p id="nota-escala-global" class="text-xs text-white/40 leading-relaxed mt-6">
+        <a href="#nota-escala-global-ref" class="hover:underline" style="color:#7FB8F0;">[1]</a>
+        Estimación propia a partir de los ~2.500 millones de mensajes de texto que ChatGPT procesa por día según datos de OpenAI difundidos por <a href="https://techcrunch.com/2025/07/21/chatgpt-users-send-2-5-billion-prompts-a-day/" target="_blank" rel="noopener" class="hover:underline" style="color:#7FB8F0;">TechCrunch (jul. 2025)</a>, aplicados a los promedios de agua directa e indirecta por consulta que usa esta calculadora. Es una proyección ilustrativa, no una medición directa: no incluye otros modelos de IA, imágenes ni el costo de entrenamiento. Una pileta olímpica equivale a 2.500 m³ (medida oficial FINA).
+      </p>
+    </div>
+  </div>
+</div>
+-->
 
 <!-- CUESTIONARIO -->
 <section id="quiz" class="pb-16 sm:pb-24 px-3 sm:px-5">
@@ -664,7 +754,7 @@
     <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
     <div class="relative max-w-2xl mx-auto">
       <p class="font-mono text-xs text-white/60 tracking-widest mb-3">CUESTIONARIO.</p>
-      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-2 text-white">¿Qué tan grande es tu huella?</h2>
+      <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-2 text-white">¿Qué tan grande es tu huella?</h2>
       <p class="text-white/70 mb-10">5 preguntas rápidas. No hay respuestas correctas ni incorrectas.</p>
 
       <div class="card p-6 sm:p-10">
@@ -713,7 +803,18 @@
   <div class="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
     <p class="font-mono text-xs text-accent tracking-widest mb-3">ARTÍCULOS.</p>
     <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
-      <h2 class="reveal text-3xl sm:text-4xl font-medium leading-snug">Entendé el tema a fondo<span class="text-accent">.</span></h2>
+      <div class="flex flex-wrap items-center gap-5">
+        <h2 class="reveal text-3xl sm:text-4xl italic font-serif leading-snug">Entendé el tema a fondo<span class="text-accent">.</span></h2>
+        <div class="flex items-center gap-2.5">
+          <p class="font-serif text-2xl sm:text-3xl text-ink leading-none"><span id="hero-progress-count">0</span><span class="text-muted">/</span><span id="hero-progress-total">10</span></p>
+          <div>
+            <p class="font-mono text-[9px] tracking-widest text-muted leading-tight">ARTÍCULOS<br>EXPLORADOS</p>
+            <div class="w-20 h-[3px] rounded-full mt-1.5 overflow-hidden" style="background:#E4DFD3;">
+              <div id="hero-progress-bar" class="h-full rounded-full transition-all duration-500" style="background:#FF6A00; width:0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <a href="#" id="open-todos-articulos" class="btn-pop inline-flex items-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:brightness-110 transition shrink-0">
         Ver más
       </a>
@@ -915,7 +1016,7 @@
     </div>
     <div>
       <p class="font-mono text-xs text-accent tracking-widest mb-3">AHORA TE TOCA A VOS.</p>
-      <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-2 text-ink">¿Podrías administrar un centro de datos?</h2>
+      <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-2 text-ink">¿Podrías administrar un centro de datos?</h2>
       <p class="font-mono text-xs text-orange tracking-widest mb-5">SEQUIA · EL SIMULADOR DE SED DE DATOS</p>
       <p class="text-muted leading-relaxed mb-1.5">Ahora que viste qué hay detrás de una consulta, probá tomar las decisiones que mantienen funcionando una IA.</p>
       <p class="text-muted leading-relaxed mb-6">Elegí cómo enfriar, qué energía usar, cuánto invertir y cómo responder al aumento de demanda.</p>
@@ -972,7 +1073,7 @@
 
     <div class="relative pr-12">
       <p class="font-mono text-xs tracking-widest mb-3" style="color:#7FB8F0;">EN LA PRÁCTICA.</p>
-      <h2 class="text-2xl sm:text-3xl font-medium leading-snug max-w-2xl mb-4 text-white">Una imagen generada por IA equivale a <span id="ratio-counter-modal" class="text-orange font-semibold">0</span> consultas de texto, en agua.</h2>
+      <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug max-w-2xl mb-4 text-white">Una imagen generada por IA equivale a <span id="ratio-counter-modal" class="text-orange font-semibold">0</span> consultas de texto, en agua.</h2>
       <p class="text-white/60 max-w-2xl mb-10">~15 ml de agua directa por consulta de texto, contra ~3,5 L por imagen generada.</p>
 
       <div class="grid sm:grid-cols-[auto_1fr] gap-8 sm:gap-10 items-center">
@@ -1001,7 +1102,7 @@
     <div class="flex items-end justify-between mb-10 gap-4 pr-12">
       <div>
         <p class="font-mono text-xs text-accent tracking-widest mb-3">FUENTES.</p>
-        <h2 class="text-2xl sm:text-3xl font-medium leading-snug">De dónde salen nuestros números.</h2>
+        <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug">De dónde salen nuestros números.</h2>
       </div>
       <a href="#faq" class="group hidden sm:inline-flex items-center gap-2 text-accent font-semibold text-sm shrink-0">
         Ver preguntas frecuentes
@@ -1010,6 +1111,12 @@
     </div>
 
     <div class="divide-y divide-line border-t border-b border-line">
+      <a href="https://techcrunch.com/2025/07/21/chatgpt-users-send-2-5-billion-prompts-a-day/" target="_blank" rel="noopener" class="flex items-center justify-between py-5 group transition-transform duration-200 hover:translate-x-1.5" data-title="TechCrunch: ChatGPT users send 2.5 billion prompts a day" data-snippet="Nota en inglés sobre los ~2.500 millones de mensajes diarios de ChatGPT, según datos difundidos por OpenAI.">
+        <div>
+          <p class="font-semibold group-hover:text-accent transition">TechCrunch — "ChatGPT users send 2.5 billion prompts a day"</p>
+          <p class="text-muted text-sm mt-1">La base del cálculo del contador en vivo: cuántos mensajes procesa ChatGPT por día</p>
+        </div>
+      </a>
       <a href="https://www.xataka.com.co/robotica-e-ia/inteligencia-artificial-tambien-tiene-sed-alto-consumo-agua-detras-boom-tecnologico" target="_blank" rel="noopener" class="flex items-center justify-between py-5 group transition-transform duration-200 hover:translate-x-1.5" data-title="Xataka: La IA también tiene sed" data-snippet="Nota en español sobre el consumo de agua detrás del boom de la inteligencia artificial.">
         <div>
           <p class="font-semibold group-hover:text-accent transition">Xataka — "La IA también tiene sed"</p>
@@ -1059,7 +1166,7 @@
       <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
       <div class="relative p-8 sm:p-12 max-w-xl">
         <div class="w-10 h-0.5 bg-white/40 mb-6"></div>
-        <h3 class="text-white text-2xl sm:text-3xl font-medium leading-snug mb-3">Sugerí una fuente</h3>
+        <h3 class="text-white text-2xl sm:text-3xl italic font-serif leading-snug mb-3">Sugerí una fuente</h3>
         <p class="text-white/70 mb-8 leading-relaxed">¿Tenés un artículo, estudio o dato que creas que deberíamos sumar? Contanos y lo revisamos para agregarlo a la lista.</p>
 
         <form id="source-form" action="mailto:hola@sed-de-datos.ar?subject=Sugerencia%20de%20fuente" method="POST" enctype="text/plain" class="space-y-5">
@@ -1105,7 +1212,7 @@
     </button>
 
     <p class="font-mono text-xs text-orange tracking-widest mb-3 pr-12">GEOPOLÍTICA · INFRAESTRUCTURA Y HUELLA HÍDRICA</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-4 pr-12">Geopolítica del Agua Digital</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Geopolítica del Agua Digital</h2>
     <p class="text-muted italic leading-relaxed mb-8">¿Dónde están los Data Centers y por qué importan las cuencas locales desde Virginia hasta el Cono Sur?</p>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
@@ -1121,9 +1228,6 @@
       <div class="not-prose rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-5 mb-5 gap-4">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full" style="background:rgba(79,214,255,0.15); border:1px solid rgba(79,214,255,0.35); color:#4FD6FF;">
-              Módulo interactivo
-            </span>
             <h4 class="text-xl font-semibold mt-2.5 text-white">La Balanza Hídrica: Ciudad vs. Nube</h4>
             <p class="text-sm text-white/50 mt-1">Compará el consumo diario de agua dulce de una población frente a un complejo de procesadores de IA.</p>
           </div>
@@ -1230,7 +1334,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">TECNOLOGÍA + AMBIENTE</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-4 pr-12">Cómo refrigeran los centros de datos: agua, aire o inmersión</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Cómo refrigeran los centros de datos: agua, aire o inmersión</h2>
     <p class="text-muted italic leading-relaxed mb-8">Cada técnica tiene un costo ambiental distinto según el clima, la infraestructura y la ubicación.</p>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
@@ -1301,12 +1405,53 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">ENERGÍA · HUELLA HÍDRICA</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-4 pr-12">Agua directa vs. Agua indirecta: la cara oculta de la energía</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Agua directa vs. Agua indirecta: la cara oculta de la energía</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>Cuando hablamos del impacto ambiental de la Inteligencia Artificial, la imagen mental más común es la de un centro de datos evaporando litros de agua para evitar que sus servidores se sobrecalienten. Sin embargo, este consumo directo es apenas la mitad de la historia. Existe un segundo grifo, mucho más grande y silencioso, que se abre cada vez que interactuamos con un modelo de IA: <strong>el agua indirecta</strong>.</p>
       <p>El <strong>agua directa</strong> es la que se utiliza <em>in situ</em>, dentro de las instalaciones de los centros de datos. Los procesadores de alto rendimiento generan un calor masivo al procesar millones de datos. Para mantener los equipos a temperaturas seguras, las infraestructuras emplean sistemas de enfriamiento evaporativo que consumen y evaporan agua de manera constante. Es un impacto tangible, medible a nivel local y directamente vinculado al edificio donde operan los servidores.</p>
       <p>Lo que raras veces se contabiliza en el debate público es el agua consumida <em>ex situ</em> para generar la electricidad que alimenta a esos mismos servidores. Las plantas termoeléctricas (carbón, gas natural, nuclear) necesitan volúmenes gigantescos de agua para sus condensadores de vapor y sistemas de refrigeración. Incluso las centrales hidroeléctricas pierden agua por evaporación directa en los grandes embalses. Por lo tanto, cada megavatio-hora que consume la IA lleva implícita una enorme huella hídrica que ocurre a kilómetros de distancia del centro de datos.</p>
+
+      <!-- Diagrama de flujo: el recorrido del agua -->
+      <div class="not-prose my-8">
+        <p class="font-mono text-[11px] text-muted tracking-widest text-center mb-6">EL RECORRIDO DEL AGUA, PASO A PASO</p>
+        <div class="flex flex-col items-center">
+          <div class="rounded-xl border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink text-center max-w-xs">Hacés una consulta a la IA</div>
+          <div class="w-px h-6 bg-line"></div>
+          <div class="rounded-xl border border-line bg-surface2 px-5 py-3 text-sm font-semibold text-ink text-center max-w-xs">El servidor la procesa y genera calor</div>
+
+          <!-- Conector de bifurcación (solo escritorio) -->
+          <div class="hidden sm:block relative w-full max-w-md h-6" aria-hidden="true">
+            <div class="absolute top-0 h-6 w-px bg-line" style="left:25%;"></div>
+            <div class="absolute top-0 h-6 w-px bg-line" style="left:75%;"></div>
+            <div class="absolute top-0 h-px bg-line" style="left:25%; right:25%;"></div>
+          </div>
+          <div class="w-px h-6 bg-line sm:hidden"></div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8 w-full max-w-md">
+            <!-- Rama: agua directa -->
+            <div class="flex flex-col items-center gap-3">
+              <p class="font-mono text-[10px] tracking-widest text-orange">AGUA DIRECTA</p>
+              <div class="rounded-xl border-2 px-4 py-3 text-sm text-center text-ink" style="border-color:#FF6A00; background:#FFE9DA;">Se enfría con agua, ahí mismo, en el centro de datos</div>
+              <div class="w-px h-5 bg-line"></div>
+              <div class="rounded-xl px-4 py-3 text-sm font-bold text-center text-white" style="background:#FF6A00;">Agua evaporada in situ</div>
+            </div>
+            <!-- Rama: agua indirecta -->
+            <div class="flex flex-col items-center gap-3">
+              <p class="font-mono text-[10px] tracking-widest text-accent">AGUA INDIRECTA</p>
+              <div class="rounded-xl border-2 px-4 py-3 text-sm text-center text-ink" style="border-color:#2952E3; background:#E7EDFC;">Consume electricidad de la red</div>
+              <div class="w-px h-5 bg-line"></div>
+              <div class="rounded-xl border border-line bg-surface px-4 py-3 text-xs text-center text-muted">La planta que generó esa electricidad también gasta agua, lejos de acá</div>
+              <div class="w-px h-5 bg-line"></div>
+              <div class="rounded-xl px-4 py-3 text-sm font-bold text-center text-white" style="background:#2952E3;">Agua consumida ex situ</div>
+            </div>
+          </div>
+
+          <div class="w-px h-6 bg-line"></div>
+          <div class="rounded-xl px-6 py-4 text-sm sm:text-base font-bold text-center text-white max-w-md" style="background:#06264A;">Tu consulta = agua directa + agua indirecta</div>
+        </div>
+      </div>
+
       <p>Este doble consumo crea una paradoja fascinante: mover un centro de datos a una zona fría reduce el uso de agua directa para enfriamiento, pero si la electricidad de esa región proviene de plantas térmicas de ciclo combinado, la huella de agua indirecta se dispara. La ubicación geográfica no solo determina qué tan eficientes son los ventiladores de la instalación, sino qué tan "sedienta" es la red eléctrica que le da vida.</p>
 
       <!-- Widget interactivo: ¿Dónde vive tu IA? -->
@@ -1356,7 +1501,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">TRANSPARENCIA · REPORTES CORPORATIVOS</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-4 pr-12">Cajas negras: por qué las Big Tech no quieren que sepamos cuánta agua consumen</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Cajas negras: por qué las Big Tech no quieren que sepamos cuánta agua consumen</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>Para finales de esta década, la expansión de la Inteligencia Artificial podría exigir un volumen de agua equivalente al consumo de más de 1.300 millones de personas. Sin embargo, mientras las proyecciones globales alertan sobre una crisis de liquidez hídrica inminente, los informes de sostenibilidad de los gigantes tecnológicos continúan publicados dentro de una opaca "caja negra" donde la información crítica brilla por su ausencia.</p>
@@ -1367,9 +1512,6 @@
       <div class="not-prose relative overflow-hidden rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
         <div class="dot-grid absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px); border-radius: 1rem;"></div>
         <div class="relative">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full" style="background:rgba(79,214,255,0.15); border:1px solid rgba(79,214,255,0.35); color:#4FD6FF;">
-            Módulo interactivo
-          </span>
           <h4 class="text-xl font-semibold mt-2.5 text-white">Decodificador de Reportes ESG</h4>
           <p class="text-sm text-white/50 mt-1 mb-5">Lo que dicen vs. lo que significa. Tocá cada frase para revelar la letra chica.</p>
 
@@ -1457,7 +1599,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">JUSTICIA AMBIENTAL · SUR GLOBAL</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8 pr-12">Sesgo de origen: ¿cómo se investiga la huella hídrica desde el Sur Global?</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-8 pr-12">Sesgo de origen: ¿cómo se investiga la huella hídrica desde el Sur Global?</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>La Inteligencia Artificial suele presentarse como una revolución global e intangible, pero su infraestructura física tiene un arraigo territorial sumamente desigual. Mientras el Norte Global concentra el desarrollo del software y la toma de decisiones corporativas, muchas de las cargas ambientales de esta aceleración tecnológica —el consumo intensivo de agua, la demanda de energía y la extracción de minerales— recaen en las periferias del sistema. En este contexto, investigar el impacto hídrico de la IA desde el Sur Global implica enfrentar un doble desafío: la escasez de datos locales y una asimetría estructural de poder.</p>
@@ -1466,15 +1608,12 @@
       <p>Tecnoceno es el concepto que Flavia Costa<sup><a href="#nota-costa" id="nota-costa-ref" class="text-accent no-underline hover:underline">[1]</a></sup> propone para pensar una etapa histórica en la que las tecnologías de alta intensidad y alto riesgo tienen una capacidad creciente para transformar el planeta y nuestras formas de vida. El concepto de Tecnoceno nos permite entender cómo la era de la tecnología digital está intrínsecamente ligada a la transformación y explotación de la naturaleza. Detrás de la metáfora de "la nube" se despliega una vasta red de centros de datos, cables submarinos y centrales eléctricas. En las regiones en desarrollo, la instalación de infraestructuras hiperinteligentes entra frecuentemente en conflicto directo con las necesidades básicas de las comunidades locales, compitiendo por fuentes de agua potable en zonas que ya sufren estrés hídrico o sequías estructurales.</p>
 
       <h3 class="text-lg font-semibold text-ink pt-2">La brecha epistémica</h3>
-      <p>Para los investigadores, periodistas y activistas del Sur Global, auditar el consumo hídrico de las Big Tech es un ejercicio marcado por el "sesgo de origen". La mayor parte de la literatura académica, los datos estandarizados y los modelos de medición provienen de laboratorios e instituciones del Norte Global, respondiendo a sus propios marcos regulatorios y realidades climáticas. A esto se le suma la opacidad corporativa en nuestras latitudes: los acuerdos de instalación de datacenters suelen estar amparados por cláusulas de confidencialidad y vacíos legales locales, dificultando el acceso a mediciones reales de extracción y evaporación de agua in situ.</p>
+      <p>Para los investigadores, periodistas y activistas del Sur Global, auditar el consumo hídrico de las Big Tech es un ejercicio marcado por el "sesgo de origen". La mayor parte de la literatura académica, los datos estandarizados y los modelos de medición provienen de laboratorios e instituciones del Norte Global, respondiendo a sus propios marcos regulatorios y realidades climáticas. A esto se le suma la opacidad corporativa en nuestras latitudes: los acuerdos de instalación de Data Centers suelen estar amparados por cláusulas de confidencialidad y vacíos legales locales, dificultando el acceso a mediciones reales de extracción y evaporación de agua in situ.</p>
 
       <!-- Widget interactivo: El Mapa de Asimetría del Tecnoceno -->
       <div class="not-prose relative overflow-hidden rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
         <div class="dot-grid absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px); border-radius: 1rem;"></div>
         <div class="relative">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full" style="background:rgba(79,214,255,0.15); border:1px solid rgba(79,214,255,0.35); color:#4FD6FF;">
-            Módulo interactivo
-          </span>
           <h4 class="text-xl font-semibold mt-2.5 text-white">El Mapa de Asimetría del Tecnoceno</h4>
           <p class="text-sm text-white/50 mt-1 mb-5">Elegí una dimensión y mirá cómo el Norte y el Sur Global viven una misma tecnología de forma opuesta.</p>
 
@@ -1544,6 +1683,84 @@
     </div>
 
     <div class="grid sm:grid-cols-2 gap-5">
+      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="geopolitica">
+        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
+        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
+          <path d="M 40 40 L 120 70 L 180 120 L 250 130" stroke="#4FD6FF" stroke-width="1.5" stroke-dasharray="4 4" />
+          <path d="M 120 70 L 220 50" stroke="#FF6A00" stroke-width="1.5" stroke-dasharray="3 3" />
+          <circle cx="120" cy="70" r="4" fill="#FF6A00" />
+          <circle cx="180" cy="120" r="4" fill="#4FD6FF" />
+          <circle cx="250" cy="130" r="5" fill="#FF6A00" />
+        </svg>
+        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+          <p class="text-white font-semibold leading-snug">Geopolítica del Agua Digital</p>
+          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Geopolítica · 6 min</p>
+        </div>
+      </a>
+
+      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="patagonia">
+        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
+        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
+          <!-- Picos de montaña + gota de agua -->
+          <path d="M20 120 L70 55 L100 90 L140 40 L190 120 Z" stroke="#4FD6FF" stroke-width="1.5" stroke-linejoin="round" />
+          <path d="M225 70c9 10 14 18 14 25a14 14 0 1 1-28 0c0-7 5-15 14-25z" fill="#FF6A00" opacity="0.85" />
+          <circle cx="225" cy="70" r="30" stroke="#FF6A00" stroke-width="1" stroke-dasharray="2 5" opacity="0.5" />
+        </svg>
+        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+          <p class="text-white font-semibold leading-snug">El centro de datos de la Patagonia y la frontera del agua digital</p>
+          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Territorio · 5 min</p>
+        </div>
+      </a>
+
+      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="fake-news">
+        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
+        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
+          <!-- Gota de agua agrietada rodeada de nodos virales (red social) -->
+          <path d="M150 35c14 18 24 32 24 44a24 24 0 1 1-48 0c0-12 10-26 24-44z" stroke="#4FD6FF" stroke-width="1.5" />
+          <path d="M150 50l-7 20h9l-6 18" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="60" cy="50" r="5" stroke="#4FD6FF" stroke-width="1.2" />
+          <circle cx="240" cy="60" r="5" stroke="#4FD6FF" stroke-width="1.2" />
+          <circle cx="40" cy="115" r="5" stroke="#4FD6FF" stroke-width="1.2" />
+          <circle cx="255" cy="120" r="5" stroke="#4FD6FF" stroke-width="1.2" />
+          <path d="M65 54 L128 70 M235 64 L172 72 M45 112 L120 90 M250 117 L178 88" stroke="#4FD6FF" stroke-width="1" stroke-dasharray="2 4" opacity="0.6" />
+        </svg>
+        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+          <p class="text-white font-semibold leading-snug">El fenómeno viral del clima: mitos sobre la IA y el ambiente</p>
+          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Comunicación · 5 min</p>
+        </div>
+      </a>
+
+      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="trampa-escala">
+        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
+        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
+          <!-- Una gota que se multiplica en una grilla de gotas: el efecto de escala -->
+          <circle cx="55" cy="80" r="9" stroke="#4FD6FF" stroke-width="1.5" />
+          <path d="M90 80 L120 80" stroke="#FF6A00" stroke-width="1.5" stroke-dasharray="3 3" />
+          <path d="M112 73 L120 80 L112 87" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <circle cx="150" cy="55" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="175" cy="55" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="200" cy="55" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="225" cy="55" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="150" cy="80" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="175" cy="80" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="200" cy="80" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="225" cy="80" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="150" cy="105" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="175" cy="105" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="200" cy="105" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="225" cy="105" r="5" fill="#4FD6FF" opacity="0.8" />
+          <circle cx="248" cy="40" r="4" fill="#FF6A00" opacity="0.7" />
+        </svg>
+        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+          <p class="text-white font-semibold leading-snug">El problema no es tu prompt: la trampa de la escala</p>
+          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Escala · 4 min</p>
+        </div>
+      </a>
+
       <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="refrigeracion">
         <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
         <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
@@ -1559,22 +1776,6 @@
         <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
           <p class="text-white font-semibold leading-snug">Cómo refrigeran los centros de datos: agua, aire o inmersión</p>
           <p class="text-xs mt-1.5" style="color:#7FB8F0;">Tecnología + Ambiente · 5 min</p>
-        </div>
-      </a>
-
-      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="geopolitica">
-        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
-        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
-          <path d="M 40 40 L 120 70 L 180 120 L 250 130" stroke="#4FD6FF" stroke-width="1.5" stroke-dasharray="4 4" />
-          <path d="M 120 70 L 220 50" stroke="#FF6A00" stroke-width="1.5" stroke-dasharray="3 3" />
-          <circle cx="120" cy="70" r="4" fill="#FF6A00" />
-          <circle cx="180" cy="120" r="4" fill="#4FD6FF" />
-          <circle cx="250" cy="130" r="5" fill="#FF6A00" />
-        </svg>
-        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
-          <p class="text-white font-semibold leading-snug">Geopolítica del Agua Digital</p>
-          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Geopolítica · 6 min</p>
         </div>
       </a>
 
@@ -1652,21 +1853,6 @@
           <p class="text-xs mt-1.5" style="color:#7FB8F0;">Cultura digital · 4 min</p>
         </div>
       </a>
-
-      <a href="#" class="todos-art-link group relative rounded-2xl overflow-hidden h-52 block" data-open="patagonia">
-        <div class="absolute inset-0" style="background: linear-gradient(135deg, #06264A, #0A192F);"></div>
-        <div class="dot-grid absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-        <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 160" fill="none">
-          <!-- Picos de montaña + gota de agua -->
-          <path d="M20 120 L70 55 L100 90 L140 40 L190 120 Z" stroke="#4FD6FF" stroke-width="1.5" stroke-linejoin="round" />
-          <path d="M225 70c9 10 14 18 14 25a14 14 0 1 1-28 0c0-7 5-15 14-25z" fill="#FF6A00" opacity="0.85" />
-          <circle cx="225" cy="70" r="30" stroke="#FF6A00" stroke-width="1" stroke-dasharray="2 5" opacity="0.5" />
-        </svg>
-        <div class="absolute inset-x-0 bottom-0 p-4 pt-10 transition-transform duration-300 group-hover:-translate-y-1" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
-          <p class="text-white font-semibold leading-snug">El centro de datos de la Patagonia y la frontera del agua digital</p>
-          <p class="text-xs mt-1.5" style="color:#7FB8F0;">Territorio · 5 min</p>
-        </div>
-      </a>
     </div>
   </div>
 </div>
@@ -1680,7 +1866,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">TERRITORIO · ARGENTINA</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8 pr-12">El centro de datos de la Patagonia y la frontera del agua digital</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-8 pr-12">El centro de datos de la Patagonia y la frontera del agua digital</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>La Patagonia argentina suele evocar imágenes de glaciares, vientos helados e inmensidades despobladas. Esta misma geografía, percibida externamente como un territorio infinito de frío y recursos, se ha convertido en el nuevo objetivo de la infraestructura global de la Inteligencia Artificial. Los proyectos de instalación de grandes centros de datos en la región se presentan habitualmente bajo la promesa de aprovechar las bajas temperaturas ambientales para reducir los costos de enfriamiento. Sin embargo, detrás del relato de la eficiencia climática se esconde una tensión directa sobre los recursos hídricos y energéticos locales.</p>
@@ -1691,9 +1877,6 @@
       <div class="not-prose relative overflow-hidden rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
         <div class="dot-grid absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px); border-radius: 1rem;"></div>
         <div class="relative">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-white px-3 py-1 rounded-full" style="background:rgba(79,214,255,0.15); border:1px solid rgba(79,214,255,0.35); color:#4FD6FF;">
-            Ficha de impacto
-          </span>
           <h4 class="text-xl font-semibold mt-2.5 text-white">El Caso Patagonia</h4>
           <p class="text-sm text-white/50 mt-1 mb-5">Tres formas de mirar el mismo proyecto: lo que se promete, lo que se calcula y lo que falta regular.</p>
 
@@ -1818,7 +2001,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">GUÍA · CIERRE</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8 pr-12">Tu huella hídrica digital: guía de acción para un uso consciente de la tecnología</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-8 pr-12">Tu huella hídrica digital: guía de acción para un uso consciente de la tecnología</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>A lo largo de este recorrido hemos desarmado el mito de la inmaterialidad digital: la Inteligencia Artificial no habita en una nube etérea, sino en una infraestructura física sedienta que exige electricidad y millones de litros de agua para evitar que sus procesadores se sobrecalienten. Comprender el impacto ambiental de estas herramientas no busca promover la parálisis ni el rechazo tecnológico, sino impulsar un uso crítico, responsable y éticamente comprometido con nuestros bienes comunes.</p>
@@ -1874,7 +2057,7 @@
     </button>
 
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">CULTURA DIGITAL</p>
-    <h2 class="text-2xl sm:text-3xl font-medium leading-snug mb-8 pr-12">Generación Prompt: de la fascinación por la velocidad al consumo responsable</h2>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-8 pr-12">Generación Prompt: de la fascinación por la velocidad al consumo responsable</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
       <p>Escribir una frase y obtener en segundos un ensayo, un código funcional o una ilustración hiperrealista genera una sensación innegable de poder digital. Somos la "Generación Prompt": una audiencia moldeada por la cultura de la inmediatez, donde la fricción ha sido eliminada y la respuesta rápida se ha convertido en la norma. Sin embargo, esta fascinación por la velocidad suele ocultar el costo físico que cada interacción computacional exige al entorno.</p>
@@ -1911,11 +2094,213 @@
   </div>
 </div>
 
+<!-- ARTÍCULO: El fenómeno viral del clima (modal, no visible en el flujo normal de la página) -->
+<div id="fake-news-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+<div id="fake-news-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+  <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
+    <button id="close-fake-news" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">COMUNICACIÓN · DESINFORMACIÓN</p>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">El fenómeno viral del clima: cómo circulan las fake news y los mitos sobre la IA y el ambiente</h2>
+    <p class="text-muted italic leading-relaxed mb-8">Entre publicaciones catastrofistas que afirman que la Inteligencia Artificial va a secar los ríos en meses y el discurso verde de Silicon Valley, las redes sociales distorsionan la discusión ecológica. Un análisis de la huella hídrica algorítmica bajo la lupa del teórico Tarleton Gillespie.</p>
+
+    <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
+      <h3 class="text-lg font-semibold text-ink pt-2">La tiranía del algoritmo de recomendación</h3>
+      <p>Abrís TikTok o Instagram y es frecuente encontrar, tras un par de <em>swipes</em>, algún video con música dramática que sostiene que cada prompt destruye un litro de agua potable. El contenido acumula millones de vistas, miles de guardados y cientos de comentarios en pánico. Sin embargo, la cifra es falsa o está descontextualizada.</p>
+      <p>¿Por qué este tipo de contenido se vuelve tan viral mientras las investigaciones rigurosas pasan desapercibidas? La respuesta no está solo en la desinformación de los usuarios, sino en lo que el investigador Tarleton Gillespie<sup><a href="#nota-gillespie" id="nota-gillespie-ref" class="text-accent no-underline hover:underline">[1]</a></sup> define como la curaduría algorítmica de las plataformas digitales.</p>
+      <p>Las plataformas no son meros contenedores neutros de información. Diseñan políticas y sistemas de recomendación que priorizan el efecto emocional inmediato (indignación, miedo, sorpresa) por encima del rigor empírico. En el ecosistema de las redes, la complejidad técnica de la refrigeración evaporativa de un Data Center no "vende" si no se traduce en un gancho hiperbólico.</p>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">Mitos de extremo a extremo: del apocalipsis al "greenwashing"</h3>
+      <p>En la circulación del debate ambiental sobre la Inteligencia Artificial conviven dos tipos de discursos virales distorsionados:</p>
+      <ol class="list-decimal pl-5 space-y-3 marker:text-accent marker:font-semibold">
+        <li><strong>La hipérbole catastrofista:</strong> creadores de contenido que multiplican por diez los datos reales de consumo hídrico para generar clics (clickbait socioambiental). Al infundir ansiedad paralizante en lugar de comprensión crítica, reducen el problema a una culpa individual del usuario ("no le pidas recetas a la IA"), invisibilizando las políticas públicas y las regulaciones corporativas.</li>
+        <li><strong>El tecnooptimismo corporativo:</strong> reels e infografías institucionales que promocionan promesas de "Net Zero" o "Water Positive" para 2030 sin transparentar las métricas actuales de extracción hídrica por región.</li>
+      </ol>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">¿Cuánto consume realmente un prompt? Banco de prueba</h3>
+      <p>Para desmontar la posverdad algorítmica hace falta acudir a la investigación. De acuerdo con estudios recientes desarrollados por investigadores de la Universidad de California en Riverside, un diálogo promedio de 20 a 50 preguntas con un Modelo de Lenguaje Grande (LLM) requiere aproximadamente 500 mililitros de agua para la disipación térmica de los procesadores en el centro de datos: lejos del litro "por prompt" que circula en las redes.</p>
+
+      <!-- Widget interactivo: Verificador de Mitos: IA y Huella Hídrica -->
+      <div class="not-prose relative overflow-hidden rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
+        <div class="dot-grid absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px); border-radius: 1rem;"></div>
+        <div class="relative">
+          <h4 class="text-xl font-semibold mt-2.5 text-white">Verificador de Mitos: IA y Huella Hídrica</h4>
+          <p class="text-sm text-white/50 mt-1 mb-5">Circulan mucho en redes. Tocá cada mito para ver el fact-check.</p>
+
+          <div class="space-y-3">
+            <details class="mito-item rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.22); border:1px solid rgba(255,106,0,0.3);">
+              <summary class="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
+                <span class="flex items-center gap-3 min-w-0">
+                  <span class="text-sm shrink-0">❌</span>
+                  <span class="text-white font-semibold text-sm">"Enviar un mail con IA gasta un balde entero de agua."</span>
+                </span>
+                <svg class="mito-chevron shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="px-4 pb-4">
+                <div class="rounded-lg p-3 flex items-start gap-2" style="background:rgba(255,106,0,0.1); border:1px solid rgba(255,106,0,0.3);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="2.5" class="mt-0.5 shrink-0"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a1.5 1.5 0 0 0 1.3 2.2h17.4A1.5 1.5 0 0 0 22 18L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+                  <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.75);"><strong style="color:#FF6A00;">Falso.</strong> Un correo convencional consume fracciones imperceptibles de mililitro. Una consulta extensa a modelos generativos de imagen o texto avanzado ronda los 10 a 20 ml por interacción individual.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="mito-item rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.22); border:1px solid rgba(255,106,0,0.3);">
+              <summary class="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
+                <span class="flex items-center gap-3 min-w-0">
+                  <span class="text-sm shrink-0">⚠️</span>
+                  <span class="text-white font-semibold text-sm">"El agua que usan los Data Centers queda totalmente contaminada e inutilizable."</span>
+                </span>
+                <svg class="mito-chevron shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="px-4 pb-4">
+                <div class="rounded-lg p-3 flex items-start gap-2" style="background:rgba(255,106,0,0.1); border:1px solid rgba(255,106,0,0.3);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="2.5" class="mt-0.5 shrink-0"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a1.5 1.5 0 0 0 1.3 2.2h17.4A1.5 1.5 0 0 0 22 18L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+                  <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.75);"><strong style="color:#FF6A00;">Engañoso.</strong> El agua de refrigeración evaporativa se pierde en forma de vapor a la atmósfera o se recircula. El problema principal no es la contaminación química, sino la extracción masiva de agua dulce potable que no regresa a las napas locales.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="mito-item rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.22); border:1px solid rgba(41,82,227,0.35);">
+              <summary class="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
+                <span class="flex items-center gap-3 min-w-0">
+                  <span class="text-sm shrink-0">✅</span>
+                  <span class="text-white font-semibold text-sm">"Las Big Tech no están obligadas a informar cuánto consumo de agua tienen sus plantas."</span>
+                </span>
+                <svg class="mito-chevron shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="px-4 pb-4">
+                <div class="rounded-lg p-3 flex items-start gap-2" style="background:rgba(79,214,255,0.1); border:1px solid rgba(79,214,255,0.35);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4FD6FF" stroke-width="2.5" class="mt-0.5 shrink-0"><path d="M20 6L9 17l-5-5"/></svg>
+                  <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.75);"><strong style="color:#4FD6FF;">Verdadero.</strong> En la mayoría de los países de América Latina no existen marcos regulatorios que obliguen a las empresas a publicar el consumo de agua por planta en tiempo real, amparándose en el "secreto comercial".</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="mito-item rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.22); border:1px solid rgba(255,106,0,0.3);">
+              <summary class="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
+                <span class="flex items-center gap-3 min-w-0">
+                  <span class="text-sm shrink-0">❌</span>
+                  <span class="text-white font-semibold text-sm">"Cada prompt que le hacés a un chatbot seca un litro de agua potable."</span>
+                </span>
+                <svg class="mito-chevron shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="px-4 pb-4">
+                <div class="rounded-lg p-3 flex items-start gap-2" style="background:rgba(255,106,0,0.1); border:1px solid rgba(255,106,0,0.3);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="2.5" class="mt-0.5 shrink-0"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a1.5 1.5 0 0 0 1.3 2.2h17.4A1.5 1.5 0 0 0 22 18L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+                  <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.75);"><strong style="color:#FF6A00;">Falso.</strong> Según estudios de la Universidad de California en Riverside, una conversación completa de 20 a 50 preguntas consume cerca de 500 ml. Un litro por una sola consulta exagera el dato real por un factor de entre 20 y 50 veces.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="mito-item rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.22); border:1px solid rgba(255,106,0,0.3);">
+              <summary class="cursor-pointer list-none p-4 flex items-center justify-between gap-3">
+                <span class="flex items-center gap-3 min-w-0">
+                  <span class="text-sm shrink-0">⚠️</span>
+                  <span class="text-white font-semibold text-sm">"Las promesas de 'Net Zero' o 'Water Positive' para 2030 significan que ya redujeron su consumo a cero."</span>
+                </span>
+                <svg class="mito-chevron shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="px-4 pb-4">
+                <div class="rounded-lg p-3 flex items-start gap-2" style="background:rgba(255,106,0,0.1); border:1px solid rgba(255,106,0,0.3);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" stroke-width="2.5" class="mt-0.5 shrink-0"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a1.5 1.5 0 0 0 1.3 2.2h17.4A1.5 1.5 0 0 0 22 18L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+                  <p class="text-xs leading-relaxed" style="color:rgba(255,255,255,0.75);"><strong style="color:#FF6A00;">Engañoso.</strong> Son objetivos a futuro, muchas veces sostenidos con créditos de compensación en cuencas distantes. La extracción de agua dulce en las plantas actuales, en regiones con estrés hídrico, continúa mientras tanto.</p>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">Hacia una alfabetización mediático-ambiental</h3>
+      <p>Para contrarrestar el sesgo de la curaduría de plataformas, Gillespie propone entender las políticas del diseño de software y exigir transparencia algorítmica. Como usuarios y comunicadores, la alfabetización digital no solo implica detectar fake news, sino comprender la física de la infraestructura.</p>
+      <p>La próxima vez que un video de 15 segundos te alerte sobre el fin del agua a causa de la tecnología, recordá: la huella hídrica de la IA es real, urgente y material, pero no se resolverá con titulares virales, sino con regulación estatal, auditorías ambientales independientes y un periodismo que investigue más allá del feed.</p>
+
+      <div class="not-prose border-t border-line pt-4 mt-8">
+        <p id="nota-gillespie" class="text-xs text-muted leading-relaxed">
+          <a href="#nota-gillespie-ref" class="text-accent no-underline hover:underline">[1]</a>
+          Gillespie, T. (2018). <em>Custodians of the Internet: Platforms, Content Moderation, and the Hidden Decisions That Shape Social Media</em>. Yale University Press.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARTÍCULO: El problema no es tu prompt (modal, no visible en el flujo normal de la página) -->
+<div id="trampa-escala-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+<div id="trampa-escala-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
+  <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
+    <button id="close-trampa-escala" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">INFRAESTRUCTURA · ESCALA</p>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">El problema no es tu prompt: la trampa de la escala y la ilusión del consumo individual</h2>
+    <p class="text-muted italic leading-relaxed mb-8">Sentir culpa por pedirle un correo a la IA es caer en una trampa diseñada a medida por las grandes corporaciones. El colapso ambiental no es culpa de tu prompt: es consecuencia de la escala.</p>
+
+    <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
+      <h3 class="text-lg font-semibold text-ink pt-2">La culpa individual como trampa de diseño</h3>
+      <p>Es fácil sentir culpa cuando miramos las métricas. Saber que pedirle a la Inteligencia Artificial que redacte un correo o genere una imagen consume decenas de mililitros de agua y valiosos vatios de energía nos empuja a pensar: <em>"debería usar menos esta herramienta"</em>. Pero detenernos en la culpa individual es caer en una trampa diseñada a medida por las grandes corporaciones. El colapso ambiental de la IA no es culpa de tu prompt; es consecuencia de la escala.</p>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">La IA por defecto: una infraestructura que no elegiste</h3>
+      <p>El verdadero impacto no ocurre porque un usuario explore una herramienta nueva, sino porque la industria tecnológica ha decidido imponer la IA generativa como la infraestructura por defecto del mundo digital. Hoy, la IA está siendo incrustada en cada búsqueda web, en cada actualización de software y en cada aplicación móvil, independientemente de si el usuario la necesita o no. Una simple consulta web, que antes requería una fracción de segundo y una cantidad minúscula de energía, hoy es procesada por modelos masivos que multiplican el gasto energético por diez.</p>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">El efecto multiplicador: de mililitros a mega centros de datos</h3>
+      <p>A esto se le suma el efecto multiplicador. No estamos hablando de miles de usuarios, sino de miles de millones de interacciones diarias. Para sostener esta arquitectura, las empresas tecnológicas están librando una carrera armamentística de infraestructura. Se están construyendo mega centros de datos del tamaño de ciudades pequeñas, demandando tanta electricidad que están poniendo en jaque las redes energéticas nacionales e impulsando la reactivación de fuentes de energía contaminantes.</p>
+
+      <!-- Widget interactivo: El Multiplicador de Escala -->
+      <div class="not-prose relative overflow-hidden rounded-2xl p-6 sm:p-8 my-8" id="mde-card" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
+        <div class="dot-grid absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px); border-radius: 1rem;"></div>
+        <div id="mde-flood" class="absolute inset-0 pointer-events-none transition-opacity duration-700" style="background: linear-gradient(180deg, rgba(79,214,255,0) 0%, rgba(41,82,227,0.55) 100%); opacity: 0;"></div>
+        <div class="relative">
+          <h4 class="text-xl font-semibold mt-2.5 text-white">El Multiplicador de Escala</h4>
+          <p class="text-sm text-white/50 mt-1 mb-6">Un prompt individual es casi nada. Arrastrá el control para multiplicarlo por la cantidad de gente que usa IA todos los días.</p>
+
+          <div class="grid sm:grid-cols-[auto_1fr] gap-6 sm:gap-10 items-center">
+            <div class="flex flex-col items-center shrink-0 mx-auto">
+              <svg viewBox="0 0 160 230" width="86" height="124">
+                <defs>
+                  <clipPath id="mde-glass-clip">
+                    <path d="M22 8 L138 8 L122 222 L38 222 Z"/>
+                  </clipPath>
+                </defs>
+                <rect id="mde-water" x="0" y="222" width="160" height="0" fill="#4FD6FF" clip-path="url(#mde-glass-clip)" style="transition: y 0.6s ease, height 0.6s ease;"/>
+                <path d="M22 8 L138 8 L122 222 L38 222 Z" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linejoin="round"/>
+              </svg>
+              <p id="mde-value" class="text-xl font-bold text-white mt-3 text-center">15 ml</p>
+              <p id="mde-sub" class="text-[11px] text-white/50 mt-1 text-center max-w-[150px] leading-snug">lo que gasta tu prompt</p>
+            </div>
+
+            <div>
+              <div class="flex gap-3 mb-5 h-9 items-end justify-center sm:justify-start" id="mde-towers">
+                <svg class="mde-tower transition-opacity duration-500" style="opacity:0.12;" width="22" height="34" viewBox="0 0 22 34" fill="none"><path d="M5 34V14c0-5 2-9 6-9s6 4 6 9v20" stroke="#FF6A00" stroke-width="2"/><path d="M8 5c-2-2-2-4 0-5M14 5c2-2 2-4 0-5" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+                <svg class="mde-tower transition-opacity duration-500" style="opacity:0.12;" width="22" height="34" viewBox="0 0 22 34" fill="none"><path d="M5 34V14c0-5 2-9 6-9s6 4 6 9v20" stroke="#FF6A00" stroke-width="2"/><path d="M8 5c-2-2-2-4 0-5M14 5c2-2 2-4 0-5" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+                <svg class="mde-tower transition-opacity duration-500" style="opacity:0.12;" width="22" height="34" viewBox="0 0 22 34" fill="none"><path d="M5 34V14c0-5 2-9 6-9s6 4 6 9v20" stroke="#FF6A00" stroke-width="2"/><path d="M8 5c-2-2-2-4 0-5M14 5c2-2 2-4 0-5" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+                <svg class="mde-tower transition-opacity duration-500" style="opacity:0.12;" width="22" height="34" viewBox="0 0 22 34" fill="none"><path d="M5 34V14c0-5 2-9 6-9s6 4 6 9v20" stroke="#FF6A00" stroke-width="2"/><path d="M8 5c-2-2-2-4 0-5M14 5c2-2 2-4 0-5" stroke="#FF6A00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+              </div>
+
+              <input type="range" id="mde-slider" min="0" max="3" step="1" value="0" class="mde-range w-full" aria-label="Escala a nivel global">
+              <div class="flex justify-between text-[10px] sm:text-[11px] text-white/50 mt-2 px-0.5">
+                <span>1 usuario</span><span>10 mil</span><span>1 millón</span><span>100 millones</span>
+              </div>
+              <p id="mde-caos" class="text-xs font-bold mt-4 opacity-0 transition-opacity duration-300" style="color:#FF6A00;">⚠️ Escala fuera de control: el mismo gesto imperceptible, multiplicado por tus 100 millones de usuarios diarios, es una crisis hídrica regional.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-semibold text-ink pt-2">De la culpa al reclamo: regulación, no racionamiento</h3>
+      <p>La narrativa de la "huella de carbono individual" traslada la responsabilidad al consumidor, mientras las Big Tech se oponen a revelar el impacto ambiental real de sus modelos a gran escala. La solución no pasa únicamente por racionar nuestros prompts o dejar de experimentar con la tecnología, sino por exigir regulación sistémica, transparencia corporativa y límites claros a la expansión descontrolada de una infraestructura que privatiza las ganancias mientras socializa la sequía y la contaminación.</p>
+    </div>
+  </div>
+</div>
+
 <!-- FAQ -->
 <section id="faq" class="border-t border-line">
   <div class="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
     <p class="font-mono text-xs text-accent tracking-widest mb-3">PREGUNTAS FRECUENTES.</p>
-    <h2 class="reveal text-2xl sm:text-3xl font-medium leading-snug mb-10">Dudas comunes sobre el tema.</h2>
+    <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-10">Dudas comunes sobre el tema.</h2>
 
     <div id="faq-pills" class="flex flex-wrap gap-3 mb-12">
       <button data-cat="impacto" class="faq-pill active btn-pop inline-flex items-center gap-2 bg-surface border border-line rounded-xl px-5 py-3 font-semibold text-sm hover:border-accent hover:text-accent transition">Sobre el impacto ambiental</button>
@@ -1928,7 +2313,7 @@
     <h3 id="faq-cat-title" class="font-serif italic text-xl sm:text-2xl text-accent mb-6">Sobre el impacto ambiental</h3>
 
     <div id="faq-list" class="space-y-3">
-      <details class="faq-row" data-cat="impacto" open>
+      <details class="faq-row" data-cat="impacto">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
           ¿Esto significa que no debería usar IA?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -2140,9 +2525,10 @@
         <p class="text-xs font-bold tracking-wide mb-4" style="color:#7FB8F0;">SECCIONES</p>
         <div class="flex flex-col gap-2.5 text-sm">
           <a href="#como-funciona" class="text-white/80 hover:text-orange transition">Cómo funciona</a>
-          <a href="#articulos" class="text-white/80 hover:text-orange transition">Aprender</a>
+          <a href="#articulos" class="text-white/80 hover:text-orange transition">Artículos</a>
           <a href="#calculadora" class="text-white/80 hover:text-orange transition">Calculadora</a>
           <a href="#quiz" class="text-white/80 hover:text-orange transition">Cuestionario</a>
+          <a href="#jugar" class="text-white/80 hover:text-orange transition">SequIA</a>
         </div>
       </div>
       <div>
@@ -2185,12 +2571,17 @@
   })();
 
   // ---- Fade del hero al hacer scroll ----
+  // Medido contra la posición del propio hero en el viewport (no contra
+  // window.scrollY a secas), para que funcione igual sin importar qué haya
+  // arriba de él en la página.
   (function () {
     const heroFade = document.getElementById('hero-fade');
     const heroSection = document.getElementById('inicio');
     function updateHeroFade() {
       const heroHeight = heroSection.offsetHeight || 1;
-      const progress = Math.min(Math.max(window.scrollY / (heroHeight * 0.8), 0), 1);
+      const heroTop = heroSection.getBoundingClientRect().top;
+      const scrolledIntoHero = Math.max(0, -heroTop);
+      const progress = Math.min(Math.max(scrolledIntoHero / (heroHeight * 0.8), 0), 1);
       heroFade.style.opacity = String(1 - progress);
       heroFade.style.transform = `translateY(${progress * -40}px)`;
       heroFade.style.filter = `blur(${progress * 6}px)`;
@@ -2277,8 +2668,8 @@
 </script>
 
 <script>
-  // ---- Contador "artículos explorados" del hero ----
-  const HERO_ARTICLE_KEYS = ['refrigeracion', 'generacion-prompt', 'directa-indirecta', 'sesgo-origen', 'cajasnegras', 'guia-accion', 'geopolitica', 'patagonia'];
+  // ---- Contador "artículos explorados" (sección de artículos) ----
+  const HERO_ARTICLE_KEYS = ['refrigeracion', 'generacion-prompt', 'directa-indirecta', 'sesgo-origen', 'cajasnegras', 'guia-accion', 'geopolitica', 'patagonia', 'fake-news', 'trampa-escala'];
   function updateHeroProgress() {
     const countEl = document.getElementById('hero-progress-count');
     const barEl = document.getElementById('hero-progress-bar');
@@ -2300,6 +2691,150 @@
     updateHeroProgress();
   }
   updateHeroProgress();
+
+  // ---- Sección "lluvia en vivo": contador + charco que crece ----
+  // Litros de agua que gastaría la IA en el mundo desde que se abrió esta
+  // página, a partir de los ~2.500 millones de mensajes de texto por día que
+  // OpenAI difundió para ChatGPT y los mismos promedios de agua por consulta
+  // que usa el resto del sitio (ver nota en Fuentes → TechCrunch). Es una
+  // proyección ilustrativa, no una medición en tiempo real. El mismo valor
+  // alimenta el número grande y el tamaño del charco animado de abajo.
+  (function () {
+    const section = document.getElementById('lluvia-en-vivo');
+    const canvas = document.getElementById('puddle-canvas');
+    const counterEl = document.getElementById('live-water-counter');
+    if (!section || !canvas || !counterEl) return;
+    const ctx = canvas.getContext('2d');
+
+    const QUERIES_PER_DAY = 2500000000;
+    const WATER_L_PER_QUERY = 0.01551; // directa (0,015 L) + indirecta (0,00051 L)
+    const L_PER_SECOND = (QUERIES_PER_DAY * WATER_L_PER_QUERY) / 86400;
+    const startTime = performance.now();
+
+    let width, height, running = false;
+
+    function resize() {
+      width = section.clientWidth;
+      height = section.clientHeight;
+      canvas.width = width * devicePixelRatio;
+      canvas.height = height * devicePixelRatio;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+
+    // -- Gotas cayendo --
+    let drops = [];
+    let splashes = []; // ondas al tocar el charco
+    let lastSpawn = 0;
+    const SPAWN_MS = 140;
+    const DROPS_PER_SPAWN = 2;
+
+    function spawnDrops(cx, spread) {
+      for (let i = 0; i < DROPS_PER_SPAWN; i++) {
+        drops.push({
+          x: cx + (Math.random() * 2 - 1) * spread,
+          y: -20,
+          vy: 3 + Math.random() * 2,
+          r: 2.3 + Math.random() * 1.7
+        });
+      }
+    }
+
+    function drawBlob(cx, cy, rx, ry, t) {
+      const POINTS = 36;
+      ctx.beginPath();
+      for (let i = 0; i <= POINTS; i++) {
+        const a = (i / POINTS) * Math.PI * 2;
+        const wobble = 1 + 0.035 * Math.sin(a * 3 + t * 0.0007) + 0.025 * Math.sin(a * 5 - t * 0.0005);
+        const x = cx + Math.cos(a) * rx * wobble;
+        const y = cy + Math.sin(a) * ry * wobble;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function draw(ts) {
+      if (!running) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const elapsedS = (ts - startTime) / 1000;
+      const liters = elapsedS * L_PER_SECOND;
+      counterEl.textContent = Math.round(liters).toLocaleString('es-AR');
+
+      const cx = width / 2;
+      const baseY = height * 0.78;
+      const growth = 1 - Math.exp(-liters / 5500); // 0→1: el charco crece rápido y se estabiliza
+      const rx = 36 + Math.min(width * 0.42, height * 0.5) * growth;
+      const ry = rx * 0.36;
+      const floorY = baseY - ry * 0.82;
+
+      // física simple de caída + choque contra la superficie del charco
+      for (let i = drops.length - 1; i >= 0; i--) {
+        const d = drops[i];
+        d.vy += 0.22;
+        d.y += d.vy;
+        if (d.y >= floorY) {
+          drops.splice(i, 1);
+          splashes.push({ x: d.x, y: floorY, age: 0 });
+        } else if (d.y > height + 30) {
+          drops.splice(i, 1);
+        }
+      }
+
+      if (ts - lastSpawn > SPAWN_MS) {
+        spawnDrops(cx, Math.max(18, rx * 0.5));
+        lastSpawn = ts;
+      }
+
+      // charco (forma orgánica, no una línea de puntos)
+      ctx.fillStyle = '#2952E3';
+      ctx.globalAlpha = 0.92;
+      drawBlob(cx, baseY, rx, ry, ts);
+
+      // brillo/textura sutil encima, para que no se vea plano
+      ctx.fillStyle = '#4FD6FF';
+      ctx.globalAlpha = 0.16;
+      drawBlob(cx, baseY - ry * 0.18, rx * 0.68, ry * 0.5, ts * 1.3);
+
+      // gotas cayendo
+      ctx.fillStyle = '#2952E3';
+      ctx.globalAlpha = 0.85;
+      for (const d of drops) {
+        ctx.beginPath();
+        ctx.ellipse(d.x, d.y, d.r * 0.75, d.r + Math.min(6, d.vy * 0.35), 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // ondas al tocar el charco
+      ctx.strokeStyle = '#2952E3';
+      ctx.lineWidth = 1.3;
+      for (let i = splashes.length - 1; i >= 0; i--) {
+        const s = splashes[i];
+        s.age += 16;
+        const p = s.age / 260;
+        if (p >= 1) { splashes.splice(i, 1); continue; }
+        ctx.globalAlpha = (1 - p) * 0.45;
+        ctx.beginPath();
+        ctx.ellipse(s.x, s.y, 3 + p * 12, (3 + p * 12) * 0.4, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      requestAnimationFrame(draw);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      const wasRunning = running;
+      running = entries[0].isIntersecting;
+      if (running && !wasRunning) requestAnimationFrame(draw);
+    }, { threshold: 0.05 });
+    io.observe(section);
+
+    window.addEventListener('resize', resize);
+    resize();
+  })();
 
   // ---- Panel de navegación lateral ----
   const menuBtn = document.getElementById('menu-btn');
@@ -2438,6 +2973,35 @@
   enPracticaOverlay.addEventListener('click', closeEnPracticaModal);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeEnPracticaModal(); });
 
+  // ---- Modal de A escala global: RETIRADO (30/09), queda comentado por si hay que reactivarlo. ----
+  /*
+  const escalaGlobalModal = document.getElementById('escala-global-modal');
+  const escalaGlobalOverlay = document.getElementById('escala-global-overlay');
+  const closeEscalaGlobal = document.getElementById('close-escala-global');
+
+  function openEscalaGlobal() {
+    closeNavPanel();
+    escalaGlobalModal.classList.remove('opacity-0', 'pointer-events-none');
+    escalaGlobalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = 'hidden';
+    escalaGlobalModal.scrollTop = 0;
+  }
+  function closeEscalaGlobalModal() {
+    escalaGlobalModal.classList.add('opacity-0', 'pointer-events-none');
+    escalaGlobalOverlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('a[href="#escala-global"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openEscalaGlobal();
+    });
+  });
+  closeEscalaGlobal.addEventListener('click', closeEscalaGlobalModal);
+  escalaGlobalOverlay.addEventListener('click', closeEscalaGlobalModal);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeEscalaGlobalModal(); });
+  */
+
   // ---- Modal del artículo: Geopolítica del Agua Digital ----
   const geoModal = document.getElementById('geopolitica-modal');
   const geoOverlay = document.getElementById('geopolitica-overlay');
@@ -2503,6 +3067,8 @@
         if (openKey === 'patagonia') openPatArticle();
         if (openKey === 'guia-accion') openGaArticle();
         if (openKey === 'generacion-prompt') openGpArticle();
+        if (openKey === 'fake-news') openFnArticle();
+        if (openKey === 'trampa-escala') openTrArticle();
       }
       // si no tiene data-open, es un link normal (#calculadora, #quiz) y navega solo
     });
@@ -2549,7 +3115,7 @@
       },
       gobernanza: {
         norte: 'Define cláusulas de confidencialidad y modelos de medición que responden a sus propios marcos regulatorios y realidades climáticas.',
-        sur: 'Sufre vacíos legales locales: los acuerdos de instalación de datacenters suelen estar amparados por secreto comercial, dificultando la auditoría real.'
+        sur: 'Sufre vacíos legales locales: los acuerdos de instalación de Data Centers suelen estar amparados por secreto comercial, dificultando la auditoría real.'
       }
     };
 
@@ -2597,6 +3163,90 @@
       if (quizSection) setTimeout(() => quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     });
   }
+
+  // ---- Modal del artículo: El fenómeno viral del clima (fake news) ----
+  const fnModal = document.getElementById('fake-news-modal');
+  const fnOverlay = document.getElementById('fake-news-overlay');
+  const closeFn = document.getElementById('close-fake-news');
+
+  function openFnArticle() {
+    closeNavPanel();
+    trackArticleOpen('fake-news');
+    fnModal.classList.remove('opacity-0', 'pointer-events-none');
+    fnOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = 'hidden';
+    fnModal.scrollTop = 0;
+  }
+  function closeFnArticle() {
+    fnModal.classList.add('opacity-0', 'pointer-events-none');
+    fnOverlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+  closeFn.addEventListener('click', closeFnArticle);
+  fnOverlay.addEventListener('click', closeFnArticle);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFnArticle(); });
+  fnModal.addEventListener('click', (e) => { if (e.target === fnModal) closeFnArticle(); });
+
+  // ---- Modal del artículo: El problema no es tu prompt (trampa de la escala) ----
+  const trModal = document.getElementById('trampa-escala-modal');
+  const trOverlay = document.getElementById('trampa-escala-overlay');
+  const closeTr = document.getElementById('close-trampa-escala');
+
+  function openTrArticle() {
+    closeNavPanel();
+    trackArticleOpen('trampa-escala');
+    trModal.classList.remove('opacity-0', 'pointer-events-none');
+    trOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = 'hidden';
+    trModal.scrollTop = 0;
+  }
+  function closeTrArticle() {
+    trModal.classList.add('opacity-0', 'pointer-events-none');
+    trOverlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+  closeTr.addEventListener('click', closeTrArticle);
+  trOverlay.addEventListener('click', closeTrArticle);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeTrArticle(); });
+  trModal.addEventListener('click', (e) => { if (e.target === trModal) closeTrArticle(); });
+
+  // ---- Widget: El Multiplicador de Escala (slider dentro del artículo "trampa de la escala") ----
+  (function () {
+    const slider = document.getElementById('mde-slider');
+    if (!slider) return;
+    const water = document.getElementById('mde-water');
+    const valueEl = document.getElementById('mde-value');
+    const subEl = document.getElementById('mde-sub');
+    const flood = document.getElementById('mde-flood');
+    const caos = document.getElementById('mde-caos');
+    const card = document.getElementById('mde-card');
+    const towers = document.querySelectorAll('.mde-tower');
+    const GLASS_TOP = 8;
+    const GLASS_BOTTOM = 222;
+    const GLASS_H = GLASS_BOTTOM - GLASS_TOP;
+
+    const steps = [
+      { fill: 0.025, value: '15 ml', sub: 'lo que gasta tu prompt', flood: 0, towers: 0 },
+      { fill: 0.22, value: '150 L', sub: '10.000 personas hicieron la misma consulta', flood: 0.08, towers: 1 },
+      { fill: 0.6, value: '15.000 L (15 m³)', sub: '1 millón de consultas simultáneas', flood: 0.22, towers: 2 },
+      { fill: 1, value: '1.500.000 L (≈1.500 m³)', sub: 'más de la mitad de una pileta olímpica, por tus 100 millones de usuarios diarios', flood: 0.5, towers: 4 },
+    ];
+
+    function render(i) {
+      const s = steps[i];
+      const fillH = s.fill * GLASS_H;
+      water.setAttribute('y', String(GLASS_BOTTOM - fillH));
+      water.setAttribute('height', String(fillH));
+      valueEl.textContent = s.value;
+      subEl.textContent = s.sub;
+      flood.style.opacity = String(s.flood);
+      caos.style.opacity = i === 3 ? '1' : '0';
+      card.classList.toggle('mde-alert', i === 3);
+      towers.forEach((t, idx) => { t.style.opacity = idx < s.towers ? '1' : '0.12'; });
+    }
+    slider.addEventListener('input', (e) => render(parseInt(e.target.value, 10)));
+    render(0);
+  })();
 
   // ---- Modal del artículo: Tu huella hídrica digital (guía de acción) ----
   const gaModal = document.getElementById('guia-accion-modal');
@@ -2846,6 +3496,7 @@
     [cfModal, closeComoFunciona],
     [fuentesModal, closeFuentesModal],
     [enPracticaModal, closeEnPracticaModal],
+    // [escalaGlobalModal, closeEscalaGlobalModal], — modal retirado (30/09), reactivar junto con el resto.
     [geoModal, closeGeoArticle],
     [todosModal, closeTodosArticulos],
     [cnModal, closeCnArticle],
@@ -2902,17 +3553,20 @@
   const searchIndex = [
     { title: 'Cómo funciona: tres gastos de un prompt', id: 'como-funciona', snippet: 'Electricidad directa, agua directa y agua indirecta.' },
     { title: 'Calculadora de consumo', id: 'calculadora', snippet: 'Calculá cuánta agua y electricidad gastás con texto o imágenes.' },
+    // { title: 'A escala global', id: 'escala-global', snippet: 'Cuánta agua consume ChatGPT en el mundo, por hora, día, mes y año.' }, — modal retirado (30/09), reactivar junto con el resto.
     { title: 'En la práctica: imagen vs. texto', id: 'en-la-practica', snippet: 'Una imagen generada equivale a 233 consultas de texto, en agua.' },
     { title: 'Cuestionario: ¿qué tan grande es tu huella?', id: 'quiz', snippet: 'Respondé 5 preguntas y descubrí tu resultado.' },
     { title: 'SequIA: el simulador de Sed de Datos', id: 'jugar', snippet: 'Administrá un centro de datos de IA y tomá las decisiones que definen su huella hídrica.' },
     { title: 'Cómo refrigeran los centros de datos', id: 'articulos', snippet: 'Agua, aire o inmersión: el costo ambiental de cada técnica.' },
-    { title: 'Geopolítica del Agua Digital', id: 'geopolitica', snippet: 'Dónde están los data centers y por qué importan las cuencas locales.' },
+    { title: 'Geopolítica del Agua Digital', id: 'geopolitica', snippet: 'Dónde están los Data Centers y por qué importan las cuencas locales.' },
     { title: 'Agua directa vs. agua indirecta', id: 'articulos', snippet: 'La cara oculta de la energía: el segundo grifo que casi nunca se contabiliza.' },
     { title: 'Cajas negras: lo que las Big Tech no cuentan', id: 'articulos', snippet: 'Por qué los reportes de sostenibilidad hídrica ocultan más de lo que muestran.' },
     { title: 'Sesgo de origen: la huella hídrica desde el Sur Global', id: 'sesgo-origen', snippet: 'Por qué investigar el agua de la IA es distinto desde el Norte o el Sur Global.' },
     { title: 'El centro de datos de la Patagonia', id: 'patagonia', snippet: 'La promesa del clima frío frente al vacío regulatorio sobre el agua.' },
     { title: 'Tu huella hídrica digital: guía de acción', id: 'guia-accion', snippet: 'Hábitos concretos y qué exigirles a las empresas y los gobiernos.' },
     { title: 'Generación Prompt: velocidad y consumo responsable', id: 'generacion-prompt', snippet: 'Ni neo-ludismo ni culpa individual: pensar la técnica sin extremos.' },
+    { title: 'El fenómeno viral del clima: mitos sobre la IA y el ambiente', id: 'fake-news', snippet: 'Cómo circulan las fake news sobre la huella hídrica, según Tarleton Gillespie.' },
+    { title: 'El problema no es tu prompt: la trampa de la escala', id: 'trampa-escala', snippet: 'La culpa individual es una trampa de diseño: el verdadero impacto es la escala.' },
     { title: 'Fuentes y estudios', id: 'fuentes', snippet: 'Xataka, BBC Mundo, Noticias ONU, IEEE Spectrum.' },
     { title: 'Sugerí una fuente', id: 'fuentes', snippet: 'Compartí un artículo o estudio para sumar a la lista.' },
     { title: 'Nuestro proyecto', id: 'acerca', snippet: 'Quiénes hacemos Sed de Datos y por qué.' },
@@ -2941,6 +3595,8 @@
           openComoFunciona();
         } else if (btn.dataset.target === 'en-la-practica') {
           openEnPractica();
+        /* } else if (btn.dataset.target === 'escala-global') {
+          openEscalaGlobal(); — modal retirado (30/09), reactivar junto con el resto. */
         } else if (btn.dataset.target === 'geopolitica') {
           openGeoArticle();
         } else if (btn.dataset.target === 'sesgo-origen') {
@@ -2951,6 +3607,10 @@
           openGaArticle();
         } else if (btn.dataset.target === 'generacion-prompt') {
           openGpArticle();
+        } else if (btn.dataset.target === 'fake-news') {
+          openFnArticle();
+        } else if (btn.dataset.target === 'trampa-escala') {
+          openTrArticle();
         } else {
           const target = document.getElementById(btn.dataset.target);
           if (target) {
