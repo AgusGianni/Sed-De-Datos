@@ -107,6 +107,40 @@
   .btn-pop:hover { transform: translateY(-2px) scale(1.03); }
   .btn-pop:active { transform: translateY(0) scale(0.98); }
 
+  /* ===== Sistema unificado de botones (todo lo pulsable, menos el juego) ===== */
+  .sd-btn, .sd-tab { position: relative; }
+  body .sd-btn, body .sd-tab {
+    --sd-fill: rgba(255,255,255,.22); --sd-hov: currentColor;
+    isolation: isolate; overflow: hidden; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font-family: inherit; font-weight: 600; line-height: 1.2; border: 1.5px solid transparent; border-radius: 9999px;
+    transition: transform .35s cubic-bezier(.22,.61,.36,1), color .3s ease, border-color .3s ease, background-color .3s ease, filter .25s ease;
+  }
+  body .sd-btn::before, body .sd-tab::before {
+    content: ''; position: absolute; inset: 0; background: var(--sd-fill); transform: scaleX(0); transform-origin: left;
+    transition: transform .45s cubic-bezier(.65,0,.35,1); z-index: -1; pointer-events: none;
+  }
+  body .sd-btn:hover::before, body .sd-tab:not(.active):hover::before { transform: scaleX(1); }
+  body .sd-btn:hover, body .sd-tab:not(.active):hover { transform: translateY(-2px) scale(1.03); color: var(--sd-hov); }
+  body .sd-btn:active, body .sd-tab:not(.active):active { transform: translateY(0) scale(.98); }
+  body .sd-btn:focus-visible, body .sd-tab:focus-visible { outline: 2px solid #2952E3; outline-offset: 3px; }
+  body .sd-btn:disabled { opacity: .6; cursor: wait; }
+  body .sd-btn { min-height: 2.75rem; padding: .55rem 1.4rem; font-size: .875rem; }
+  body .sd-icon { width: 2.75rem; height: 2.75rem; min-height: 0; padding: 0; flex-shrink: 0; }
+  /* variantes */
+  body .sd-btn--primary { background: #FF6A00; color: #fff; border-color: #FF6A00; --sd-fill: rgba(255,255,255,.24); --sd-hov: #fff; }
+  body .sd-btn--outline { background: transparent; color: #14181F; border-color: #14181F; --sd-fill: #14181F; --sd-hov: #fff; }
+  body .sd-btn--outline-dark { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); --sd-fill: #fff; --sd-hov: #06264A; }
+  /* tabs / filtros */
+  body .sd-tab { min-height: 2.25rem; padding: .4rem 1rem; font-size: .75rem; background: transparent; color: #5B6472; border-color: #E4DFD3; --sd-fill: rgba(41,82,227,.12); --sd-hov: #2952E3; }
+  body .sd-tab.active { background: #2952E3; color: #fff; border-color: #2952E3; }
+  body .sd-tab--dark { color: rgba(255,255,255,.65); border-color: rgba(255,255,255,.22); --sd-fill: rgba(255,255,255,.16); --sd-hov: #fff; }
+  body .sd-tab--dark.active { background: #FF6A00; color: #fff; border-color: #FF6A00; }
+  body .mode-btn.sd-tab { min-height: 2.75rem; font-size: .875rem; }
+  body .faq-pill.sd-tab { font-size: .85rem; gap: .6rem; padding: .5rem 1.1rem; text-align: left; }
+  body .faq-pill.sd-tab.active .faq-pill-n { color: rgba(255,255,255,.8); }
+  @media (prefers-reduced-motion: reduce) { body .sd-btn:hover, body .sd-tab:hover { transform: none; } }
+
   .btn-glow { animation: glowPulse 2.2s ease-in-out infinite; }
   @keyframes glowPulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(79,214,255,0.45); }
@@ -142,7 +176,10 @@
   .hx h2 { color: #06264A; }
   .hx h2 span[style*="2952E3"] { color: #1A3DBF !important; }
   .hx-sub { font-size: .82rem; line-height: 1.6; color: #06264A; max-width: 34rem; margin: 1.75rem auto 0; letter-spacing: .01em; }
-  .hx-pill { color: #06264A; border-color: #06264A; }
+  /* La flecha queda quieta y alineada con el botón; solo se mueve el dibujo de adentro */
+  .hx-btns { align-items: center; }
+  .hx-arrow svg { animation: hxbob 1.8s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .hx-arrow svg { animation: none; } }
   html.hx-js .hx { height: 340vh; }
   html.hx-js .hx-stage { position: sticky; top: 0; height: 100vh; min-height: 0; padding: 4.5rem 1.25rem 1.5rem; }
   html.hx-js .hx-rings { display: block; position: absolute; left: 50%; top: 50%; width: 150vmax; height: 150vmax; margin: -75vmax 0 0 -75vmax; z-index: 1; pointer-events: none; transform: scale(var(--rs, .2)); will-change: transform; }
@@ -198,14 +235,8 @@
     fill: #FFFFFF;
   }
 
-  .whb-unit-btn { color: rgba(255,255,255,0.5); }
-  .whb-unit-btn.active { background: #4FD6FF; color: #06264A; font-weight: 700; }
 
-  .asim-tab { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); background: transparent; }
-  .asim-tab.active { background: #FF6A00; color: #FFFFFF; border-color: #FF6A00; }
 
-  .pat-tab { color: rgba(255,255,255,0.5); border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .pat-tab.active { color: #FFFFFF; border-bottom-color: #FF6A00; }
   .pat-item summary::-webkit-details-marker { display: none; }
   .pat-item[open] .pat-chevron { transform: rotate(180deg); }
   .whb-value-fade { animation: whbFade 0.25s ease; }
@@ -361,14 +392,9 @@
   #portada .pt-count { font-family: 'Newsreader', Georgia, serif; font-weight: 700; color: #4FD6FF; font-size: clamp(4.25rem, 17vw, 10.5rem); line-height: 0.95; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; text-shadow: 0 0 40px rgba(79,214,255,0.35); transition: color 0.8s ease, text-shadow 0.8s ease; }
   #portada.is-deep .pt-count { color: #FFFFFF; text-shadow: 0 2px 28px rgba(6,38,74,0.55); }
   #portada .pt-count small { font-size: 0.34em; font-weight: 700; margin-left: 0.18em; color: #FFFFFF; letter-spacing: 0; }
-  #portada .pt-cue { position: absolute; left: 50%; bottom: 1.1rem; margin-left: -2.5rem; width: 5rem; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; color: #FFFFFF; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; z-index: 2; text-shadow: 0 1px 8px rgba(6,38,74,.6); }
-  #portada .pt-cue-ic { width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; transition: background .3s, color .3s; }
-  #portada .pt-cue:hover .pt-cue-ic, #portada .pt-cue:focus-visible .pt-cue-ic { background: #FFFFFF; color: #06264A; }
-  @media (prefers-reduced-motion: reduce) { #portada .pt-in { animation: none; opacity: 1; transform: none; } #portada .pt-cue-ic { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { #portada .pt-in { animation: none; opacity: 1; transform: none; } }
 
   /* ---- Calculadora: olas que suben y tapan la sección ---- */
-  .mode-btn { color: #5B6472; }
-  .mode-btn.active { background: #2952E3; color: #FFFFFF; border-color: #2952E3; }
   .cal-water { --wh: 42px; position: absolute; left: 0; right: 0; top: 0; height: 100%; pointer-events: none; transform: translateY(calc((1 - var(--lv, 0)) * 100% + 4px)); transition: transform 1.8s cubic-bezier(.22,.61,.36,1); will-change: transform; }
   .cal-water.is-slosh { --wh: 66px; }
   .cal-water-back { --c: #4FD6FF; opacity: 0.30; transition-duration: 2.4s; }
@@ -387,14 +413,19 @@
   @media (prefers-reduced-motion: reduce) { .cal-water { transition: none; } .cal-wave-a, .cal-wave-b, .cal-bubble { animation: none; } .cal-bubble { display: none; } .cal-glasses svg { animation: none; } }
 
   /* ---- Cuestionario: tarjetas con medidor de huella en vivo ---- */
-  .qm-opt { display: flex; align-items: center; gap: 0.85rem; width: 100%; text-align: left; padding: 0.8rem 1rem; border: 1px solid #E4DFD3; border-radius: 0.85rem; background: #FFFFFF; font-weight: 600; font-size: 0.92rem; line-height: 1.3; color: #14181F; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; animation: qmIn 0.4s ease both; animation-delay: calc(var(--i, 0) * 55ms); }
+  .qm-opt { display: flex; align-items: center; gap: 0.85rem; width: 100%; text-align: left; padding: 0.8rem 1rem; border: 1px solid #E4DFD3; border-radius: 0.85rem; background: #FFFFFF; font-weight: 600; font-size: 0.92rem; line-height: 1.3; color: #14181F; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; animation: qmIn 0.4s ease backwards; animation-delay: calc(var(--i, 0) * 40ms); }
   .qm-opt:hover, .qm-opt:focus-visible { border-color: #FF6A00; background: #FFF6EF; outline: none; }
   .qm-opt:focus-visible { box-shadow: 0 0 0 3px rgba(255,106,0,0.25); }
   .qm-opt:active { transform: scale(0.99); }
   .qm-opt .qm-key { flex-shrink: 0; width: 1.65rem; height: 1.65rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.72rem; font-weight: 600; background: #E7EDFC; color: #2952E3; transition: background 0.2s ease, color 0.2s ease; }
   .qm-opt:hover .qm-key, .qm-opt:focus-visible .qm-key, .qm-opt.is-picked .qm-key { background: #FF6A00; color: #FFFFFF; }
   .qm-opt.is-picked { border-color: #FF6A00; background: #FFE9DA; }
-  .qm-list.is-locked .qm-opt:not(.is-picked) { opacity: 0.45; pointer-events: none; }
+  .qm-list.is-locked .qm-opt:not(.is-picked) { opacity: 0.4; pointer-events: none; }
+  #quiz-q { transition: opacity .2s ease, transform .2s ease; }
+  #quiz-q.is-leaving { opacity: 0; transform: translateX(-16px); }
+  #quiz-q.is-entering { animation: qzEnter .32s cubic-bezier(.22,.61,.36,1) backwards; }
+  @keyframes qzEnter { from { opacity: 0; transform: translateX(16px); } }
+  @media (prefers-reduced-motion: reduce) { #quiz-q, #quiz-q.is-entering { transition: none; animation: none; } }
   .qm-glass-wrap { display: flex; align-items: center; gap: 1rem; }
   .qm-water, .qm-ghost { transition: transform 0.9s cubic-bezier(.22,.61,.36,1); }
   .qm-ghost { opacity: 0.35; transition-duration: 0.35s; }
@@ -416,8 +447,20 @@
   .gx-mini .gx-row { padding: 0.65rem 0 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.18); border-top: 0; }
   .gx-mini .gx-num { font-size: clamp(1.1rem, 3.6vw, 1.3rem); letter-spacing: 0; }
   .gx-mini .gx-lbl { margin-top: 0.3rem; font-size: 0.68rem; font-weight: 500; color: rgba(255,255,255,0.72); line-height: 1.4; }
-  /* Calculadora protagonista: más ancha; las cifras de al lado, chicas y abajo */
-  @media (min-width: 1024px) { #calculadora .grid.items-start { grid-template-columns: 1.9fr 1fr; align-items: stretch; } #calculadora .cal-side { justify-content: flex-end; } }
+  /* Calculadora y cuestionario lado a lado (en pantallas grandes) */
+  @media (min-width: 1024px) {
+    .cal-quiz-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+    #quiz .qz-sheet { padding: 1.6rem; box-shadow: 7px 7px 0 #14181F; }
+    #quiz #quiz-questions { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+    #quiz #quiz-meter { order: -1; rotate: 0deg; padding: 0.7rem 0.9rem; }
+    #quiz .qm-glass-wrap { flex-direction: row; text-align: left; gap: 0.9rem; }
+    #quiz .qm-glass-wrap svg { width: 44px; height: auto; flex-shrink: 0; }
+    #quiz .qz-num { font-size: 2.8rem; }
+    #quiz #quiz-q > p { font-size: 1.3rem; }
+    #quiz .qm-opt { padding: 0.65rem 0.8rem; }
+  }
+  /* El marco de la calculadora nunca se desplaza solo (las olas son más anchas que la caja) */
+  #calculadora > div { overflow: hidden; overflow: clip; }
   .gx-armed .gx-row .gx-num, .gx-armed .gx-row .gx-lbl { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.8s cubic-bezier(.22,.61,.36,1); }
   .gx-armed .gx-row .gx-lbl { transition-delay: 0.15s; }
   .gx-armed .gx-row.in .gx-num, .gx-armed .gx-row.in .gx-lbl { opacity: 1; transform: none; }
@@ -451,11 +494,7 @@
 
   /* ---- FAQ: filas editoriales numeradas, filtro como índice ---- */
   .faq-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-  .faq-pill { display: inline-flex; align-items: baseline; gap: 0.6rem; padding: 0.55rem 0.9rem; border: 2px solid #14181F; border-radius: 999px; background: transparent; font-weight: 600; font-size: 0.85rem; color: #14181F; cursor: pointer; transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
   .faq-pill-n { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.68rem; color: #5B6472; }
-  .faq-pill:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #14181F; }
-  .faq-pill.active { background: #14181F; color: #F7F4EE; box-shadow: none; transform: none; }
-  .faq-pill.active .faq-pill-n { color: #FF8A3D; }
   @media (min-width: 1024px) { .faq-pills { flex-direction: column; align-items: flex-start; } }
   .faq-list { counter-reset: faq; border-top: 2px solid #14181F; }
   #faq-list .faq-row { counter-increment: faq; border-bottom: 1px solid #E4DFD3; position: relative; transition: background 0.25s ease; }
@@ -473,23 +512,29 @@
   /* ---- Cuestionario: papel y tinta (bordes oscuros, sombras duras, número grande) ---- */
   #quiz-q .qm-list { gap: 1rem; }
   .qz-sheet { border: 2px solid #14181F; border-radius: 1.25rem; box-shadow: 9px 9px 0 #14181F; }
-  #quiz-progress-wrap > div:last-child { height: 14px; border: 2px solid #14181F; background: #fff; }
-  #quiz-progress-bar { background-image: repeating-linear-gradient(-45deg, #FF6A00 0 8px, #FF9A57 8px 16px); background-size: 22.6px 22.6px; animation: qzStripes 1.2s linear infinite; }
+  /* Progreso: misma gota que marca el avance de la página, en horizontal */
+  .qz-track { position: relative; height: 6px; margin: 14px 0 10px; border-radius: 999px; background: rgba(127,127,127,0.28); }
+  .qz-fill { position: absolute; left: 0; top: 0; bottom: 0; width: calc(9px + var(--p, 0) * (100% - 18px)); border-radius: 999px; background: #FF6A00; transition: width .5s cubic-bezier(.22,.61,.36,1); }
+  .qz-drop { position: absolute; top: 50%; left: calc(9px + var(--p, 0) * (100% - 18px)); width: 22px; height: 22px; transform: translate(-50%, -58%); transition: left .5s cubic-bezier(.22,.61,.36,1); }
   @keyframes qzStripes { to { background-position: 22.6px 0; } }
   .qz-num { display: block; font-family: 'Newsreader', Georgia, serif; font-weight: 700; font-size: 4.2rem; line-height: 0.85; color: #FF6A00; margin-bottom: 0.7rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
   #quiz-q > p { font-family: 'Newsreader', Georgia, serif; font-style: italic; font-weight: 600; font-size: clamp(1.35rem, 2.8vw, 1.8rem); line-height: 1.2; }
-  .qm-opt { border: 2px solid #14181F; border-radius: 0.9rem; box-shadow: 4px 4px 0 #14181F; transition: translate 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease, rotate 0.2s ease; }
-  .qm-opt:nth-child(odd) { rotate: -0.45deg; }
-  .qm-opt:nth-child(even) { rotate: 0.4deg; }
-  .qm-opt:hover, .qm-opt:focus-visible { border-color: #14181F; background: #FFF1E6; translate: -2px -2px; box-shadow: 6px 6px 0 #14181F; rotate: 0deg; }
-  .qm-opt:active { transform: none; translate: 2px 2px; box-shadow: 1px 1px 0 #14181F; }
-  .qm-opt .qm-key { border: 2px solid #14181F; background: #fff; color: #14181F; }
+  /* Opciones del cuestionario: misma animación que el resto de los botones */
+  .qm-opt { position: relative; isolation: isolate; overflow: hidden; border: 1.5px solid #14181F; border-radius: 1.25rem; box-shadow: none; transition: transform .35s cubic-bezier(.22,.61,.36,1), color .3s ease, border-color .3s ease, background-color .3s ease, opacity .25s ease; }
+  .qm-opt::before { content: ''; position: absolute; inset: 0; background: rgba(255,106,0,.16); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.65,0,.35,1); z-index: -1; pointer-events: none; }
+  .qm-opt:hover, .qm-opt:focus-visible { border-color: #14181F; background: #FFFFFF; transform: translateY(-2px) scale(1.03); box-shadow: none; outline: none; }
+  .qm-opt:hover::before, .qm-opt:focus-visible::before { transform: scaleX(1); }
+  .qm-opt:focus-visible { outline: 2px solid #2952E3; outline-offset: 3px; }
+  .qm-opt:active { transform: translateY(0) scale(.98); box-shadow: none; }
+  .qm-opt .qm-key { border: 1.5px solid #14181F; background: #fff; color: #14181F; }
   .qm-opt:hover .qm-key, .qm-opt:focus-visible .qm-key { background: #FF6A00; color: #fff; }
-  .qm-opt.is-picked { border-color: #14181F; background: #FF6A00; color: #fff; box-shadow: 1px 1px 0 #14181F; translate: 3px 3px; rotate: 0deg; }
+  .qm-opt.is-picked { border-color: #FF6A00; background: #FF6A00; color: #fff; box-shadow: none; transform: scale(1.02); }
+  .qm-opt.is-picked::before { transform: scaleX(0); }
   .qm-opt.is-picked .qm-key { background: #14181F; color: #fff; }
+  @media (prefers-reduced-motion: reduce) { .qm-opt:hover { transform: none; } }
   #quiz-meter { border: 2px dashed #14181F; background: #FFF6EF; rotate: 1.6deg; }
   #quiz-final-badge { border: 2px solid #14181F; border-radius: 1rem; box-shadow: 5px 5px 0 #14181F; }
-  @media (prefers-reduced-motion: reduce) { #quiz-progress-bar { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .qz-fill, .qz-drop { transition: none; } }
   /* ---- Marcador dentro de los artículos: se pinta cuando el artículo se abre ---- */
   .mkm { background-image: linear-gradient(transparent 38%, var(--mk) 38%, var(--mk) 92%, transparent 92%); background-repeat: no-repeat; background-size: 0% 100%; padding: 0 0.12em; margin: 0 -0.12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size 0.8s cubic-bezier(.22,.61,.36,1); }
   [id$="-modal"]:not(.opacity-0) .mkm { background-size: 100% 100%; transition-delay: 0.7s; }
@@ -542,7 +587,7 @@
 <aside id="nav-panel" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-surface z-50 shadow-2xl overflow-y-auto">
   <div class="p-8">
     <div class="flex justify-end mb-8">
-      <button id="close-nav" aria-label="Cerrar menú" class="w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+      <button id="close-nav" aria-label="Cerrar menú" class="sd-btn sd-icon sd-btn--outline">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
@@ -555,13 +600,13 @@
       </button>
       <div class="nav-subitems">
         <a href="#como-funciona" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Cómo funciona</a>
+        <a href="#en-practica" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">En la práctica</a>
         <a href="#articulos" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Artículos</a>
         <a href="#fuentes" class="nav-link block py-3 pl-4 text-muted hover:text-accent transition">Fuentes</a>
       </div>
 
       <a href="#acerca" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Nosotros</a>
-      <a href="#calculadora" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Calculadora</a>
-      <a href="#quiz" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Cuestionario</a>
+      <a href="#calculadora" class="nav-link nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium hover:text-accent transition">Calculadora y cuestionario</a>
 
       <button class="nav-group-toggle nav-main-item py-4 border-b border-line hover:border-accent text-xl font-medium flex items-center justify-between hover:text-accent transition">
         SequIA
@@ -596,7 +641,7 @@
         <input id="site-search" type="text" placeholder="Buscar…" class="w-full bg-surface border border-line rounded-full pl-9 pr-3 py-2 text-sm placeholder:text-muted focus:outline-none focus:border-accent transition" autocomplete="off">
         <div id="search-results" class="absolute top-[calc(100%+8px)] left-0 right-0 card p-2 shadow-xl max-h-80 overflow-y-auto z-50"></div>
       </div>
-      <button id="menu-btn" aria-label="Abrir menú" class="btn-pop w-12 h-12 rounded-xl bg-orange flex items-center justify-center hover:brightness-110 transition shrink-0">
+      <button id="menu-btn" aria-label="Abrir menú" class="sd-btn sd-icon sd-btn--primary shrink-0">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
       </button>
     </div>
@@ -619,7 +664,6 @@
     <h1 id="portada-titulo" class="pt-in pt-count" style="animation-delay:0.3s;"><span id="portada-counter">0</span><small>L</small></h1>
     <p class="pt-in text-base sm:text-xl leading-snug text-white/85 mt-6 max-w-md" style="animation-delay:0.6s;">Litros de agua utilizados por IA desde que abriste la página</p>
   </div>
-  <a href="#inicio" class="pt-cue pt-in" style="animation-delay:1s;" aria-label="Bajar a la página"><span class="font-mono">Scrolleá</span><span class="pt-cue-ic bounce-down"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></span></a>
 </section>
 
 <!-- HERO -->
@@ -635,11 +679,11 @@
       <div class="hx-more">
         <p class="hx-sub font-mono">Detrás de cada respuesta hay miles de servidores. Explorá los datos, medí tu consumo y descubrí la huella invisible de la IA.</p>
         <div class="hx-btns mt-7 flex items-center justify-center gap-3">
-          <a href="#calculadora" class="btn-pop hx-pill inline-flex items-center gap-2 border border-ink rounded-full px-6 py-3 font-semibold text-sm hover:bg-ink hover:text-white transition">
+          <a href="#calculadora" class="sd-btn sd-btn--outline hx-pill">
             Calculá tu huella
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="#el-problema" aria-label="Bajar" class="bounce-down w-11 h-11 rounded-full border border-ink/40 flex items-center justify-center text-ink hover:bg-ink hover:text-white transition">
+          <a href="#el-problema" aria-label="Bajar" class="sd-btn sd-icon sd-btn--outline hx-arrow">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
           </a>
         </div>
@@ -680,13 +724,6 @@
     <p class="mf-kicker font-mono text-xs text-accent tracking-widest">POR QUÉ IMPORTA.</p>
     <h2 class="mf-p" data-mf="0">Un gasto <span style="white-space:nowrap"><span class="dr sq">invisible<svg class="sq-svg" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 Q 6 1 11 6 T 21 6 T 31 6 T 41 6 T 51 6 T 61 6 T 71 6 T 81 6 T 91 6 T 99 6"/></svg></span>,</span> pero <span class="dr ci">real<svg class="ci-svg" viewBox="0 0 110 50" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M18 12 C 40 -1, 98 4, 104 24 C 108 42, 56 50, 24 45 C 2 41, -2 22, 16 11"/></svg></span>.</h2>
     <p class="mf-p mf-p--sm" data-mf="1">No se trata de dejar de usar IA, sino de entender el <span class="mk" style="--mk:#FFD9BF">costo ambiental</span> que normalmente no vemos.</p>
-    <div class="mf-links" data-mf="1">
-      <div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-        <a href="#como-funciona" class="group inline-flex items-center gap-2 text-accent font-semibold text-sm">Aprender más <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a href="#en-practica" class="group inline-flex items-center gap-2 text-orangeink font-semibold text-sm">En la práctica <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a href="#fuentes" class="group inline-flex items-center gap-2 text-accent font-semibold text-sm">Ver fuentes <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -751,15 +788,16 @@
       <svg class="cal-wave cal-wave-b" viewBox="0 0 2400 60" preserveAspectRatio="none"><path d="M0 30 Q150 0 300 30 T600 30 T900 30 T1200 30 T1500 30 T1800 30 T2100 30 T2400 30 V60 H0 Z"/></svg>
       <div class="cal-water-body"><i class="cal-bubble" style="left:6%; --d:0s; --t:7s; --z:7px"></i><i class="cal-bubble" style="left:14%; --d:2.5s; --t:9s; --z:5px"></i><i class="cal-bubble" style="left:23%; --d:4.1s; --t:8s; --z:9px"></i><i class="cal-bubble" style="left:33%; --d:1.2s; --t:10s; --z:6px"></i><i class="cal-bubble" style="left:41%; --d:5.5s; --t:7.5s; --z:8px"></i><i class="cal-bubble" style="left:52%; --d:3.3s; --t:9.5s; --z:5px"></i><i class="cal-bubble" style="left:60%; --d:0.8s; --t:8.5s; --z:10px"></i><i class="cal-bubble" style="left:69%; --d:6.2s; --t:7s; --z:6px"></i><i class="cal-bubble" style="left:77%; --d:2.1s; --t:10s; --z:8px"></i><i class="cal-bubble" style="left:85%; --d:4.8s; --t:8s; --z:5px"></i><i class="cal-bubble" style="left:93%; --d:1.7s; --t:9s; --z:7px"></i></div>
     </div>
-    <div class="relative max-w-4xl mx-auto">
-      <p class="font-mono text-xs text-white/60 tracking-widest mb-3">CALCULADORA.</p>
+    <div class="relative max-w-5xl mx-auto">
+      <p class="font-mono text-xs text-white/60 tracking-widest mb-3">TU HUELLA.</p>
       <h2 class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-10 text-white">¿Cuánto gastás vos?</h2>
 
-      <div class="grid lg:grid-cols-[1.35fr_1fr] gap-6 items-start">
+      <div class="cal-quiz-grid grid gap-6 items-start">
+        <!-- Calculadora -->
         <div class="card p-6 sm:p-10">
           <div class="flex gap-2 mb-6">
-            <button data-mode="texto" class="mode-btn active flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Texto</button>
-            <button data-mode="imagen" class="mode-btn flex-1 text-sm font-semibold rounded-xl py-2.5 border border-line transition">Imagen</button>
+            <button data-mode="texto" class="mode-btn sd-tab flex-1 active">Texto</button>
+            <button data-mode="imagen" class="mode-btn sd-tab flex-1">Imagen</button>
           </div>
 
           <div class="bg-surface2 rounded-2xl p-5 mb-6 border border-line">
@@ -801,52 +839,65 @@
               <div><p id="eq-phone" class="font-serif font-bold text-xl leading-none">0</p><p class="text-[11px] text-muted mt-1 leading-tight">cargas de celular</p></div>
             </div>
           </div>
+          <p id="calc-note" class="text-[11px] text-muted leading-relaxed mt-4"></p>
         </div>
 
-        <div class="cal-side flex flex-col gap-7">
-        <div id="gx-list" class="gx-list gx-mini">
-        <article class="gx-row" data-a="10" data-b="25" data-dec="0" data-unit=" ml" style="--tone:#FF6A00">
-        <div>
-        <p class="gx-num">10–25 ml</p>
-        <p class="gx-lbl">de agua directa por cada consulta de texto a una IA</p>
-        </div>
-        </article>
-        <article class="gx-row" data-a="2" data-b="5" data-dec="0" data-unit=" L" style="--tone:#FF6A00">
-        <div>
-        <p class="gx-num">2–5 L</p>
-        <p class="gx-lbl">de agua por cada imagen generada con una IA</p>
-        </div>
-        </article>
-        <article class="gx-row" data-a="0.34" data-dec="2" data-unit=" Wh" style="--tone:#A8E8FF">
-        <div>
-        <p class="gx-num">0,34 Wh</p>
-        <p class="gx-lbl">de electricidad por cada consulta de texto a una IA</p>
-        </div>
-        </article>
-        <article class="gx-row" data-a="0.5" data-b="2.5" data-dec="1" data-unit=" L" style="--tone:#A8E8FF">
-        <div>
-        <p class="gx-num">0,5–2,5 L</p>
-        <p class="gx-lbl">de agua por cada kWh de electricidad generado</p>
-        </div>
-        </article>
-        </div>
-        <div class="card overflow-hidden flex flex-col">
-          <details class="calc-why">
-            <summary class="cursor-pointer list-none px-6 sm:px-8 py-3.5 flex items-center justify-between gap-2 text-xs font-semibold text-accent bg-surface hover:bg-accentbg transition">
-              ¿Por qué este número puede cambiar?
-              <svg class="calc-why-chevron shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-            </summary>
-            <div class="px-6 sm:px-8 pb-5 pt-1 bg-surface">
-              <p class="text-xs text-muted leading-relaxed mb-3">Cada empresa mide con su propio hardware, su propio sistema de refrigeración y su propia ubicación geográfica. Que Google, Microsoft u OpenAI publiquen números distintos entre sí no significa que alguno esté mintiendo: miden modelos y centros de datos diferentes, en climas distintos, con metodologías que todavía no están estandarizadas a nivel de la industria. Google, por ejemplo, midió 0,26 ml de agua directa por consulta mediana de Gemini, mientras que UC Riverside estima entre 10 y 25 ml para ChatGPT.</p>
-              <p id="calc-note" class="text-[11px] text-muted leading-relaxed"></p>
-            </div>
-          </details>
-          <!-- Botón "Ver a escala global" retirado junto con el modal (ver comentario más abajo, donde estaba el modal). Reactivar sumando de nuevo este bloque:
-          <div class="p-6 sm:p-8 bg-surface border-t border-line mt-auto">
-            <a href="#escala-global" class="w-full btn-pop inline-flex items-center justify-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-3.5 rounded-xl hover:brightness-110 transition">Ver a escala global</a>
+        <!-- Cuestionario: 5 preguntas seguidas y resultado directo -->
+        <div id="quiz">
+      <div class="card qz-sheet p-6 sm:p-10">
+        <p class="font-mono text-[11px] tracking-widest text-orange mb-1">CUESTIONARIO.</p>
+        <p class="font-serif italic text-xl font-bold leading-tight mb-5">¿Qué tan grande es tu huella?</p>
+        <!-- Barra de progreso -->
+        <div id="quiz-progress-wrap" class="mb-6">
+          <div class="flex items-center justify-between text-xs text-muted mb-2">
+            <span id="quiz-step-label">Pregunta 1 de 5</span>
+            <button id="quiz-restart" class="hidden text-accent font-semibold hover:underline">Volver a empezar</button>
           </div>
-          -->
+          <div id="quiz-progress-bar" class="qz-track" style="--p: 0;"><span class="qz-fill"></span><svg class="qz-drop" viewBox="0 0 24 24" fill="#FF6A00" stroke="#14181F" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5s6.5 7.2 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.5 12 2.5z"/></svg></div>
         </div>
+
+        <!-- Preguntas -->
+        <div id="quiz-questions" class="grid md:grid-cols-[minmax(0,1fr)_11.5rem] gap-6 md:gap-8 items-start">
+          <div id="quiz-q"></div>
+          <aside id="quiz-meter" class="order-first md:order-last rounded-2xl bg-surface2 border border-line p-4" aria-live="polite">
+            <div class="qm-glass-wrap">
+              <svg width="84" height="112" viewBox="0 0 120 160" class="shrink-0" aria-hidden="true">
+                <defs><clipPath id="qm-clip"><path d="M18 12 H102 L94 148 Q93 154 87 154 H33 Q27 154 26 148 Z"/></clipPath></defs>
+                <g clip-path="url(#qm-clip)">
+                  <rect x="0" y="0" width="120" height="160" fill="#FFFFFF"/>
+                  <g id="qm-ghost" class="qm-ghost" style="transform: translateY(154px)"><rect x="-20" y="0" width="160" height="170" fill="#4FD6FF"/></g>
+                  <g id="qm-water" class="qm-water" style="transform: translateY(154px)">
+                    <path class="qm-wave" d="M-20 4 Q-5 -2 10 4 T40 4 T70 4 T100 4 T130 4 T160 4 V170 H-20 Z" fill="#4FD6FF"/>
+                  </g>
+                </g>
+                <path d="M18 12 H102 L94 148 Q93 154 87 154 H33 Q27 154 26 148 Z" fill="none" stroke="#14181F" stroke-width="4" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <p class="font-mono text-[10px] tracking-widest text-muted mb-1">MEDIDOR DE HUELLA</p>
+                <p id="qm-level" class="font-serif italic text-lg leading-tight text-ink">Todavía vacío</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Resultado final -->
+        <div id="quiz-final" class="hidden">
+          <div id="quiz-final-badge" class="bg-accentbg rounded-2xl p-6 sm:p-8 mb-4">
+            <p class="text-[11px] font-bold text-accent mb-1.5">TU RESULTADO</p>
+            <h3 id="quiz-final-title" class="text-xl font-semibold mb-3"></h3>
+            <p id="quiz-final-body" class="text-sm text-ink/80 leading-relaxed"></p>
+          </div>
+          <div class="bg-surface2 border border-line rounded-2xl p-5 mb-4">
+            <p class="text-[11px] font-bold text-muted mb-1.5">TU COMPROMISO</p>
+            <p id="quiz-final-commitment" class="text-sm text-ink/80"></p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button id="quiz-restart-2" class="sd-btn sd-btn--outline">
+              Volver a hacer el cuestionario
+            </button>
+          </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -859,7 +910,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="escala-global-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="rounded-2xl max-w-4xl w-full my-4 relative overflow-hidden p-6 sm:p-10" style="background: #06264A;">
     <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-    <button id="close-escala-global" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/25 text-white flex items-center justify-center hover:border-orange hover:text-orange transition z-10">
+    <button id="close-escala-global" aria-label="Cerrar" class="absolute top-5 right-5 z-10 sd-btn sd-icon sd-btn--outline-dark">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -904,103 +955,6 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 </div>
 -->
 
-<!-- CUESTIONARIO -->
-<section id="quiz" class="pb-16 sm:pb-24 px-3 sm:px-5">
-  <div class="rounded-3xl relative overflow-hidden p-8 sm:p-14" style="background: #FF6A00;">
-    <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-    <div class="relative max-w-4xl mx-auto">
-      <p class="font-mono text-xs text-white/60 tracking-widest mb-3">CUESTIONARIO.</p>
-      <h2 class="reveal text-3xl sm:text-5xl italic font-serif leading-[1.1] mb-3 text-white">¿Qué tan grande es tu huella?</h2>
-      <p class="text-white/70 mb-10">5 preguntas rápidas. No hay respuestas correctas ni incorrectas.</p>
-
-      <div class="card qz-sheet p-6 sm:p-10">
-        <!-- Barra de progreso -->
-        <div id="quiz-progress-wrap" class="mb-8">
-          <div class="flex items-center justify-between text-xs text-muted mb-2">
-            <span id="quiz-step-label">Pregunta 1 de 5</span>
-            <button id="quiz-restart" class="hidden text-accent font-semibold hover:underline">Volver a empezar</button>
-          </div>
-          <div class="h-1.5 bg-surface2 rounded-full overflow-hidden border border-line">
-            <div id="quiz-progress-bar" class="h-full bg-orange transition-all duration-300" style="width: 20%;"></div>
-          </div>
-        </div>
-
-        <!-- Preguntas -->
-        <div id="quiz-questions" class="grid md:grid-cols-[minmax(0,1fr)_11.5rem] gap-6 md:gap-8 items-start">
-          <div id="quiz-q"></div>
-          <aside id="quiz-meter" class="order-first md:order-last rounded-2xl bg-surface2 border border-line p-4" aria-live="polite">
-            <div class="qm-glass-wrap">
-              <svg width="84" height="112" viewBox="0 0 120 160" class="shrink-0" aria-hidden="true">
-                <defs><clipPath id="qm-clip"><path d="M18 12 H102 L94 148 Q93 154 87 154 H33 Q27 154 26 148 Z"/></clipPath></defs>
-                <g clip-path="url(#qm-clip)">
-                  <rect x="0" y="0" width="120" height="160" fill="#FFFFFF"/>
-                  <g id="qm-ghost" class="qm-ghost" style="transform: translateY(154px)"><rect x="-20" y="0" width="160" height="170" fill="#4FD6FF"/></g>
-                  <g id="qm-water" class="qm-water" style="transform: translateY(154px)">
-                    <path class="qm-wave" d="M-20 4 Q-5 -2 10 4 T40 4 T70 4 T100 4 T130 4 T160 4 V170 H-20 Z" fill="#4FD6FF"/>
-                  </g>
-                </g>
-                <path d="M18 12 H102 L94 148 Q93 154 87 154 H33 Q27 154 26 148 Z" fill="none" stroke="#14181F" stroke-width="4" stroke-linejoin="round"/>
-              </svg>
-              <div>
-                <p class="font-mono text-[10px] tracking-widest text-muted mb-1">MEDIDOR DE HUELLA</p>
-                <p id="qm-level" class="font-serif italic text-lg leading-tight text-ink">Todavía vacío</p>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <!-- Resultado final -->
-        <div id="quiz-final" class="hidden">
-          <div id="quiz-final-badge" class="bg-accentbg rounded-2xl p-6 sm:p-8 mb-4">
-            <p class="text-[11px] font-bold text-accent mb-1.5">TU RESULTADO</p>
-            <h3 id="quiz-final-title" class="text-xl font-semibold mb-3"></h3>
-            <p id="quiz-final-body" class="text-sm text-ink/80 leading-relaxed"></p>
-          </div>
-          <div class="bg-surface2 border border-line rounded-2xl p-5 mb-4">
-            <p class="text-[11px] font-bold text-muted mb-1.5">TU COMPROMISO</p>
-            <p id="quiz-final-commitment" class="text-sm text-ink/80"></p>
-          </div>
-          <div class="flex flex-wrap gap-3">
-            <a href="#calculadora" class="btn-pop inline-flex items-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:brightness-110 transition">
-              Calculá el número exacto
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-            </a>
-            <button id="quiz-restart-2" class="btn-pop inline-flex items-center gap-2 border border-line font-semibold text-sm px-5 py-2.5 rounded-xl hover:border-accent transition">
-              Volver a hacer el cuestionario
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Animación decorativa: el recorrido de una consulta (solo el dibujo, sin texto) -->
-      <div class="qa-wrap" aria-hidden="true">
-        <svg id="qa-svg" class="qa-svg" viewBox="0 140 1200 372" aria-hidden="true" focusable="false">
-  <path class="qa-d qa-h" data-w="0 .06" d="M0 470H1200"/>
-  <rect class="qa-d" data-w="0 .08" x="70" y="250" width="120" height="210" rx="18"/>
-  <path class="qa-d qa-h" data-w=".05 .10" d="M92 292H168M92 320H150M92 348H162"/>
-  <path id="qa-req" class="qa-d qa-h" data-w=".14 .34" d="M190 340C270 300 340 380 420 340"/>
-  <circle id="qa-pulse" r="7" cx="190" cy="340" fill="#14181F" opacity="0"/>
-  <rect class="qa-d" data-w=".30 .40" x="420" y="240" width="260" height="230"/>
-  <rect class="qa-d" data-w="0.34 0.44" x="445" y="275" width="60" height="170" rx="3"/><path class="qa-d qa-h" data-w="0.38 0.46" d="M445 309H505M445 343H505M445 377H505M445 411H505"/><rect class="qa-d" data-w="0.36 0.46" x="520" y="275" width="60" height="170" rx="3"/><path class="qa-d qa-h" data-w="0.40 0.48" d="M520 309H580M520 343H580M520 377H580M520 411H580"/><rect class="qa-d" data-w="0.38 0.48" x="595" y="275" width="60" height="170" rx="3"/><path class="qa-d qa-h" data-w="0.42 0.50" d="M595 309H655M595 343H655M595 377H655M595 411H655"/>
-  <circle class="qa-led" cx="493" cy="292" r="3.5" opacity="0"/><circle class="qa-led" cx="493" cy="326" r="3.5" opacity="0"/><circle class="qa-led" cx="493" cy="360" r="3.5" opacity="0"/><circle class="qa-led" cx="493" cy="394" r="3.5" opacity="0"/><circle class="qa-led" cx="493" cy="428" r="3.5" opacity="0"/><circle class="qa-led" cx="568" cy="292" r="3.5" opacity="0"/><circle class="qa-led" cx="568" cy="326" r="3.5" opacity="0"/><circle class="qa-led" cx="568" cy="360" r="3.5" opacity="0"/><circle class="qa-led" cx="568" cy="394" r="3.5" opacity="0"/><circle class="qa-led" cx="568" cy="428" r="3.5" opacity="0"/><circle class="qa-led" cx="643" cy="292" r="3.5" opacity="0"/><circle class="qa-led" cx="643" cy="326" r="3.5" opacity="0"/><circle class="qa-led" cx="643" cy="360" r="3.5" opacity="0"/><circle class="qa-led" cx="643" cy="394" r="3.5" opacity="0"/><circle class="qa-led" cx="643" cy="428" r="3.5" opacity="0"/>
-  <path class="qa-d qa-e qa-h qa-fx" data-w=".42 .55" d="M480 228q-12-20 0-40t0-40M550 228q-12-20 0-40t0-40M620 228q-12-20 0-40t0-40"/>
-  <path class="qa-d qa-w" data-w=".56 .62" d="M680 330H770"/>
-  <path class="qa-d qa-w" data-w=".58 .70" d="M770 470C795 410 800 340 788 270H872C860 340 865 410 890 470"/>
-  <path class="qa-d qa-w qa-h" data-w=".62 .70" d="M788 270Q830 288 872 270"/>
-  <g id="qa-vapor"><path class="qa-d qa-w qa-h qa-fx" data-w=".66 .78" d="M805 252q-14-22 0-44t0-44M832 252q-14-22 0-44t0-44M859 252q-14-22 0-44t0-44"/></g>
-  <rect class="qa-d" data-w=".78 .86" x="960" y="420" width="190" height="50"/>
-  <rect class="qa-d" data-w=".80 .88" x="985" y="300" width="36" height="120"/>
-  <rect class="qa-d" data-w=".82 .90" x="1050" y="340" width="36" height="80"/>
-  <path class="qa-d qa-h qa-fx" data-w=".86 .94" d="M1003 290q-12-18 0-36t0-36"/>
-  <path id="qa-wire" class="qa-d qa-e" data-w=".82 .94" d="M1055 470V498H550V470"/>
-  <circle id="qa-pulse2" r="7" cx="1055" cy="470" fill="#FFE9DA" opacity="0"/>
-  <path class="qa-fx" data-w=".90 .96" d="M1128 232c0 0-14 17-14 27a14 14 0 0 0 28 0c0-10-14-27-14-27z" fill="#4FD6FF"/>
-</svg>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- APRENDER / ARTÍCULOS -->
 <section id="articulos" class="border-t border-line bg-surface2">
   <div class="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
@@ -1018,7 +972,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
         </div>
       </div>
-      <a href="#" id="open-todos-articulos" class="btn-pop inline-flex items-center gap-2 bg-orange text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:brightness-110 transition shrink-0">
+      <a href="#" id="open-todos-articulos" class="sd-btn sd-btn--primary shrink-0">
         Ver más
       </a>
     </div>
@@ -1038,7 +992,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Cómo refrigeran los centros de datos: agua, aire o inmersión</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">Cada técnica tiene un costo ambiental distinto según el clima, la infraestructura y la ubicación.</p>
-          <a href="#" id="open-refrigeracion-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-refrigeracion-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1058,7 +1012,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Generación Prompt: de la velocidad al consumo responsable</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">Ni neo-ludismo ni culpa individual: una pausa reflexiva antes de enviar cada prompt.</p>
-          <a href="#" id="open-generacion-prompt-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-generacion-prompt-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1077,7 +1031,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Agua directa vs. agua indirecta</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">La cara oculta de la energía: el segundo grifo, más grande y silencioso, que casi nunca se contabiliza.</p>
-          <a href="#" id="open-directa-indirecta-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-directa-indirecta-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1096,7 +1050,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Sesgo de origen: la huella hídrica desde el Sur Global</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">Por qué investigar el consumo de agua de la IA es distinto según se haga desde el Norte o el Sur Global.</p>
-          <a href="#" id="open-sesgo-origen-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-sesgo-origen-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1115,7 +1069,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Cajas negras: lo que las Big Tech no cuentan</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">Por qué los reportes de sostenibilidad hídrica de Google, Microsoft o Meta ocultan más de lo que muestran.</p>
-          <a href="#" id="open-cajasnegras-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-accent flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-cajasnegras-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1134,7 +1088,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Tu huella hídrica digital: guía de acción</h3>
           <p class="text-muted text-sm mt-2 leading-relaxed pr-12">Hábitos concretos para un uso consciente, y qué exigirles a las empresas y los gobiernos.</p>
-          <a href="#" id="open-guia-accion-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 w-9 h-9 rounded-lg bg-orange flex items-center justify-center hover:brightness-110 transition">
+          <a href="#" id="open-guia-accion-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
         </div>
@@ -1164,7 +1118,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       <p class="text-muted leading-relaxed mb-1.5">Ahora que viste qué hay detrás de una consulta, probá tomar las decisiones que mantienen funcionando una IA.</p>
       <p class="text-muted leading-relaxed mb-6">Elegí cómo enfriar, qué energía usar, cuánto invertir y cómo responder al aumento de demanda.</p>
       <p class="text-ink font-semibold mb-8">¿Qué priorizarías?</p>
-      <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="group btn-pop btn-glow inline-flex items-center gap-2.5 text-white font-bold text-sm sm:text-base px-7 py-4 rounded-xl hover:brightness-110 transition" style="background: linear-gradient(90deg, #06264A, #2952E3);">
+      <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="group sd-btn sd-btn--primary">
         Entrar a SequIA
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -1183,11 +1137,11 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
     <div class="flex items-center justify-between border-b pb-5 mb-12" style="border-color: rgba(255,255,255,0.15);">
       <p class="font-mono text-xs tracking-widest" style="color: #7FB8F0;">MANIFIESTO.</p>
       <div class="flex items-center gap-4">
-        <button id="about-prev" aria-label="Anterior" class="btn-pop w-9 h-9 rounded-full border flex items-center justify-center transition hover:border-accent text-white" style="border-color: rgba(255,255,255,0.3);">
+        <button id="about-prev" aria-label="Anterior" class="sd-btn sd-icon sd-btn--outline-dark">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <span id="about-counter" class="font-mono text-xs text-white/50 shrink-0">01 / 04</span>
-        <button id="about-next" aria-label="Siguiente" class="btn-pop w-9 h-9 rounded-full border flex items-center justify-center transition hover:border-accent text-white" style="border-color: rgba(255,255,255,0.3);">
+        <button id="about-next" aria-label="Siguiente" class="sd-btn sd-icon sd-btn--outline-dark">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -1214,11 +1168,11 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
         <p class="font-mono text-xs text-accent tracking-widest mb-3">PREGUNTAS FRECUENTES.</p>
         <h2 class="reveal text-3xl sm:text-5xl italic font-serif leading-[1.1] mb-6">Dudas comunes sobre el tema.</h2>
         <div id="faq-pills" class="faq-pills">
-        <button data-cat="impacto" class="faq-pill active"><span class="faq-pill-n">01</span><span>Sobre el impacto ambiental</span></button>
-        <button data-cat="cifras" class="faq-pill"><span class="faq-pill-n">02</span><span>Sobre las cifras y la calculadora</span></button>
-        <button data-cat="articulos" class="faq-pill"><span class="faq-pill-n">03</span><span>Sobre los artículos y las fuentes</span></button>
-        <button data-cat="juego" class="faq-pill"><span class="faq-pill-n">04</span><span>Sobre el Cuestionario y SequIA</span></button>
-        <button data-cat="sitio" class="faq-pill"><span class="faq-pill-n">05</span><span>Sobre el sitio</span></button>
+        <button data-cat="impacto" class="faq-pill sd-tab active"><span class="faq-pill-n">01</span><span>Sobre el impacto ambiental</span></button>
+        <button data-cat="cifras" class="faq-pill sd-tab"><span class="faq-pill-n">02</span><span>Sobre las cifras y la calculadora</span></button>
+        <button data-cat="articulos" class="faq-pill sd-tab"><span class="faq-pill-n">03</span><span>Sobre los artículos y las fuentes</span></button>
+        <button data-cat="juego" class="faq-pill sd-tab"><span class="faq-pill-n">04</span><span>Sobre el Cuestionario y SequIA</span></button>
+        <button data-cat="sitio" class="faq-pill sd-tab"><span class="faq-pill-n">05</span><span>Sobre el sitio</span></button>
         </div>
       </div>
 
@@ -1446,11 +1400,11 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
         </div>
         <p class="text-sm text-white/60 leading-relaxed">Un proyecto de divulgación sobre el costo ambiental oculto de la inteligencia artificial.</p>
         <div class="mt-5 flex flex-wrap items-center gap-2.5">
-          <a href="#fuentes" class="inline-flex items-center gap-2 bg-orange text-ink font-semibold text-sm rounded-lg px-4 py-2.5 hover:brightness-110 transition">
+          <a href="#fuentes" class="sd-btn sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
             Sugerí una fuente
           </a>
-          <a href="mailto:seddedatos@gmail.com?subject=Consulta%20desde%20Sed%20de%20Datos" class="inline-flex items-center gap-2 border border-white/30 text-white font-semibold text-sm rounded-lg px-4 py-2.5 hover:border-white transition">Escribinos</a>
+          <a href="mailto:seddedatos@gmail.com?subject=Consulta%20desde%20Sed%20de%20Datos" class="sd-btn sd-btn--outline-dark">Escribinos</a>
         </div>
       </div>
       <div>
@@ -1458,8 +1412,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
         <div class="flex flex-col gap-2.5 text-sm">
           <a href="#como-funciona" class="text-white/80 hover:text-orange transition">Cómo funciona</a>
           <a href="#articulos" class="text-white/80 hover:text-orange transition">Artículos</a>
-          <a href="#calculadora" class="text-white/80 hover:text-orange transition">Calculadora</a>
-          <a href="#quiz" class="text-white/80 hover:text-orange transition">Cuestionario</a>
+          <a href="#calculadora" class="text-white/80 hover:text-orange transition">Calculadora y cuestionario</a>
           <a href="https://sequ-ia.vercel.app/" target="_blank" rel="noopener" class="text-white/80 hover:text-orange transition">SequIA</a>
         </div>
       </div>
@@ -1481,7 +1434,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="comofunciona-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="comofunciona-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-6xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-comofunciona" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-comofunciona" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1532,7 +1485,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="en-practica-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="rounded-2xl max-w-3xl w-full my-4 relative overflow-hidden p-6 sm:p-10" style="background: #06264A;">
     <div class="dot-grid absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(white 1.3px, transparent 1.3px);"></div>
-    <button id="close-en-practica" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/25 text-white flex items-center justify-center hover:border-orange hover:text-orange transition z-10">
+    <button id="close-en-practica" aria-label="Cerrar" class="absolute top-5 right-5 z-10 sd-btn sd-icon sd-btn--outline-dark">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1560,7 +1513,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="fuentes-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="fuentes-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-5xl w-full my-4 relative p-6 sm:p-10">
-    <button id="close-fuentes" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-fuentes" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1665,7 +1618,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 
           <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
           <div class="flex flex-wrap items-center gap-4 pt-2">
-            <button type="submit" id="sf-submit" class="btn-pop inline-flex items-center gap-2 bg-orange text-white font-semibold text-sm px-6 py-3 rounded-xl hover:brightness-110 transition disabled:opacity-60 disabled:cursor-wait">
+            <button type="submit" id="sf-submit" class="sd-btn sd-btn--primary">
               Enviar sugerencia
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -1681,7 +1634,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="geopolitica-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="geopolitica-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-geopolitica" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-geopolitica" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1705,10 +1658,10 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
             <h4 class="text-xl font-semibold mt-2.5 text-white">La Balanza Hídrica: Ciudad vs. Nube</h4>
             <p class="text-sm text-white/50 mt-1">Compará el consumo diario de agua dulce de una población frente a un complejo de procesadores de IA.</p>
           </div>
-          <div id="whb-toggle" class="flex items-center bg-black/25 p-1 rounded-xl border border-white/10 shrink-0 self-start">
-            <button data-unit="litros" class="whb-unit-btn active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Litros/Día</button>
-            <button data-unit="piletas" class="whb-unit-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Piletas Olímpicas</button>
-            <button data-unit="duchas" class="whb-unit-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Duchas (8 min)</button>
+          <div id="whb-toggle" class="flex items-center gap-1 bg-black/25 p-1 rounded-full border border-white/10 shrink-0 self-start">
+            <button data-unit="litros" class="whb-unit-btn sd-tab sd-tab--dark active">Litros/Día</button>
+            <button data-unit="piletas" class="whb-unit-btn sd-tab sd-tab--dark">Piletas Olímpicas</button>
+            <button data-unit="duchas" class="whb-unit-btn sd-tab sd-tab--dark">Duchas (8 min)</button>
           </div>
         </div>
 
@@ -1803,7 +1756,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="refrigeracion-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="refrigeracion-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-refrigeracion" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-refrigeracion" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1874,7 +1827,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="directa-indirecta-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="directa-indirecta-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-directa-indirecta" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-directa-indirecta" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -1970,7 +1923,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="cajasnegras-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="cajasnegras-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-cajasnegras" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-cajasnegras" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2068,7 +2021,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="sesgo-origen-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="sesgo-origen-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-sesgo-origen" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-sesgo-origen" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2092,9 +2045,9 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           <p class="text-sm text-white/50 mt-1 mb-5">Elegí una dimensión y mirá cómo el Norte y el Sur Global viven una misma tecnología de forma opuesta.</p>
 
           <div id="asim-tabs" class="flex flex-wrap gap-2 mb-6">
-            <button data-dim="acceso" class="asim-tab active px-3.5 py-2 text-xs font-semibold rounded-lg border transition-all">Acceso a la información</button>
-            <button data-dim="impacto" class="asim-tab px-3.5 py-2 text-xs font-semibold rounded-lg border transition-all">Impacto en cuencas</button>
-            <button data-dim="gobernanza" class="asim-tab px-3.5 py-2 text-xs font-semibold rounded-lg border transition-all">Gobernanza y marcos regulatorios</button>
+            <button data-dim="acceso" class="asim-tab sd-tab sd-tab--dark active">Acceso a la información</button>
+            <button data-dim="impacto" class="asim-tab sd-tab sd-tab--dark">Impacto en cuencas</button>
+            <button data-dim="gobernanza" class="asim-tab sd-tab sd-tab--dark">Gobernanza y marcos regulatorios</button>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-4">
@@ -2146,7 +2099,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="todos-articulos-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="todos-articulos-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-4xl w-full my-4 relative p-6 sm:p-10">
-    <button id="close-todos-articulos" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-todos-articulos" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2254,7 +2207,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="patagonia-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="patagonia-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-patagonia" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-patagonia" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2273,10 +2226,10 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           <h3 class="text-xl font-semibold mt-2.5 text-white">El Caso Patagonia</h3>
           <p class="text-sm text-white/50 mt-1 mb-5">Tres formas de mirar el mismo proyecto: lo que se promete, lo que se calcula y lo que falta regular.</p>
 
-          <div id="pat-tabs" class="flex flex-wrap gap-2 mb-6 border-b" style="border-color: rgba(255,255,255,0.12);">
-            <button data-tab="promesa" class="pat-tab active px-3.5 py-2.5 text-xs font-semibold transition-all">Promesa Corporativa</button>
-            <button data-tab="calculadora" class="pat-tab px-3.5 py-2.5 text-xs font-semibold transition-all">Calculadora de Demanda Hídrica</button>
-            <button data-tab="semaforo" class="pat-tab px-3.5 py-2.5 text-xs font-semibold transition-all">Semáforo de Leyes y Vacíos</button>
+          <div id="pat-tabs" class="flex flex-wrap gap-2 mb-6">
+            <button data-tab="promesa" class="pat-tab sd-tab sd-tab--dark active">Promesa Corporativa</button>
+            <button data-tab="calculadora" class="pat-tab sd-tab sd-tab--dark">Calculadora de Demanda Hídrica</button>
+            <button data-tab="semaforo" class="pat-tab sd-tab sd-tab--dark">Semáforo de Leyes y Vacíos</button>
           </div>
 
           <!-- Panel 1: Promesa Corporativa -->
@@ -2389,7 +2342,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="guia-accion-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="guia-accion-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-guia-accion" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-guia-accion" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2445,7 +2398,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="generacion-prompt-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="generacion-prompt-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-generacion-prompt" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-generacion-prompt" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2491,7 +2444,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="fake-news-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="fake-news-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-fake-news" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-fake-news" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -2624,7 +2577,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
 <div id="trampa-escala-overlay" class="fixed inset-0 bg-ink/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="trampa-escala-modal" class="fixed inset-0 z-[60] flex items-start justify-center p-4 sm:p-8 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto">
   <div class="bg-bg rounded-2xl max-w-3xl w-full my-4 relative p-6 sm:p-12">
-    <button id="close-trampa-escala" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-line flex items-center justify-center hover:border-accent hover:text-accent transition">
+    <button id="close-trampa-escala" aria-label="Cerrar" class="absolute top-5 right-5 sd-btn sd-icon sd-btn--outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
@@ -3348,7 +3301,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       e.preventDefault();
       closeGpArticle();
       const quizSection = document.getElementById('quiz');
-      if (quizSection) setTimeout(() => quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      if (quizSection) { setTimeout(() => quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
     });
   }
 
@@ -3925,7 +3878,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
     sliderLabel.textContent = cfg.label;
     queriesSlider.min = cfg.min; queriesSlider.max = cfg.max; queriesSlider.step = cfg.step; queriesSlider.value = cfg.value;
     sliderMin.textContent = cfg.min; sliderMax.textContent = cfg.max;
-    calcNote.textContent = cfg.note;
+    if (calcNote) calcNote.textContent = cfg.note;
     updateCalc();
   }
 
@@ -4330,7 +4283,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
   function renderQuizStep() {
     const q = quizData[quizStep];
     quizStepLabel.textContent = `Pregunta ${quizStep + 1} de ${quizData.length}`;
-    quizProgressBar.style.width = `${((quizStep) / quizData.length) * 100 + (100 / quizData.length)}%`;
+    quizProgressBar.style.setProperty('--p', (quizStep / quizData.length).toFixed(3));
     const neutral = q.options.every(o => !o.points);
 
     quizQ.innerHTML = `
@@ -4346,6 +4299,9 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       </div>
     `;
     updateQuizMeter();
+    quizQ.classList.remove('is-leaving', 'is-entering');
+    void quizQ.offsetWidth;
+    quizQ.classList.add('is-entering');
 
     const list = quizQ.querySelector('.qm-list');
     quizQ.querySelectorAll('.quiz-option').forEach(btn => {
@@ -4364,15 +4320,18 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
         if (opt.note) quizAwareness = opt.note;
         if (opt.commitment) quizCommitment = opt.commitment;
         updateQuizMeter();
+        quizProgressBar.style.setProperty('--p', ((quizStep + 1) / quizData.length).toFixed(3));
 
+        const last = quizStep >= quizData.length - 1;
+        setTimeout(() => quizQ.classList.add('is-leaving'), last ? 380 : 300);
         setTimeout(() => {
-          if (quizStep < quizData.length - 1) {
+          if (!last) {
             quizStep++;
             renderQuizStep();
           } else {
             showQuizResult();
           }
-        }, 650);
+        }, last ? 560 : 500);
       });
     });
   }
@@ -4414,7 +4373,6 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
   quizRestartBtn.addEventListener('click', restartQuiz);
   quizRestartBtn2.addEventListener('click', restartQuiz);
   renderQuizStep();
-
 
   // ---- Nosotros: pestañas ----
   const aboutSlides = [
