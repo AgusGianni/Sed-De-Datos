@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#06264A">
+<script>/* Portada: el texto arranca oculto desde el primer pintado (si el script principal no llega, se muestra solo) */(function(){try{if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){var d=document.documentElement;d.classList.add("hx-rv");setTimeout(function(){if(!window.__hxRv)d.classList.remove("hx-rv")},9000)}}catch(e){}})();</script>
 <title>Sed de Datos — El costo oculto de la inteligencia artificial</title>
 <meta name="description" content="Calculá cuánta agua y electricidad gasta tu uso de IA, entendé de dónde sale ese costo y probá administrar tu centro de datos en SequIA, el simulador.">
 
@@ -185,6 +186,7 @@
   html.hx-rv .hx-say .letter, html.hx-rv .hx-say .sw { display: inline-block; opacity: .08; filter: blur(7px); transform: translateY(8px); animation: none; transition: opacity .9s ease, filter .9s ease, transform .9s cubic-bezier(.22,.61,.36,1); will-change: opacity, filter, transform; }
   html.hx-rv .hx-say .letter.on, html.hx-rv .hx-say .sw.on { opacity: 1; filter: none; transform: none; }
   html.hx-rv .hx-sub { touch-action: pan-y; }
+  html.hx-rv .hx-sub:not([aria-label]) { visibility: hidden; }
   html.hx-rv .hx-btns { opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .8s ease, transform .8s ease; }
   html.hx-rv .hx-btns.on, html.hx-rv .hx-btns:focus-within { opacity: 1; transform: none; pointer-events: auto; }
   html.hx-rv .hx-hint, html.hx-rv .hx-cue { display: flex; position: absolute; left: 50%; bottom: 2.25rem; translate: -50% 0; z-index: 2; flex-direction: column; align-items: center; gap: .5rem; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #06264A; transition: opacity .6s ease; }
@@ -802,42 +804,33 @@ body .sd-div { position: relative; height: 0; z-index: 7; pointer-events: none; 
 .hx-drops { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; }
 html.hx-gl .hx-photo { display: none; }
 /* Simulador 3D */
-/* ---- Simulador 3D: escena a pantalla completa con paneles de vidrio (referencia: water-simulation.vercel.app) ---- */
+/* ---- Simulador 3D: sala de servidores a pantalla completa con paneles de vidrio ---- */
 body #simulador-modal .ap-card { padding: 0; max-width: none; }
 body #simulador-modal .ap-card > p, body #simulador-modal .ap-card > h2 { display: none; }
-.sim { position: relative; width: 100%; height: calc(100vh - 80px); height: calc(100svh - 80px); min-height: 480px; overflow: hidden; background: #7e9cc7; color: #fff; font-family: Inter, system-ui, sans-serif; }
-.sim-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; outline: none; }
+.sim { position: relative; width: 100%; height: calc(100vh - 80px); height: calc(100svh - 80px); min-height: 480px; overflow: hidden; background: #cfd9e4; color: #fff; font-family: Inter, system-ui, sans-serif; }
+.sim::before { content: ''; position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 9.5rem; background: linear-gradient(180deg, rgba(6,38,74,.62), rgba(6,38,74,0)); pointer-events: none; }
+.sim-cv { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; outline: none; }
 .sim-cv.grab { cursor: grabbing; }
 .sim-cv:focus-visible { outline: 3px solid rgba(255,255,255,.8); outline-offset: -6px; }
-.sim-title { position: absolute; z-index: 3; left: clamp(1.25rem, 3.4vw, 3rem); top: clamp(1rem, 3vw, 2.2rem); max-width: min(30rem, 54%); pointer-events: none; text-shadow: 0 1px 18px rgba(30,50,90,.35); }
-body .sim-title h2 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact, sans-serif; font-weight: 400; font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: .95; letter-spacing: .01em; margin: 0 0 .6rem; color: #fff; text-transform: none; }
-.sim-title p { font-size: clamp(.78rem, 1.25vw, .92rem); line-height: 1.35; color: rgba(255,255,255,.95); max-width: 21rem; margin: 0; }
-.sim-bar { position: absolute; z-index: 4; right: clamp(1.25rem, 3.4vw, 3rem); top: clamp(1.1rem, 3.2vw, 2.4rem); display: flex; gap: .7rem; }
-.sim-pill { display: inline-flex; align-items: center; gap: .7rem; padding: .5rem .85rem .5rem 1.15rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.75); background: rgba(255,255,255,.08); color: #fff; font: 500 .8rem/1 Inter, system-ui, sans-serif; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .2s ease; }
-.sim-pill:hover, .sim-pill:focus-visible, .sim-pill[aria-expanded="true"] { background: rgba(255,255,255,.24); outline: none; }
+.sim-title { position: absolute; z-index: 3; left: clamp(1.25rem, 3.4vw, 3rem); top: clamp(1rem, 3vw, 2.2rem); max-width: min(30rem, 50%); pointer-events: none; text-shadow: 0 1px 16px rgba(0,16,44,.7); }
+body .sim-title h2 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact, sans-serif; font-weight: 400; font-size: clamp(2.2rem, 4.8vw, 4rem); line-height: .95; letter-spacing: .01em; margin: 0 0 .5rem; color: #fff; text-transform: none; }
+.sim-title p { font-size: clamp(.74rem, 1.15vw, .86rem); line-height: 1.4; color: rgba(255,255,255,.94); max-width: 22rem; margin: 0; }
+.sim-bar { position: absolute; z-index: 4; right: clamp(1.25rem, 3.4vw, 3rem); top: clamp(1.1rem, 3.2vw, 2.4rem); display: flex; gap: .7rem; transition: opacity .25s ease, visibility 0s; }
+.sim-pill { display: inline-flex; align-items: center; gap: .7rem; padding: .5rem .85rem .5rem 1.15rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.75); background: rgba(6,38,74,.5); color: #fff; font: 500 .8rem/1 Inter, system-ui, sans-serif; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background .2s ease; }
+.sim-pill:hover, .sim-pill:focus-visible, .sim-pill[aria-expanded="true"], .sim-pill[aria-pressed="true"] { background: rgba(255,255,255,.3); outline: none; }
 .sim-pill svg { width: 1.5rem; height: 1.5rem; flex: none; }
-.sim.pn .sim-bar, .sim.pn .sim-title { opacity: 0; visibility: hidden; }
+.sim-pill .sm { display: none; }
+.sim.pn .sim-bar, .sim.pn .sim-title, .sim.pn .srv-step, .sim.pn .srv-card { opacity: 0; visibility: hidden; }
 .sim-title { transition: opacity .25s ease; }
-#sim-mode { display: none; }
-@media (max-width: 767px) { #sim-mode { display: inline-flex; } }
-.sim-bar { transition: opacity .25s ease, visibility 0s; }
-.sim-tip { position: absolute; z-index: 3; left: 50%; bottom: 1.1rem; transform: translateX(-50%); width: max-content; max-width: calc(100% - 2rem); text-align: center; font-size: .72rem; color: rgba(255,255,255,.72); pointer-events: none; transition: opacity .6s ease; margin: 0; }
+.sim-tip { position: absolute; z-index: 3; left: 50%; bottom: 4.4rem; transform: translateX(-50%); width: max-content; max-width: calc(100% - 2rem); text-align: center; font-size: .72rem; color: #fff; padding: .35rem .8rem; border-radius: 99px; background: rgba(6,38,74,.5); pointer-events: none; transition: opacity .6s ease; margin: 0; }
 .sim-tip.off { opacity: 0; }
-.sim-panel { position: absolute; z-index: 6; top: 1.1rem; right: 1.1rem; bottom: 1.1rem; width: min(23.5rem, calc(100% - 2.2rem)); padding: 1.7rem 1.7rem 1.4rem; overflow-y: auto; overscroll-behavior: contain; border-radius: 1.1rem; border: 1px solid rgba(255,255,255,.35); background: linear-gradient(150deg, rgba(255,255,255,.26), rgba(110,120,200,.3) 60%, rgba(80,90,170,.34)); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); box-shadow: 0 18px 50px rgba(20,30,70,.3); color: #fff; transform: translateX(24px); opacity: 0; visibility: hidden; transition: transform .35s ease, opacity .35s ease, visibility 0s .35s; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.4) transparent; }
+.sim-panel { position: absolute; z-index: 6; top: 1.1rem; right: 1.1rem; bottom: 1.1rem; width: min(23.5rem, calc(100% - 2.2rem)); padding: 1.7rem 1.7rem 1.4rem; overflow-y: auto; overscroll-behavior: contain; border-radius: 1.1rem; border: 1px solid rgba(255,255,255,.35); background: linear-gradient(150deg, rgba(20,60,120,.88), rgba(8,34,74,.9) 60%, rgba(6,26,56,.92)); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); box-shadow: 0 18px 50px rgba(0,10,40,.4); color: #fff; transform: translateX(24px); opacity: 0; visibility: hidden; transition: transform .35s ease, opacity .35s ease, visibility 0s .35s; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.4) transparent; }
 .sim-panel.open { transform: none; opacity: 1; visibility: visible; transition-delay: 0s; }
 .sim-x { position: sticky; float: right; top: 0; z-index: 2; margin: -.6rem -.6rem 0 .5rem; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 0; background: rgba(60,70,100,.55); color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 .sim-x:hover, .sim-x:focus-visible { background: rgba(60,70,100,.8); outline: none; }
 body .sim-panel h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact, sans-serif; font-weight: 400; font-size: 2rem; line-height: 1; margin: 0 0 .4rem; color: #fff; text-transform: none; letter-spacing: .01em; }
 .sim-note { font-size: .78rem; line-height: 1.4; color: rgba(255,255,255,.85); margin: 0 0 1rem; }
-.sim-note--warn { margin: 0 0 .8rem; }
 .sim-panel section + section { margin-top: 2rem; }
-.sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
-.sim-opt { position: relative; aspect-ratio: 1 / .92; border-radius: .8rem; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.1); color: #fff; text-align: left; padding: 0; overflow: hidden; cursor: pointer; font: 500 .72rem Inter, system-ui, sans-serif; transition: background .2s ease, border-color .2s ease; }
-.sim-opt:hover, .sim-opt:focus-visible { background: rgba(255,255,255,.2); outline: none; }
-.sim-opt.active { background: rgba(255,255,255,.3); border-color: rgba(255,255,255,.85); }
-.sim-opt .th { position: absolute; left: .55rem; right: .55rem; top: .55rem; bottom: 1.7rem; border-radius: .5rem; overflow: hidden; display: block; }
-.sim-opt .th svg { width: 100%; height: 100%; display: block; }
-.sim-opt .lb { position: absolute; left: .65rem; bottom: .5rem; }
 .sim-radio { display: flex; gap: .75rem; align-items: flex-start; padding: .3rem 0; cursor: pointer; }
 .sim-radio input { position: absolute; opacity: 0; pointer-events: none; }
 .sim-radio i { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .12rem; border: 2px solid rgba(255,255,255,.92); border-radius: 50%; position: relative; }
@@ -852,23 +845,57 @@ body .sim-panel h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact
 .sim-panel input[type="range"]::-moz-range-track { height: .9rem; border-radius: 99px; background: rgba(255,255,255,.24); }
 .sim-panel input[type="range"]::-moz-range-thumb { width: 1.3rem; height: 1.3rem; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.25); }
 .sim-panel input[type="range"]:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 99px; }
-.sim-wheel { position: relative; width: min(12.5rem, 70%); aspect-ratio: 1; margin: .4rem auto .6rem; touch-action: none; cursor: pointer; border-radius: 50%; background: conic-gradient(from 90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); -webkit-mask: radial-gradient(circle, transparent 57%, #000 58.5%); mask: radial-gradient(circle, transparent 57%, #000 58.5%); outline: none; }
-.sim-wheel-wrap { position: relative; width: min(12.5rem, 70%); aspect-ratio: 1; margin: .4rem auto .6rem; }
-.sim-wheel-wrap .sim-wheel { position: absolute; inset: 0; width: 100%; margin: 0; }
-.sim-wheel-c { position: absolute; left: 50%; top: 50%; width: 36%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 4px solid #fff; background: #8feaff; box-shadow: 0 2px 10px rgba(0,0,0,.2); pointer-events: none; }
-.sim-wheel-h { position: absolute; width: 1.15rem; height: 1.15rem; margin: -.575rem 0 0 -.575rem; border-radius: 50%; border: 3px solid #fff; background: transparent; box-shadow: 0 1px 6px rgba(0,0,0,.35); pointer-events: none; }
 .sim-btn { display: inline-block; margin-top: .4rem; padding: .7rem 1.4rem; border: 0; border-radius: 999px; background: #fff; color: #1b2440; font: 600 .8rem/1 Inter, system-ui, sans-serif; letter-spacing: .02em; text-decoration: none; cursor: pointer; }
 .sim-btn:hover, .sim-btn:focus-visible { background: #e8f1ff; outline: none; }
-.sim-load { position: absolute; inset: 0; z-index: 9; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; background: #7092bb; }
+.sim-load { position: absolute; inset: 0; z-index: 9; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; background: #284a73; }
 .sim-load.off { display: none; }
-@media (prefers-reduced-motion: reduce) { .sim-panel { transition: none; } }
+/* recorrido: lista de paradas */
+.srv-list { display: flex; flex-direction: column; gap: .4rem; margin: 0 0 1rem; }
+.srv-stop { display: flex; align-items: center; gap: .8rem; text-align: left; padding: .55rem .7rem; border-radius: .7rem; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; font: 500 .84rem/1.2 Inter, system-ui, sans-serif; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+.srv-stop:hover, .srv-stop:focus-visible { background: rgba(255,255,255,.2); outline: none; }
+.srv-stop[aria-current="step"] { background: rgba(79,214,255,.22); border-color: #4FD6FF; }
+.srv-stop b { flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 2px solid #fff; display: inline-flex; align-items: center; justify-content: center; font: 600 .74rem/1 Inter, system-ui, sans-serif; }
+.srv-stop small { display: block; font-size: .72rem; font-weight: 400; color: rgba(255,255,255,.8); margin-top: .12rem; }
+/* puntos de información, tarjeta y barra del recorrido */
+#srv-hs { position: absolute; z-index: 3; inset: 0; overflow: hidden; pointer-events: none; }
+.srv-hs { position: absolute; left: 0; top: 0; pointer-events: auto; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 2px solid #fff; background: rgba(6,38,74,.72); color: #fff; font: 600 .82rem/1 Inter, system-ui, sans-serif; cursor: pointer; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); animation: srvPulse 2.2s ease-out infinite; padding: 0; will-change: transform; }
+.srv-hs--t { width: auto; height: 2.1rem; display: inline-flex; align-items: center; gap: .45rem; padding: 0 .85rem 0 .22rem; border-radius: 99px; white-space: nowrap; border-width: 1.5px; background: rgba(6,38,74,.82); }
+.srv-hs--t i { font-style: normal; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: #fff; color: #0b1a3a; display: grid; place-items: center; font-weight: 700; font-size: .8rem; flex: none; }
+.srv-hs--t span { font-size: .74rem; font-weight: 600; letter-spacing: .01em; }
+.srv-hs--t:hover i, .srv-hs--t:focus-visible i, .srv-hs--t[aria-pressed="true"] i { background: #0b1a3a; color: #fff; }
+@media (max-width: 760px) { .srv-hs--t { height: 1.9rem; gap: .35rem; padding-right: .65rem; } .srv-hs--t i { width: 1.45rem; height: 1.45rem; } .srv-hs--t span { font-size: .68rem; } }
+.srv-hs--s { width: 1.6rem; height: 1.6rem; font-size: .7rem; border-width: 1.5px; }
+.srv-hs:hover, .srv-hs:focus-visible, .srv-hs[aria-pressed="true"] { background: #fff; color: #0b1a3a; outline: none; animation: none; }
+@keyframes srvPulse { 0% { box-shadow: 0 0 0 0 rgba(79,214,255,.7); } 70% { box-shadow: 0 0 0 14px rgba(79,214,255,0); } 100% { box-shadow: 0 0 0 0 rgba(79,214,255,0); } }
+.srv-card { position: absolute; z-index: 5; right: 1.1rem; bottom: 1.1rem; width: min(25rem, calc(100% - 2.2rem)); max-height: calc(100% - 7rem); overflow-y: auto; padding: 1.5rem 1.6rem 1.2rem; border-radius: 1.1rem; border: 1px solid rgba(255,255,255,.35); background: linear-gradient(150deg, rgba(20,60,120,.88), rgba(8,34,74,.9) 60%, rgba(6,26,56,.92)); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); box-shadow: 0 18px 50px rgba(0,10,40,.4); color: #fff; pointer-events: auto; transform: translateY(14px); opacity: 0; visibility: hidden; transition: transform .35s ease, opacity .35s ease, visibility 0s .35s; }
+.srv-card.open { transform: none; opacity: 1; visibility: visible; transition-delay: 0s; }
+.srv-k { font: 600 .66rem/1 'IBM Plex Mono', ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; color: #8feaff; margin: 0 0 .55rem; padding-right: 2rem; }
+body .srv-card h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact, sans-serif; font-weight: 400; font-size: 2rem; line-height: 1; margin: 0 0 .6rem; color: #fff; text-transform: none; letter-spacing: .01em; padding-right: 2rem; }
+.srv-b { font-size: .84rem; line-height: 1.5; color: rgba(255,255,255,.95); margin: 0; }
+.srv-s { font-size: .7rem; line-height: 1.4; color: rgba(255,255,255,.75); margin: .9rem 0 0; }
+.srv-s:empty { display: none; }
+.srv-s a { color: #cfefff; text-decoration: underline; text-underline-offset: 2px; }
+.srv-x { position: absolute; top: .8rem; right: .8rem; width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 0; background: rgba(60,70,100,.55); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.srv-x:hover, .srv-x:focus-visible { background: rgba(60,70,100,.85); outline: none; }
+.srv-step { position: absolute; z-index: 4; left: 50%; bottom: 1.1rem; transform: translateX(-50%); display: flex; align-items: center; gap: .5rem; padding: .3rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.75); background: rgba(6,38,74,.62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: opacity .25s ease, visibility 0s; }
+.srv-step button { width: 2.3rem; height: 2.3rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.18); color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.srv-step button:hover, .srv-step button:focus-visible { background: rgba(255,255,255,.4); outline: none; }
+#srv-stepl { min-width: 11rem; max-width: 15rem; text-align: center; font: 500 .78rem/1.1 Inter, system-ui, sans-serif; padding: 0 .3rem; }
+@media (prefers-reduced-motion: reduce) { .sim-panel, .srv-card { transition: none; } .srv-hs { animation: none; } }
+@media (max-width: 1000px) { .srv-step { left: 1.1rem; transform: none; } .sim-tip { display: none; } }
 @media (max-width: 760px) {
   .sim-title { max-width: 62%; }
-  .sim-bar { top: auto; bottom: 1rem; left: .6rem; right: .6rem; justify-content: center; flex-wrap: wrap; gap: .4rem; }
+  .sim-bar { top: auto; bottom: .8rem; left: .6rem; right: .6rem; justify-content: center; flex-wrap: wrap; gap: .4rem; }
   .sim-pill { padding: .4rem .5rem .4rem .8rem; gap: .35rem; font-size: .72rem; }
   .sim-pill svg { width: 1.15rem; height: 1.15rem; }
+  .sim-pill .lg { display: none; }
+  .sim-pill .sm { display: inline; }
   .sim-panel { top: auto; left: .7rem; right: .7rem; bottom: .7rem; width: auto; height: 74%; padding: 1.3rem 1.2rem 1.1rem; }
-  .sim-tip { display: none; }
+  .srv-step { left: 50%; transform: translateX(-50%); bottom: 3.9rem; }
+  #srv-stepl { min-width: 9rem; max-width: 11rem; }
+  .srv-card { left: .7rem; right: .7rem; bottom: 7.2rem; width: auto; max-height: 38%; padding: 1.1rem 1.2rem .9rem; }
+  .srv-b { font-size: .8rem; }
+  .srv-card h3 { font-size: 1.7rem; }
 }
 </style>
 <!-- Tailwind compilado (reemplaza al script del CDN): va al final del <head> para conservar el orden de la cascada -->
@@ -887,12 +914,11 @@ body .sim-panel h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact
 <aside id="nav-panel" aria-label="Menú">
   <nav id="nav-main-list" aria-label="Secciones del sitio">
       <a href="#inicio" class="nav-link menu-item" style="--k:0"><span class="grande">Inicio</span></a>
-      <a href="#articulo-simulador" data-open-sim class="nav-link menu-item" style="--k:1"><span class="grande">Simulador 3D</span></a>
+      <a href="#articulo-nosotros" data-open-nosotros class="nav-link menu-item" style="--k:1"><span class="grande">Nosotros</span></a>
       <div class="menu-item" style="--k:2"><div class="menu-archivo"><a href="#articulos" class="nav-link grande">Aprender</a><div class="menu-sub"><a href="#articulos" class="nav-link">↳ Artículos</a><a href="#fuentes" class="nav-link">↳ Fuentes</a></div></div></div>
-      <a href="#articulo-nosotros" data-open-nosotros class="nav-link menu-item" style="--k:3"><span class="grande">Nosotros</span></a>
-      <a href="#calculadora" class="nav-link menu-item" style="--k:4"><span class="grande">Calculadora y cuestionario</span></a>
+      <a href="#articulo-simulador" data-open-sim class="nav-link menu-item" style="--k:3"><span class="grande">Simulador 3D</span></a>
+      <a href="#faq" class="nav-link menu-item" style="--k:4"><span class="grande">Preguntas frecuentes</span></a>
       <div class="menu-item" style="--k:5"><div class="menu-archivo"><a href="#jugar" class="nav-link grande">SequIA</a><div class="menu-sub"><a href="#jugar" class="nav-link">↳ Sobre SequIA</a><a href="https://sequ-ia.vercel.app/" class="nav-link" target="_blank" rel="noopener">↳ Jugar ahora ↗</a></div></div></div>
-      <a href="#faq" class="nav-link menu-item" style="--k:6"><span class="grande">Preguntas frecuentes</span></a>
   </nav>
   <div class="menu-lateral">
     <a href="#calculadora" class="nav-link menu-poema" style="--k:7"><span class="chico">¿CUÁNTO GASTÁS VOS?</span><span class="grande2">Calculá tu huella →</span></a>
@@ -1094,7 +1120,7 @@ body .sim-panel h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact
           <span class="qz-sticker" aria-hidden="true">3D</span>
           <div class="simcard-txt">
             <p class="simcard-title">SIMULADOR 3D.</p>
-            <p class="simcard-sub">Metete bajo el agua de un centro de datos.</p>
+            <p class="simcard-sub">Recorré una sala de servidores por dentro.</p>
           </div>
           <button type="button" id="open-simulador" class="sd-btn sd-btn--outline" data-open-sim>Abrir simulador <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
@@ -1945,56 +1971,61 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
     <p class="font-mono text-xs text-accent tracking-widest mb-3 pr-12">SIMULADOR 3D.</p>
-    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Explorá el agua</h2>
-    <p class="text-muted italic leading-relaxed mb-8">Un centro de datos bajo el agua. Girá la cámara, sumergite y tirá gotas para ver cómo se mueve.</p>
-    <div id="simulador" class="sim" role="region" aria-label="Simulador 3D de agua" data-scene="mediodia">
-      <canvas id="sim-cv" class="sim-cv" tabindex="0" aria-label="Pileta en 3D con servidores sumergidos. Arrastrá para girar la cámara, usá la rueda o pellizcá para acercarte y sumergirte, y tocá el agua para tirar una gota."></canvas>
-      <div class="sim-title"><h2>El agua de la IA</h2><p>Simulación de agua con cáusticas y efectos bajo el agua, hecha para Sed de Datos.</p></div>
-      <div class="sim-bar" role="toolbar" aria-label="Controles del simulador">
-        <button type="button" id="sim-dive" class="sim-pill" aria-pressed="false"><span>Sumergirse</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21c2.5 2 4.5 2 7 0s4.5-2 7 0 4.5 2 7 0"/><path d="M9 15c1.5-4.5 6-7 10-5.5 2.5 1 3.5 3 3.5 5.5"/><path d="M22.5 15l4-2.5"/><circle cx="16.5" cy="12.5" r=".9" fill="currentColor"/></svg></button>
-        <button type="button" id="sim-mode" class="sim-pill" aria-pressed="false"><span>Agua</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 5c-4 6-9 10.5-9 16a9 9 0 0 0 18 0c0-5.500-5-10-9-16z"/></svg></button>
-        <button type="button" id="sim-b-esc" class="sim-pill" aria-expanded="false" aria-controls="sim-p-esc"><span>Escenas</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21a7 7 0 1 1 14 0"/><path d="M16 6v3M6.5 10l2 2M25.5 10l-2 2M4 21h3M25 21h3M5 26h22M9 29.5h14"/></svg></button>
-        <button type="button" id="sim-b-cfg" class="sim-pill" aria-expanded="false" aria-controls="sim-p-cfg"><span>Configurar</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="4.2"/><path d="M16 4.5l1.9 3.1 3.6-.9 1 3.6 3.6 1-.9 3.6 3.1 1.9-3.1 1.9.9 3.6-3.6 1-1 3.6-3.6-.9L16 27.5l-1.9-3.1-3.6.9-1-3.6-3.6-1 .9-3.6L4.5 16l3.1-1.9-.9-3.6 3.6-1 1-3.6 3.6.9z"/></svg></button>
+    <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Recorré una sala de servidores</h2>
+    <p class="text-muted italic leading-relaxed mb-8">Una sala de servidores en 3D. Seguí el recorrido guiado o girá la cámara a mano.</p>
+    <div id="simulador" class="sim" role="region" aria-label="Simulador 3D de una sala de servidores">
+      <canvas id="srv-cv" class="sim-cv" tabindex="0" aria-label="Sala de servidores en 3D. Arrastrá para mirar alrededor, usá la rueda, el pellizco o las teclas W A S D para caminar por la sala, y seguí el recorrido guiado o tocá los puntos numerados para ver cómo funciona cada parte."></canvas>
+      <div class="sim-title"><h2>Una sala de servidores</h2><p>Recorrela paso a paso o girá la cámara a mano: así se ve por dentro la infraestructura que responde cada consulta de IA.</p></div>
+      <div class="sim-bar" role="toolbar" aria-label="Controles de la sala">
+        <button type="button" id="srv-b-tour" class="sim-pill" aria-expanded="false" aria-controls="srv-p-tour"><span>Recorrido</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="23" r="2.5"/><circle cx="24" cy="9" r="2.5"/><path d="M10.5 23H19a4 4 0 000-8h-6a4 4 0 010-8h8.5"/></svg></button>
+        <button type="button" id="srv-xray" class="sim-pill" aria-pressed="false"><span class="lg">Ver el flujo del líquido</span><span class="sm">Flujo</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 5c-4 5.5-7 9-7 13a7 7 0 0014 0c0-4-3-7.5-7-13z"/><path d="M12.5 19a3.5 3.5 0 003.5 3.5"/></svg></button>
+        <button type="button" id="srv-b-cfg" class="sim-pill" aria-expanded="false" aria-controls="srv-p-cfg"><span>Configurar</span><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10h12M23 10h4M5 22h4M15 22h12"/><circle cx="20" cy="10" r="3"/><circle cx="12" cy="22" r="3"/></svg></button>
       </div>
-      <aside id="sim-p-esc" class="sim-panel" aria-label="Escenas" aria-hidden="true">
+      <div id="srv-hs"></div>
+      <aside id="srv-card" class="srv-card" aria-hidden="true" aria-live="polite">
+        <button type="button" class="srv-x" aria-label="Cerrar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <p class="srv-k"></p><h3></h3><p class="srv-b"></p><p class="srv-s"></p>
+      </aside>
+      <div class="srv-step" role="group" aria-label="Recorrido guiado">
+        <button type="button" id="srv-prev" aria-label="Parada anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span id="srv-stepl" aria-live="polite">Recorrido guiado</span>
+        <button type="button" id="srv-next" aria-label="Parada siguiente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <aside id="srv-p-tour" class="sim-panel" aria-label="Recorrido" aria-hidden="true">
         <button type="button" class="sim-x" data-close aria-label="Cerrar panel"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         <section>
-          <h3>Momento del día</h3>
-          <p class="sim-note">Cambia la luz, el cielo y el color del agua.</p>
-          <div class="sim-grid">
-            <button type="button" class="sim-opt" data-scene="manana" aria-pressed="false"><span class="th" style="background:linear-gradient(#5d8fe6,#fbcdb0)"></span><span class="lb">Mañana</span></button>
-            <button type="button" class="sim-opt" data-scene="mediodia" aria-pressed="false"><span class="th" style="background:linear-gradient(#3f7fee,#d3eaff)"></span><span class="lb">Mediodía</span></button>
-            <button type="button" class="sim-opt" data-scene="atardecer" aria-pressed="false"><span class="th" style="background:linear-gradient(#2b3375,#ff854d)"></span><span class="lb">Atardecer</span></button>
-            <button type="button" class="sim-opt" data-scene="noche" aria-pressed="false"><span class="th" style="background:linear-gradient(#030818,#16275a)"></span><span class="lb">Noche</span></button>
-          </div>
+          <h3>Recorrido</h3>
+          <p class="sim-note">Siete paradas para entender qué hay en una sala de servidores. Tocá una para ir directo.</p>
+          <div id="srv-list" class="srv-list"></div>
+          <button type="button" id="srv-go" class="sim-btn">Empezar desde el principio</button>
+        </section>
+        <section>
+          <h3>Dentro de la bandeja</h3>
+          <p class="sim-note">Cinco puntos sobre una bandeja de cómputo con refrigeración líquida. Se ven al acercarte al carro del pasillo.</p>
+          <div id="srv-list2" class="srv-list"></div>
         </section>
       </aside>
-      <aside id="sim-p-cfg" class="sim-panel" aria-label="Configuración" aria-hidden="true">
+      <aside id="srv-p-cfg" class="sim-panel" aria-label="Configuración" aria-hidden="true">
         <button type="button" class="sim-x" data-close aria-label="Cerrar panel"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
         <section>
           <h3>Calidad</h3>
-          <p class="sim-note sim-note--warn">Se aplica al instante y ajusta la resolución del agua.</p>
-          <label class="sim-radio"><input type="radio" name="simq" value="perf"><i></i><span><b>Rendimiento</b><small>Menos resolución y menos detalle del agua</small></span></label>
-          <label class="sim-radio"><input type="radio" name="simq" value="bal"><i></i><span><b>Equilibrado</b><small>Resolución y detalle por defecto</small></span></label>
-          <label class="sim-radio"><input type="radio" name="simq" value="ultra"><i></i><span><b>Ultra</b><small>Máxima resolución del agua y de las cáusticas</small></span></label>
+          <p class="sim-note">Se aplica al instante. Si tu dispositivo va lento, elegí Rendimiento.</p>
+          <label class="sim-radio"><input type="radio" name="srvq" value="perf"><i></i><span><b>Rendimiento</b><small>Menos resolución, más fluidez</small></span></label>
+          <label class="sim-radio"><input type="radio" name="srvq" value="bal"><i></i><span><b>Equilibrado</b><small>Resolución y detalle por defecto</small></span></label>
+          <label class="sim-radio"><input type="radio" name="srvq" value="ultra"><i></i><span><b>Ultra</b><small>Máxima resolución</small></span></label>
         </section>
         <section>
-          <h3>Luz</h3>
-          <label class="sim-lbl" for="sim-az">Rotación</label>
-          <input id="sim-az" type="range" min="0" max="360" step="1" value="35">
-          <label class="sim-lbl" for="sim-el">Elevación</label>
-          <input id="sim-el" type="range" min="6" max="85" step="1" value="58">
+          <h3>Luz de la sala</h3>
+          <label class="sim-lbl" for="srv-lum">Intensidad</label>
+          <input id="srv-lum" type="range" min="0" max="100" step="1" value="55">
+          <p class="sim-note" style="margin-top:.6rem">Con poca luz se destacan los LED de los equipos.</p>
         </section>
         <section>
-          <h3>Agua</h3>
-          <div class="sim-wheel-wrap"><div id="sim-wheel" class="sim-wheel" role="slider" tabindex="0" aria-label="Color del agua (tono)" aria-valuemin="0" aria-valuemax="360" aria-valuenow="190"></div><div id="sim-wheel-c" class="sim-wheel-c"></div><div id="sim-wheel-h" class="sim-wheel-h"></div></div>
-          <label class="sim-lbl" for="sim-lum">Luminosidad</label>
-          <input id="sim-lum" type="range" min="20" max="100" step="1" value="80">
-          <label class="sim-lbl" for="sim-rough">Rugosidad</label>
-          <input id="sim-rough" type="range" min="0" max="100" step="1" value="0">
+          <h3>Puntos</h3>
+          <label class="sim-radio"><input type="checkbox" id="srv-pins" checked><i></i><span><b>Mostrar los puntos numerados</b><small>Marcan cada parada del recorrido</small></span></label>
         </section>
       </aside>
-      <p class="sim-tip" id="sim-tip">Tip: acercate con la rueda o pellizcando para sumergirte, y alejate para ver las gotas en la pantalla</p>
+      <p class="sim-tip" id="sim-tip">Arrastrá para mirar · rueda o W A S D para caminar</p>
       <div class="sim-load off" id="sim-load" role="status"></div>
     </div>
     </div>
@@ -2926,790 +2957,769 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
     })();
   })();
 
-  // ---- Simulador 3D: pileta con agua (ondas, caustics, reflejos) y racks sumergidos ----
+  // ---- Simulador 3D: sala de servidores (recorrido guiado + cámara libre) ----
+  // Escena propia en WebGL2 con geometría procedural: sala de datos con racks, una bandeja con refrigeración líquida
+  // extraída sobre un carro de servicio, sala de bombas (CDU), sala eléctrica y la torre de refrigeración afuera.
   (function () {
-    const sec = document.getElementById('simulador');
-    const cv = document.getElementById('sim-cv');
+    const sec = document.getElementById('simulador'), cv = document.getElementById('srv-cv');
     if (!sec || !cv) return;
-    const giveUp = () => { const ld = document.getElementById('sim-load'); if (ld) { ld.classList.remove('off'); ld.innerHTML = '<p style="max-width:24rem;font-size:.9rem;color:#fff">Tu navegador o dispositivo no soporta el simulador 3D (necesita WebGL 2).</p>'; } const cd = document.getElementById('sim-card'); if (cd) cd.style.display = 'none'; document.querySelectorAll('[data-open-sim]').forEach(a => { const m = a.closest('.menu-item') || a; m.style.display = 'none'; }); };
-    const gl = cv.getContext('webgl2', { antialias: true, alpha: false, powerPreference: 'high-performance' });
-    if (!gl || !(gl.getExtension('EXT_color_buffer_float') || gl.getExtension('EXT_color_buffer_half_float'))) { giveUp(); return; }
-    gl.getExtension('OES_texture_float_linear');
+    const $ = (id) => document.getElementById(id);
+    const card = $('srv-card'), hsBox = $('srv-hs'), pageEl = $('simulador-modal');
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const RATE = ((2500000000 * 0.01551) / 86400) / 75; // gotas/s, mismo ritmo que el hero
+    const giveUp = () => { const ld = $('sim-load'); if (ld) { ld.classList.remove('off'); ld.innerHTML = '<p style="max-width:24rem;font-size:.9rem;color:#fff">Tu navegador o dispositivo no soporta el simulador 3D (necesita WebGL2). Probá desde otro navegador o dispositivo.</p>'; } };
+    let gl = null, ready = false, failed = false, visible = false, raf = 0, tPrev = 0, tAcc = 0;
 
-    // ---------- Shaders ----------
-    const HEAD = '#version 300 es\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\n';
-    const COMMON = `
-const float IOR_AIR=1.0; const float IOR_WATER=1.333; const float POOL_TOP=0.35;
-uniform vec3 uHalf;
-#define RACK_HALF uHalf
-uniform vec3 uEye; uniform vec3 uLight; uniform float uTime; uniform vec2 uTexel;
-uniform sampler2D uWater; uniform sampler2D uCaus;
-uniform vec3 uSkyTop; uniform vec3 uSkyHor; uniform vec3 uSunCol; uniform float uSunPow;
-uniform vec3 uAbs; uniform vec3 uDeep; uniform float uAmb; uniform float uCG; uniform float uGlow;
-uniform vec3 uRack[3]; uniform vec3 uTint; uniform float uLum; uniform float uRough; uniform int uShape; uniform float uCloud;
-const float SPH_R=0.25;
-float h21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
-float vn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f); return mix(mix(h21(i),h21(i+vec2(1.,0.)),f.x), mix(h21(i+vec2(0.,1.)),h21(i+vec2(1.,1.)),f.x), f.y); }
-vec2 isS(vec3 o, vec3 r, vec3 c, float rad){ vec3 oc=o-c; float b=dot(oc,r); float cc=dot(oc,oc)-rad*rad; float h=b*b-cc; if(h<0.) return vec2(1.,-1.); h=sqrt(h); return vec2(-b-h,-b+h); }
-vec2 isect(vec3 o, vec3 r, vec3 mn, vec3 mx){
-  vec3 a=(mn-o)/r, b=(mx-o)/r; vec3 t1=min(a,b), t2=max(a,b);
-  return vec2(max(max(t1.x,t1.y),t1.z), min(min(t2.x,t2.y),t2.z));
-}
-vec2 objT(vec3 o, vec3 r, vec3 c){ return (uShape==1) ? isS(o,r,c,SPH_R) : isect(o,r,c-RACK_HALF,c+RACK_HALF); }
-vec3 sky(vec3 d){
-  float y=d.y;
-  vec3 c=mix(uSkyHor,uSkyTop,pow(clamp(y,0.,1.),.5));
-  if(y<0.) c=mix(uSkyHor,uSkyHor*.8,clamp(-y*2.5,0.,1.));
-  float sd=max(dot(d,uLight),0.);
-  c+=uSunCol*(pow(sd,900.)*8.+pow(sd,40.)*.35)*uSunPow;
-  return c;
-}
-vec3 tileCol(vec2 uv){
-  vec2 q=uv*14.; vec2 id=floor(q); vec2 f=fract(q);
-  float r=h21(id);
-  vec3 c=mix(vec3(.10,.42,.74),vec3(.06,.62,.86),smoothstep(.1,.9,r));
-  c=mix(c,vec3(.34,.82,.92),step(.86,h21(id+7.1))*.8);
-  c=mix(c,vec3(.05,.24,.58),step(.9,h21(id+3.3))*.7);
-  c*=.94+.06*f.y;
-  float e=min(min(f.x,f.y),min(1.-f.x,1.-f.y));
-  return mix(vec3(.50,.74,.84),c,smoothstep(0.,.07,e));
-}
-vec3 dl(){ return refract(-uLight,vec3(0.,1.,0.),IOR_AIR/IOR_WATER); }
-float lightScale(vec3 p, vec3 n, float sh){
-  if(p.y>=0.) return uAmb+max(dot(uLight,n),0.)*.55;
-  vec3 d=dl();
-  float diff=max(dot(-d,n),0.);
-  vec3 fh=p+d*((-1.-p.y)/d.y);
-  vec2 cu=fh.xz*.5+.5;
-  float ins=smoothstep(0.,.04,cu.x)*smoothstep(1.,.96,cu.x)*smoothstep(0.,.04,cu.y)*smoothstep(1.,.96,cu.y);
-  float cs=texture(uCaus,cu).r*ins;
-  float depth=1.-.3*clamp(-p.y,0.,1.);
-  return (uAmb+diff*(.28+uCG*cs)*sh)*depth;
-}
-float rackShadow(vec3 p){
-  vec3 tl=-dl(); float s=1.;
-  for(int i=0;i<3;i++){ vec2 t=objT(p+tl*.003,tl,uRack[i]); if(t.x<t.y&&t.y>0.) s=.38; }
-  return s;
-}
-vec3 wallColor(vec3 p){
-  vec3 n; vec3 base;
-  if(p.y<-.9995){ n=vec3(0.,1.,0.); base=tileCol(p.xz+vec2(1.7,1.3)); }
-  else if(abs(p.x)>.9995){ n=vec3(-sign(p.x),0.,0.); base=tileCol(p.zy+vec2(.3,2.1)); }
-  else { n=vec3(0.,0.,-sign(p.z)); base=tileCol(p.xy+vec2(3.1,.7)); }
-  float sh=(p.y<0.)?rackShadow(p):1.;
-  return base*lightScale(p,n,sh);
-}
-vec3 rackColor(vec3 p, vec3 c){
-  if(uShape==1){ vec3 n=normalize(p-c); return vec3(.84,.86,.9)*(.38+lightScale(p,n,1.)); }
-  vec3 q=p-c; vec3 hs=RACK_HALF; vec3 l=q/hs; vec3 a=abs(l); vec3 n;
-  if(a.x>=a.y&&a.x>=a.z) n=vec3(sign(l.x),0.,0.); else if(a.y>=a.z) n=vec3(0.,sign(l.y),0.); else n=vec3(0.,0.,sign(l.z));
-  vec3 base=vec3(.08,.09,.11); vec3 emi=vec3(0.); float edge=1.;
-  if(n.z>.5){
-    float rw=.017, mg=.022; edge=min(hs.x-abs(q.x),hs.y-abs(q.y));
-    vec2 inn=vec2(hs.x-rw,hs.y-mg);
-    base=vec3(.07,.075,.09)*(.75+.5*h21(vec2(floor(q.y*500.),3.)));
-    if(abs(q.x)<inn.x&&abs(q.y)<inn.y){
-      float uh=2.*inn.y/10.; float ry=(q.y+inn.y)/uh; float id=floor(ry); float f=fract(ry);
-      float wu=2.*inn.x; float lx=(q.x+inn.x)/wu; float ar=uh/wu;
-      float gp=smoothstep(0.,.07,f)*smoothstep(1.,.93,f);
-      vec3 plate=vec3(.30,.32,.36)*(.86+.14*h21(vec2(floor(q.y*900.),id)));
-      base=plate*mix(.12,1.,gp);
-      base+=vec3(.10)*smoothstep(.84,.93,f)*(1.-smoothstep(.93,.97,f));
-      float ear=step(lx,.045)+step(.955,lx);
-      base=mix(base,vec3(.52,.54,.58),ear*.85*gp);
-      base=mix(base,vec3(.05),ear*gp*smoothstep(.03,.02,length(vec2(min(lx,1.-lx)-.022,(f-.5)*ar))));
-      if(id>8.5){
-        float px=(lx-.1)/.8;
-        if(px>0.&&px<1.){
-          float cx=fract(px*24.); float cell=floor(px*24.); float row=step(.5,f); float cy=fract(f*2.);
-          float port=step(abs(cx-.5),.36)*step(abs(cy-.5),.3)*step(.08,f)*step(f,.92)*gp;
-          float rnd=h21(vec2(cell,row+11.));
-          base=mix(base,vec3(.02,.022,.03),port);
-          float led=step(abs(cx-.5),.14)*step(.64,cy)*step(cy,.84)*port;
-          float on=step(.35,.5+.5*sin(uTime*(2.+rnd*4.)+rnd*50.));
-          emi+=(rnd>.25?vec3(.2,.95,.4):vec3(1.,.6,.1))*led*on*uGlow*1.4;
-        }
-      } else if(id>3.5&&id<4.5){
-        base=mix(base,vec3(.035),step(abs(f-.5),.1)*step(abs(lx-.5),.42)*gp);
-        base=mix(base,vec3(.55,.57,.6),step(abs(f-.5),.1)*step(abs(abs(lx-.5)-.42),.006)*gp);
-      } else {
-        float bx=(lx-.085)/.56;
-        if(bx>0.&&bx<1.){
-          float cx=fract(bx*6.); float cell=floor(bx*6.);
-          float bay=step(abs(cx-.5),.42)*step(abs(f-.5),.34)*gp;
-          base=mix(base,vec3(.02,.022,.027),bay);
-          base+=vec3(.12)*bay*step(abs(f-.5),.05)*step(abs(cx-.5),.3);
-          float rnd=h21(vec2(cell,id+3.));
-          float led=smoothstep(.07,.04,length(vec2(cx-.82,(f-.82)*.45)))*bay;
-          float on=step(.3,.5+.5*sin(uTime*(1.4+rnd*3.5)+rnd*40.+id));
-          emi+=(rnd<.45?vec3(.2,.9,1.):(rnd<.8?vec3(.3,1.,.5):vec3(1.,.55,.12)))*led*on*uGlow*1.6;
-        }
-        float vx=(lx-.66)/.2;
-        if(vx>0.&&vx<1.){
-          vec2 g=fract(vec2(vx*7.,f*3.)); float hole=step(length(g-.5),.3)*step(.12,f)*step(f,.88)*gp;
-          base=mix(base,vec3(.012),hole);
-        }
-        float pw=smoothstep(.045,.04,length(vec2(lx-.935,(f-.5)*ar)));
-        base=mix(base,vec3(.62,.64,.68),pw*.7*gp);
-        base=mix(base,vec3(.06),smoothstep(.026,.022,length(vec2(lx-.935,(f-.5)*ar)))*gp);
-        float lg=smoothstep(.016,.01,length(vec2(lx-.885,(f-.5)*ar)));
-        emi+=vec3(.25,1.,.45)*lg*gp*uGlow*(.8+.5*step(.4,.5+.5*sin(uTime*.9+id)));
+    // ---------- Contenido ----------
+    const yb = .82, TZ = .88;                       // altura de la base de la bandeja y cuánto sale hacia el pasillo (sobre el carro)
+    const A = (x, y, z) => [x, y, z + TZ];          // punto de la bandeja → mundo
+    const L = (h, u) => '<a href="' + h + '" target="_blank" rel="noopener">' + u + '</a>';
+    const S_LEN = L('https://lenovopress.lenovo.com/lp2357-lenovo-nvidia-gb300-nvl72-rack-scale-ai', 'Lenovo Press');
+    const S_INT = L('https://introl.com/blog/gb200-nvl72-deployment-72-gpu-liquid-cooled', 'Introl');
+    const S_TR = L('https://www.techradar.com/pro/cooling-high-density-data-centers-with-coolant-distribution-units', 'TechRadar');
+    const S_UP = L('https://www.upsite.com/blog/data-center-trends-rack-density-rises-while-pue-and-outage-frequency-remain-flat/', 'Uptime Institute (vía Upsite)');
+    const S_CRS = L('https://www.everycrsreport.com/files/2025-08-26_R48646_58c77a3e81a7a1da98ac2fa060810b6f89634f08.html', 'CRS, con datos de LBNL');
+    const S_SE = L('https://blog.se.com/datacenter/2020/07/20/design-considerations-deployment-ups-systems-in-data-centers', 'Schneider Electric');
+    const S_REG = L('https://www.theregister.com/2025/01/04/how_datacenters_use_water/', 'The Register');
+    // tour: 7 paradas; pines internos (a–e) se ven al acercarse a la bandeja
+    const ITEMS = [
+      { id: 'sala', tour: 1, pin: '1', anchor: [3.2, 1.35, 1.5], face: [-1, 0, 0], name: 'La sala', k: 'Recorrido', h: 'Un centro de datos por dentro', pose: { t: [.6, 1.2, 1.45], d: 5.6, yaw: -1.5708, pitch: .1 },
+        b: 'Filas de racks —armarios llenos de servidores— que funcionan sin parar, con energía, refrigeración y conexión propias. Esta sala es una recreación didáctica inspirada en los centros de datos de IA actuales. Seguí el recorrido con las flechas, o tocá los puntos para ir directo a cada parte.', s: '' },
+      { id: 'pasillo', tour: 1, pin: '2', anchor: [-2.6, 1.95, 1.0], face: [-1, 0, 0], name: 'Pasillos', k: 'Pasillos frío y caliente', h: 'Más calor en el mismo lugar', pose: { t: [.35, 1.15, .6], d: 2.3, yaw: -.95, pitch: .18 },
+        b: 'Los racks se enfrentan en pasillos fríos y se dan la espalda en pasillos calientes, para que el aire frío no se mezcle con el caliente. Un rack tradicional promedia menos de 8 kW (encuesta Uptime 2024); uno de IA como el GB200 NVL72 ronda los 120–135 kW. Mucha más potencia en el mismo espacio es lo que empuja a pasar del aire al agua.', s: S_UP + ' · ' + S_LEN },
+      { id: 'bandeja', tour: 1, pin: '3', anchor: A(0, yb + .16, 0), face: [0, 1, .6], name: 'La bandeja', k: 'Servicio de una bandeja', h: 'Así se ve una bandeja por dentro', hideNear: 1.6, pose: { t: [.04, yb + .0, TZ + .08], d: 1.5, yaw: .5, pitch: .78, m: { t: [.04, yb, TZ + .5], d: 1.9 } },
+        b: 'Esta bandeja de cómputo salió del rack sobre un carro de servicio: la tapa está abierta para ver cómo se enfría. Es una vista ampliada, parecida a las que usan los GB200/GB300 de NVIDIA. Tocá los puntos A–E para recorrerla o activá «Ver el flujo» para ver el líquido.', s: S_LEN },
+      { id: 'placa', pin: 'A', near: 1.6, anchor: A(-.11, yb + .052, -.02), face: [0, 1, 0], name: 'Placa fría', k: 'A · Placa fría', h: 'Donde nace el calor', pose: { t: A(-.11, yb + .03, -.02), d: .36, yaw: .45, pitch: .95 },
+        b: 'Un chip de IA actual concentra cientos de vatios en pocos centímetros cuadrados: la GPU de un GB200 llega a unos 1.200 W. Sobre el chip va una placa fría de metal con canales finísimos por donde pasa el líquido y se lleva el calor, sin que el agua toque la electrónica.', s: S_TR + ' · ' + S_LEN },
+      { id: 'circuito', pin: 'B', near: 1.6, anchor: A(-.195, yb + .066, -.06), face: [0, 1, 0], name: 'Circuito cerrado', k: 'B · Circuito cerrado', h: 'El mismo líquido, una y otra vez', pose: { t: A(-.12, yb + .05, .04), d: .6, yaw: -.5, pitch: .85 },
+        b: 'El líquido (agua desionizada o agua con glicol) circula por mangueras y caños: entra frío, recorre las placas, sale tibio y vuelve. Un rack tipo GB200 NVL72 mueve del orden de 80 litros por minuto, con ingreso a unos 20–25 °C. Ese agua no se consume acá; lo que importa es adónde va el calor que se llevó.', s: S_INT + ' · ' + S_LEN },
+      { id: 'acople', pin: 'C', near: 1.6, anchor: A(-.15, yb + .085, -.385), face: [0, 1, .3], name: 'Acople rápido', k: 'C · Acople rápido', h: 'Se saca sin vaciar el circuito', pose: { t: A(-.15, yb + .04, -.43), d: .34, yaw: 1.25, pitch: .5 },
+        b: 'Los acoples rápidos (UQD) se cierran solos al desconectarse: así se cambia una bandeja sin derramar una gota ni apagar el resto del rack. Por convención, el azul suele marcar el agua que entra fría y el rojo la que vuelve caliente.', s: S_LEN },
+      { id: 'ventiladores', pin: 'D', near: 1.6, anchor: A(.05, yb + .052, .325), face: [0, 1, 0], name: 'Ventiladores', k: 'D · Ventiladores', h: 'El aire no desaparece', pose: { t: A(0, yb + .03, .33), d: .55, yaw: 2.85, pitch: .62 },
+        b: 'Aun con refrigeración líquida, cerca del 10 % del calor del rack sigue saliendo por aire: memoria, almacenamiento y fuentes de poder. Por eso estas bandejas conservan sus ventiladores. El líquido hace el trabajo pesado, pero no todo.', s: S_LEN },
+      { id: 'cablesbandeja', pin: 'E', near: 1.6, anchor: A(-.3, yb - .02, .5), face: [0, 1, 1], name: 'Cables de la bandeja', k: 'E · Cables', h: 'Miles de conexiones', pose: { t: A(-.25, yb - .14, .56), d: .75, yaw: .85, pitch: .28 },
+        b: 'Los cables azules son fibra y cobre de alta velocidad: conectan los chips entre sí y con el resto del centro de datos. Un solo rack de 72 GPU suma más de 5.000 conexiones.', s: S_INT },
+      { id: 'cables', tour: 1, pin: '4', anchor: [1.4, 2.5, 1.55], face: [0, 1, 0], name: 'Cables', k: 'Conectividad', h: 'Por acá entra tu consulta', pose: { t: [1.2, 2.4, 1.55], d: 1.9, yaw: -1.45, pitch: .42 },
+        b: 'Sobre el pasillo, bandejas portacables llevan fibra óptica y cobre hasta cada rack. Una consulta a un chatbot viaja por fibra hasta el centro de datos, un balanceador la deriva a un clúster de GPU y la respuesta vuelve en segundos. Adentro, cientos de cables unen las GPU entre sí.', s: S_INT },
+      { id: 'energia', tour: 1, pin: '5', anchor: [7.3, 1.75, -3.84], face: [-1, 0, 0], near: 7, name: 'Energía', k: 'Sala eléctrica', h: 'Toda esa electricidad termina en calor', pose: { t: [7.4, 1.15, -3.2], d: 2.5, yaw: -1.1, pitch: .12 },
+        b: 'En 2023 los centros de datos de EE. UU. usaron unos 176 TWh: el 4,4 % de la electricidad del país, y el laboratorio LBNL proyecta que podría llegar hasta el 12 % en 2028. En esta sala, los UPS y sus baterías cubren los 10–20 segundos que tardan los generadores en arrancar; según el operador, la autonomía de diseño va de 1 a 15 minutos.', s: S_CRS + ' · ' + S_SE },
+      { id: 'cdu', tour: 1, pin: '6', anchor: [-2.15, 1.6, -3.28], face: [0, 0, 1], near: 4.8, name: 'CDU', k: 'Unidad de distribución (CDU)', h: 'Donde el calor cambia de agua', pose: { t: [-2.0, .85, -3.7], d: 3.2, yaw: .45, pitch: .22 },
+        b: 'La CDU pasa el calor del circuito de los servidores al agua del edificio, sin mezclarlas. El circuito de los servidores es cerrado: casi no consume agua. El calor, en cambio, tiene que ir a algún lado, y suele terminar en una torre de refrigeración, afuera.', s: S_TR + ' · ' + S_REG },
+      { id: 'torre', tour: 1, pin: '7', anchor: [2.0, 3.05, -7.4], face: [0, 0, 1], near: 6, name: 'La torre', k: 'Torre de refrigeración', h: 'La sed está afuera', pose: { t: [2.0, 3.0, -8.6], d: 6.2, yaw: 0, pitch: -.2 },
+        b: 'En la torre, el agua caliente se rocía y parte se evapora: esa evaporación es lo que se lleva el calor. Evaporar 10 galones por minuto enfría unos 1,5 MW de cómputo (≈ 1.500 L por hora por MW), y entre el 70 y el 80 % del agua que entra a una torre se consume. Un rack de 120 kW equivale a unos 190 L por hora si todo su calor se disipara así: cálculo propio, orientativo.', s: S_REG + ' · ' + S_TR }
+    ];
+    const TOUR = ITEMS.filter(i => i.tour);
+
+    // ---------- Matemática mínima ----------
+    const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k];
+    const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    const len = (a) => Math.hypot(a[0], a[1], a[2]), nrm = (a) => { const l = len(a) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const persp = (f, a, n, fr) => { const t = 1 / Math.tan(f / 2), nf = 1 / (n - fr); return new Float32Array([t / a, 0, 0, 0, 0, t, 0, 0, 0, 0, (fr + n) * nf, -1, 0, 0, 2 * fr * n * nf, 0]); };
+    const ortho = (l, r, b, t, n, f) => new Float32Array([2 / (r - l), 0, 0, 0, 0, 2 / (t - b), 0, 0, 0, 0, -2 / (f - n), 0, -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1]);
+    const look = (e, c, u) => { const z = nrm(sub(e, c)), x = nrm(cross(u, z)), y = cross(z, x); return new Float32Array([x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1]); };
+    const mm = (a, b) => { const o = new Float32Array(16); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) { let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s; } return o; };
+    const IDM = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+
+    // ---------- Geometría procedural ----------
+    // Vértice: pos(3) nrm(3) color(3) metal,rugosidad(2) patrón,u,capa(3) temperatura/intensidad(1) = 15 floats
+    // Capas: 0 sólido · 1 carcasa (se desvanece en «Ver el flujo») · 2 circuito del líquido · 3 placas frías (translúcidas) · 4 chip (solo en «Ver el flujo»)
+    const grp = { C: { v: [], i: [], n: 0 }, A: { v: [], i: [], n: 0 }, B: { v: [], i: [], n: 0 }, R: { v: [], i: [], n: 0 }, G: { v: [], i: [], n: 0 } };
+    const leds = [];
+    function mat(c, met, rou, pat, Ly, G) { return { c, m: met, r: rou, p: pat || 0, L: Ly || 0, G: G || null }; }
+    const gOf = (m) => m.G ? grp[m.G] : ((m.L === 1 || m.L === 3 || m.L === 4) ? grp.B : grp.A);
+    let XF = null;   // transformación actual (giro en Y + traslación) para colocar copias de racks
+    const setXF = (rot, tx, ty, tz) => { XF = { c: Math.cos(rot), s: Math.sin(rot), tx, ty, tz }; }, clrXF = () => { XF = null; };
+    const tp = (p) => XF ? [XF.c * p[0] + XF.s * p[2] + XF.tx, p[1] + XF.ty, -XF.s * p[0] + XF.c * p[2] + XF.tz] : p;
+    const tn = (n) => XF ? [XF.c * n[0] + XF.s * n[2], n[1], -XF.s * n[0] + XF.c * n[2]] : n;
+    function vtx(g, p, n, m, u, T) { p = tp(p); n = tn(n); g.v.push(p[0], p[1], p[2], n[0], n[1], n[2], m.c[0], m.c[1], m.c[2], m.m, m.r, m.p, u, m.L, T); return g.n++; }
+    const FACES = [['+x', [1, 0, 0], [0, 0, -1], [0, 1, 0]], ['-x', [-1, 0, 0], [0, 0, 1], [0, 1, 0]], ['+y', [0, 1, 0], [1, 0, 0], [0, 0, -1]], ['-y', [0, -1, 0], [1, 0, 0], [0, 0, 1]], ['+z', [0, 0, 1], [1, 0, 0], [0, 1, 0]], ['-z', [0, 0, -1], [-1, 0, 0], [0, 1, 0]]];
+    function box(m, cx, cy, cz, sx, sy, sz, skip, T, g0) {
+      const g = typeof g0 === 'string' ? grp[g0] : (g0 || gOf(m)), h = [sx / 2, sy / 2, sz / 2], c = [cx, cy, cz];
+      for (const [nm, n, u, v] of FACES) {
+        if (skip && skip.indexOf(nm) >= 0) continue;
+        const hu = Math.abs(u[0]) * h[0] + Math.abs(u[1]) * h[1] + Math.abs(u[2]) * h[2], hv = Math.abs(v[0]) * h[0] + Math.abs(v[1]) * h[1] + Math.abs(v[2]) * h[2];
+        const cc = [c[0] + n[0] * h[0], c[1] + n[1] * h[1], c[2] + n[2] * h[2]];
+        const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([a, b]) => [cc[0] + u[0] * hu * a + v[0] * hv * b, cc[1] + u[1] * hu * a + v[1] * hv * b, cc[2] + u[2] * hu * a + v[2] * hv * b]);
+        const i0 = pts.map(p => vtx(g, p, n, m, 0, T || 0)); g.i.push(i0[0], i0[1], i0[2], i0[0], i0[2], i0[3]);
       }
     }
-  } else if(n.y>.5){
-    edge=min(hs.x-abs(q.x),hs.z-abs(q.z));
-    base=vec3(.15,.16,.2)*(.85+.3*h21(vec2(floor(q.x*400.),floor(q.z*40.))));
-    float fz=hs.z*.5; float fr=min(hs.x*.82,hs.z*.4);
-    for(int k=0;k<2;k++){
-      float cz=(k==0)?-fz:fz; float rr=length(q.xz-vec2(0.,cz));
-      float inside=step(rr,fr); float ring=step(.5,fract(rr*85.));
-      base=mix(base,mix(vec3(.025),vec3(.2,.21,.25),ring),inside);
-      base=mix(base,vec3(.3,.31,.36),step(rr,fr*.22));
+    function basis(d) { const a = Math.abs(d[1]) < .9 ? [0, 1, 0] : [1, 0, 0]; const x = nrm(cross(a, d)), y = cross(d, x); return [x, y]; }
+    function cyl(m, a, b, r, opt) {
+      opt = opt || {}; const g = opt.g || gOf(m), seg = opt.seg || 14, r2 = opt.r2 == null ? r : opt.r2, T = opt.T || 0, d = sub(b, a), Ln = len(d), dn = nrm(d), [bx, by] = basis(dn);
+      const ring = (p, rr, n, uu) => { const o = []; for (let k = 0; k < seg; k++) { const th = k / seg * 6.2832, c = Math.cos(th), s = Math.sin(th); const rad = [bx[0] * c + by[0] * s, bx[1] * c + by[1] * s, bx[2] * c + by[2] * s]; o.push(vtx(g, [p[0] + rad[0] * rr, p[1] + rad[1] * rr, p[2] + rad[2] * rr], n ? n(rad) : rad, m, uu, T)); } return o; };
+      const slope = (r - r2) / (Ln || 1), nf = (rad) => nrm([rad[0] + dn[0] * slope, rad[1] + dn[1] * slope, rad[2] + dn[2] * slope]);
+      const r0 = ring(a, r, nf, 0), r1 = ring(b, r2, nf, Ln);
+      for (let k = 0; k < seg; k++) { const k2 = (k + 1) % seg; g.i.push(r0[k], r0[k2], r1[k], r1[k], r0[k2], r1[k2]); }
+      if (opt.caps !== false) for (const [p, rr, n] of [[a, r, mul(dn, -1)], [b, r2, dn]]) { const c0 = vtx(g, p, n, m, 0, T), rg = ring(p, rr, () => n, 0); for (let k = 0; k < seg; k++) g.i.push(c0, rg[k], rg[(k + 1) % seg]); }
     }
-  } else if(abs(n.x)>.5){
-    edge=min(hs.z-abs(q.z),hs.y-abs(q.y));
-    base=vec3(.13,.14,.18)*(.85+.3*h21(vec2(floor(q.y*500.),7.)));
-    if(abs(q.z)<hs.z-.04&&abs(q.y)<hs.y-.04){
-      float sy=fract(q.y*46.); base=mix(base,vec3(.02),step(abs(sy-.5),.2)*step(abs(q.z),hs.z-.07));
+    // tubo con spline Catmull-Rom (mangueras y cables); u = metros desde el inicio (anima el flujo)
+    function tube(m, pts, r, opt) {
+      opt = opt || {}; const g = opt.g || gOf(m), R = opt.seg || 10, T0 = opt.T0 || 0, T1 = opt.T1 == null ? T0 : opt.T1, step = opt.step || .01; const P = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)], n = Math.max(opt.minN || 5, Math.ceil(len(sub(p2, p1)) / step));
+        for (let k = 0; k < n; k++) { const t = k / n, t2 = t * t, t3 = t2 * t; P.push([0, 1, 2].map(j => .5 * ((2 * p1[j]) + (-p0[j] + p2[j]) * t + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * t2 + (-p0[j] + 3 * p1[j] - 3 * p2[j] + p3[j]) * t3))); }
+      }
+      P.push(pts[pts.length - 1]);
+      const U = [0]; for (let i = 1; i < P.length; i++) U.push(U[i - 1] + len(sub(P[i], P[i - 1])));
+      const tot = U[U.length - 1] || 1, d0 = sub(P[1], P[0]); let nv = nrm(cross(nrm(d0), Math.abs(d0[1]) < .8 * len(d0) ? [0, 1, 0] : [1, 0, 0]));
+      const rings = [];
+      for (let i = 0; i < P.length; i++) {
+        const tg = nrm(sub(P[Math.min(P.length - 1, i + 1)], P[Math.max(0, i - 1)])); nv = nrm(sub(nv, mul(tg, dot(nv, tg)))); const bv = cross(tg, nv), row = [];
+        for (let k = 0; k < R; k++) { const th = k / R * 6.2832, c = Math.cos(th), s = Math.sin(th), rad = [nv[0] * c + bv[0] * s, nv[1] * c + bv[1] * s, nv[2] * c + bv[2] * s]; row.push(vtx(g, add(P[i], mul(rad, r)), rad, m, U[i], T0 + (T1 - T0) * U[i] / tot)); }
+        rings.push(row);
+      }
+      for (let i = 0; i < rings.length - 1; i++) for (let k = 0; k < R; k++) { const k2 = (k + 1) % R; g.i.push(rings[i][k], rings[i][k2], rings[i + 1][k], rings[i + 1][k], rings[i][k2], rings[i + 1][k2]); }
     }
-  } else {
-    edge=min(hs.x-abs(q.x),hs.y-abs(q.y));
-    base=vec3(.10,.11,.14);
-    if(abs(q.x)<hs.x-.025&&abs(q.y)<hs.y-.03){
-      vec2 g=fract(q.xy*vec2(34.,34.)); base=mix(base,vec3(.015),step(length(g-.5),.3)*step(q.y,hs.y*.35));
-      float rz=h21(floor(q.xy*vec2(14.,10.)));
-      base=mix(base,vec3(.2,.22,.27),step(.7,rz)*step(.35*hs.y,q.y)*step(fract(q.x*14.),.5)*step(fract(q.y*10.),.5));
-    }
-  }
-  base+=vec3(.08)*(1.-smoothstep(0.,.008,edge));
-  vec3 v=normalize(uEye-p); float fr=pow(1.-max(dot(n,v),0.),3.); base+=uSkyHor*fr*.1;
-  return base*(.4+lightScale(p,n,1.))+emi;
-}
-vec3 surfRay(vec3 o, vec3 r, bool inW){
-  vec3 col; float dist;
-  vec2 t=isect(o,r,vec3(-1.,-1.,-1.),vec3(1.,2.,1.));
-  if(r.y<0.){
-    float best=t.y; int bi=-1;
-    for(int i=0;i<3;i++){ vec2 tr=objT(o,r,uRack[i]); if(tr.x<tr.y&&tr.x>0.&&tr.x<best){ best=tr.x; bi=i; } }
-    if(bi>=0) col=rackColor(o+r*best,uRack[bi]); else col=wallColor(o+r*best);
-    col*=exp(-uAbs*best);
-  } else {
-    vec3 hit=o+r*t.y;
-    if(hit.y<POOL_TOP){ col=wallColor(hit); if(inW) col*=exp(-uAbs*t.y); }
-    else col=sky(r);
-  }
-  return col;
-}
-vec3 fogUnder(vec3 col, vec3 p){
-  if(uEye.y<0. && p.y<=0.01){ float d=length(uEye-p); col*=uTint*uLum; col*=exp(-uAbs*d*.7); col=mix(col,uDeep,1.-exp(-.2*d)); }
-  return col;
-}
-`;
-    const VS_SKY = HEAD + `out vec2 vN; void main(){ vec2 p=vec2(float((gl_VertexID<<1)&2),float(gl_VertexID&2)); vN=p*2.-1.; gl_Position=vec4(vN,1.,1.); }`;
-    const FS_SKY = HEAD + COMMON + `uniform vec3 uF; uniform vec3 uR; uniform vec3 uU; uniform float uTan; uniform float uAsp;
-in vec2 vN; out vec4 o;
-void main(){ vec3 d=normalize(uF+uR*(vN.x*uTan*uAsp)+uU*(vN.y*uTan)); float t=clamp(vN.y*.5+.5+d.y*.2,0.,1.); vec3 c=mix(uSkyHor,uSkyTop,pow(t,.95)); float sd=max(dot(d,uLight),0.); c+=uSunCol*pow(sd,10.)*.14*uSunPow; { vec2 cp=d.xz/max(d.y+.45,.14)*1.1+vec2(uTime*.012,0.); float f=.5*vn(cp)+.3*vn(cp*2.1+3.7)+.2*vn(cp*4.3+9.1); float cl=smoothstep(.42,.8,f)*uCloud*clamp(d.y*2.5+.7,0.,1.); c=mix(c,mix(c,vec3(1.),.8)+uSunCol*.05,cl*.7); } vec2 q=vN*.5; c*=1.-dot(q,q)*.18; o=vec4(c,1.); }`;
-    const VS_POOL = HEAD + `in vec3 aPos; uniform mat4 uVP; out vec3 vPos; void main(){ vPos=aPos; gl_Position=uVP*vec4(aPos,1.); }`;
-    const FS_POOL = HEAD + COMMON + `in vec3 vPos; out vec4 o;
-void main(){
-  vec3 p=vPos; vec3 n;
-  if(p.y<-.9995) n=vec3(0.,1.,0.); else if(abs(p.x)>.9995) n=vec3(-sign(p.x),0.,0.); else n=vec3(0.,0.,-sign(p.z));
-  if(dot(n,uEye-p)<0.) discard;
-  o=vec4(fogUnder(wallColor(p),p),1.);
-}`;
-    const VS_RACK = HEAD + `in vec3 aPos; uniform mat4 uVP; uniform vec3 uC; uniform vec3 uHalf; out vec3 vPos; out vec3 vL;
-void main(){ vL=aPos; vPos=uC+aPos*uHalf; gl_Position=uVP*vec4(vPos,1.); }`;
-    const FS_RACK = HEAD + COMMON + `in vec3 vPos; in vec3 vL; uniform vec3 uC; out vec4 o;
-void main(){
-  vec3 a=abs(vL); vec3 n;
-  if(a.x>=a.y&&a.x>=a.z) n=vec3(sign(vL.x),0.,0.); else if(a.y>=a.z) n=vec3(0.,sign(vL.y),0.); else n=vec3(0.,0.,sign(vL.z));
-  if(dot(n,uEye-vPos)<0.) discard;
-  vec3 hp=vPos;
-  if(uShape==1){ vec3 rd=normalize(vPos-uEye); vec2 t=isS(uEye,rd,uC,SPH_R); if(t.x>t.y||t.y<0.) discard; hp=uEye+rd*max(t.x,0.); }
-  o=vec4(fogUnder(rackColor(hp,uC),hp),1.);
-}`;
-    const VS_WATER = HEAD + `in vec2 aXZ; uniform mat4 uVP; uniform sampler2D uWater; out vec3 vPos;
-void main(){ float h=textureLod(uWater,aXZ*.5+.5,0.).r; vPos=vec3(aXZ.x,h,aXZ.y); gl_Position=uVP*vec4(vPos,1.); }`;
-    const FS_WATER = HEAD + COMMON + `in vec3 vPos; out vec4 o;
-void main(){
-  vec2 uv=vPos.xz*.5+.5;
-  float hl=texture(uWater,uv-vec2(uTexel.x,0.)).r, hr=texture(uWater,uv+vec2(uTexel.x,0.)).r;
-  float hd=texture(uWater,uv-vec2(0.,uTexel.y)).r, hu=texture(uWater,uv+vec2(0.,uTexel.y)).r;
-  vec3 n=normalize(vec3(hl-hr,4.*uTexel.x,hd-hu));
-  if(uRough>0.){ vec2 rq=vPos.xz*7.+uTime*.35; n=normalize(n+uRough*.55*vec3(vn(rq)-.5,0.,vn(rq+7.3)-.5)); }
-  vec3 inc=normalize(vPos-uEye); vec3 col;
-  if(uEye.y>vPos.y){
-    vec3 rr=reflect(inc,n); vec3 fr=refract(inc,n,IOR_AIR/IOR_WATER);
-    float fres=mix(.2,1.,pow(1.-dot(n,-inc),3.));
-    vec3 rc=surfRay(vPos,rr,false); vec3 tc=surfRay(vPos,fr,true)*uTint*uLum;
-    col=mix(tc,rc,fres);
-  } else {
-    n=-n; vec3 rr=reflect(inc,n); vec3 fr=refract(inc,n,IOR_WATER/IOR_AIR);
-    float fres=mix(.5,1.,pow(1.-dot(n,-inc),3.));
-    vec3 rc=surfRay(vPos,rr,true);
-    vec3 tc=(dot(fr,fr)<1e-4)?rc:surfRay(vPos,fr,false);
-    col=mix(rc,tc,(1.-fres)*length(fr));
-    col*=uTint*uLum; float d=length(uEye-vPos); col*=exp(-uAbs*d*.7); col=mix(col,uDeep,1.-exp(-.2*d));
-  }
-  o=vec4(col,1.);
-}`;
-    const VS_CAUS = HEAD + `in vec2 aXZ; uniform sampler2D uWater; uniform vec3 uLight; uniform vec2 uTexel; out vec3 vOld; out vec3 vNew;
-void main(){
-  vec2 uv=aXZ*.5+.5; float h=textureLod(uWater,uv,0.).r;
-  float hl=textureLod(uWater,uv-vec2(uTexel.x,0.),0.).r, hr=textureLod(uWater,uv+vec2(uTexel.x,0.),0.).r;
-  float hd=textureLod(uWater,uv-vec2(0.,uTexel.y),0.).r, hu=textureLod(uWater,uv+vec2(0.,uTexel.y),0.).r;
-  vec3 n=normalize(vec3(hl-hr,4.*uTexel.x,hd-hu));
-  float eta=1./1.333;
-  vec3 d0=refract(-uLight,vec3(0.,1.,0.),eta); vec3 d1=refract(-uLight,n,eta);
-  vOld=vec3(aXZ.x,0.,aXZ.y)+d0*(-1./d0.y);
-  vec3 pos=vec3(aXZ.x,h,aXZ.y);
-  vNew=pos+d1*((-1.-h)/d1.y);
-  gl_Position=vec4(vNew.x,vNew.z,0.,1.);
-}`;
-    const FS_CAUS = HEAD + `in vec3 vOld; in vec3 vNew; out vec4 o;
-void main(){
-  float oa=length(dFdx(vOld))*length(dFdy(vOld));
-  float na=length(dFdx(vNew))*length(dFdy(vNew));
-  o=vec4(clamp(oa/max(na,1e-7),0.,8.)*.22,0.,0.,1.);
-}`;
-    const FS_SIM = HEAD + `uniform sampler2D uS; uniform vec2 uSize; uniform vec4 uD[8]; uniform int uN; in vec2 vUv; out vec4 o;
-void main(){
-  vec2 px=1./uSize; vec4 c=texture(uS,vUv);
-  float l=texture(uS,vUv-vec2(px.x,0.)).r, r=texture(uS,vUv+vec2(px.x,0.)).r, d=texture(uS,vUv-vec2(0.,px.y)).r, u=texture(uS,vUv+vec2(0.,px.y)).r;
-  float dl=texture(uS,vUv+vec2(-px.x,-px.y)).r, dr=texture(uS,vUv+vec2(px.x,-px.y)).r, ul=texture(uS,vUv+vec2(-px.x,px.y)).r, ur=texture(uS,vUv+vec2(px.x,px.y)).r;
-  float avg=((l+r+d+u)*2.+(dl+dr+ul+ur))/12.;
-  float v=c.g+(avg-c.r)*1.5; v*=.9965;
-  float h=c.r+v;
-  for(int i=0;i<8;i++){ if(i>=uN) break; float dd=length(vUv-uD[i].xy)/uD[i].z; if(dd<1.) h-=(.5+.5*cos(dd*3.14159))*uD[i].w; }
-  o=vec4(h,v,0.,1.);
-}`;
-    const FS_POST = HEAD + `uniform sampler2D uScene; uniform vec2 uRes; uniform float uTime, uInitT, uUw, uQ, uRain, uDrop, uAppP, uAppD; in vec2 vUv; out vec4 o;
-#define S(a,b,t) smoothstep(a,b,t)
-float rnd2(vec2 p){ return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453123); }
-float nz(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f); return mix(mix(rnd2(i),rnd2(i+vec2(1.,0.)),f.x), mix(rnd2(i+vec2(0.,1.)),rnd2(i+vec2(1.,1.)),f.x), f.y); }
-vec2 getAspectUv(vec2 uv){ vec2 ar=vec2(uRes.x/uRes.y,1.); if(uRes.x<uRes.y) ar=vec2(1.,uRes.y/uRes.x); return (uv-.5)*ar+.5; }
-vec3 N13(float p){ vec3 p3=fract(vec3(p)*vec3(.1031,.11369,.13787)); p3+=dot(p3,p3.yzx+19.19); return fract(vec3((p3.x+p3.y)*p3.z,(p3.x+p3.z)*p3.y,(p3.y+p3.z)*p3.x)); }
-float N(float t){ return fract(sin(t*12345.564)*7658.76); }
-float Saw(float b, float t){ return S(0.,b,t)*S(1.,b,t); }
-vec2 MovingDropLayer(vec2 uv, float t, float size){
-  vec2 UV=getAspectUv(uv);
-  float movingTime=uTime*.2;
-  uv.y+=movingTime*.75;
-  vec2 a=vec2(4.,1.); vec2 grid=a*2.; vec2 id=floor(uv*grid);
-  float colShift=N(id.x); uv.y+=colShift;
-  id=floor(uv*grid);
-  vec3 n=N13(id.x*35.2+id.y*2376.1);
-  vec2 st=fract(uv*grid)-vec2(.5,0.);
-  float x=n.x-.5;
-  float y=UV.y*20.; float wiggle=sin(y+sin(y));
-  x+=wiggle*(.5-abs(x))*(n.z-.5); x*=.7;
-  float ti=fract(movingTime+n.z);
-  y=(Saw(.85,ti)-.5)*.9+.5;
-  vec2 p=vec2(x,y);
-  float d=length((st-p)*a.yx);
-  float mainDrop=pow(S(.6*size,.0,d),1.8);
-  float r=sqrt(S(1.,y,st.y));
-  float cd=abs(st.x-x);
-  float trail=S(.23*r*size,.15*r*r*size,cd);
-  float trailFront=S(-.02*size,.02*size,st.y-y);
-  trail*=trailFront*r*r;
-  y=UV.y;
-  float trail2=S(.2*r*size,.0,cd);
-  float droplets=max(0.,(sin(y*(1.-y)*120.)-st.y))*trail2*trailFront*n.z;
-  y=fract(y*10.)+(st.y-.5);
-  float dd=length(st-vec2(x,y));
-  droplets=S(.4*size,0.,dd);
-  float m=mainDrop+droplets*r*trailFront;
-  float edge=(1.-d)*.5;
-  return vec2(m,edge);
-}
-float StaticDrops(vec2 uv, float t, float size){
-  vec2 id=floor(uv); uv=fract(uv)-.5;
-  vec3 n=N13(id.x*107.45+id.y*3543.654);
-  vec2 p=(n.xy-.5)*.7;
-  float d=length(uv-p);
-  float fade=Saw(.025,fract(uTime*0.+uInitT+n.z));
-  return pow(S(.4*size,0.,d),1.8)*fract(n.z*10.)*fade;
-}
-vec2 Drops(vec2 uv, float t, float l0, float l1, float l2, float size){
-  float s=StaticDrops(uv,t,size);
-  vec2 m1=MovingDropLayer(uv,t,size);
-  vec2 m2=MovingDropLayer(uv*1.85,t,size);
-  float c=s+m1.x+m2.x; c=S(.3,1.,c);
-  return vec2(c,max(m1.y*l0,m2.y*l1));
-}
-vec3 smp(vec2 p){ return texture(uScene,p).rgb; }
-void main(){
-  vec2 uv=vUv; float uw=uUw*step(.5,uQ);
-  // bajo el agua: ondulación suave de la imagen (frecuencia 8x3, amplitud .006x.002, velocidad 1.5, intensidad .6)
-  if(uw>0.){ vec2 q=uv*vec2(8.,3.)+uTime*1.5; uv+=(vec2(nz(q),nz(q+1.))*2.-1.)*vec2(.006,.002)*.6*uw; }
-  vec3 col=smp(uv);
-  if(uUw>0.){
-    if(uQ>1.5){ float rr=S(.3,1.,length(vUv-.5)*1.6)*.0065*uUw; col=(col*2.+smp(uv+vec2(rr,0.))+smp(uv-vec2(rr,0.))+smp(uv+vec2(0.,rr))+smp(uv-vec2(0.,rr)))/6.; }
-    if(uQ>.5){
-      vec2 dir=uv-.5; float m=S(.4,1.,length(dir)*2.); vec2 off=normalize(dir+1e-5)*.005*m*uUw;
-      col=vec3(smp(uv+off).r,col.g,smp(uv-off).b);
-      col=mix(col,vec3(0.,.24,.25),.2*uUw);
-      float ca=pow(nz(uv*20.+uTime*2.)*.5+nz(uv*15.-uTime*1.5)*.5,2.)*.05; col+=vec3(ca)*.6*uUw;
-      float vg=S(.8,.6*.799,length(uv-.5)*(.45+.6)); col*=mix(1.,mix(.55,1.,vg),uUw);
-      float g=dot(col,vec3(.299,.587,.114)); col=mix(vec3(g),col,1.+.15*uUw);
-    } else col=mix(col,vec3(.28,.63,.63),.3*uUw);
-  }
-  if(uRain>.5){
-    vec2 puv=vUv;
-    float appearMask=S(uAppD-1.,uAppD,1.-puv.y);
-    float fs=uDrop*uAppP*appearMask;
-    if(fs>.002){
-      float rainAmount=.1, distS=.17;
-      float t=uTime*.2;
-      float staticDrops=S(-.5,1.,rainAmount)*2., layer1=S(.25,.75,rainAmount), layer2=S(0.,.5,rainAmount);
-      vec2 au=getAspectUv(puv);
-      vec2 c=Drops(au,t,staticDrops,layer1,layer2,fs);
-      vec2 e=vec2(.005,0.);
-      float cx=Drops(au+e,t,staticDrops,layer1,layer2,fs).x, cy=Drops(au+e.yx,t,staticDrops,layer1,layer2,fs).x;
-      vec2 n=vec2(cx-c.x,cy-c.x); n*=3.5;
-      vec2 duv=puv+n*distS*fs*(1.+c.x*.5);
-      vec3 rc=smp(duv);
-      rc.rg+=n*(c.x*.3)*distS*fs;
-      rc*=mix(vec3(1.),vec3(1.+c.x*.05),c.x);
-      rc+=vec3(pow(c.y,2.)*.25)*(1.-c.x);
-      col=mix(col,rc,c.x*.9*appearMask);
-    }
-  }
-  o=vec4(col,1.);
-}`;
-    const VS_FULL = HEAD + `out vec2 vUv; void main(){ vec2 p=vec2(float((gl_VertexID<<1)&2),float(gl_VertexID&2)); vUv=p; gl_Position=vec4(p*2.-1.,0.,1.); }`;
+    const led = (p, s, c, ph, rate) => { p = tp(p); leds.push([p[0], p[1], p[2], c[0], c[1], c[2], s, ph == null ? Math.random() * 6.28 : ph, rate == null ? 0 : rate]); };
+    let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+    const FANS = [];
 
-    function compile(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); return null; } return s; }
-    function program(vs, fs, attrs) {
-      const a = compile(gl.VERTEX_SHADER, vs), b = compile(gl.FRAGMENT_SHADER, fs); if (!a || !b) return null;
-      const p = gl.createProgram(); gl.attachShader(p, a); gl.attachShader(p, b);
-      if (attrs) attrs.forEach((n, i) => gl.bindAttribLocation(p, i, n));
-      gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(p)); return null; }
-      const loc = {}; return { p, u(n) { return n in loc ? loc[n] : (loc[n] = gl.getUniformLocation(p, n)); } };
-    }
-    const P = {
-      sky: program(VS_SKY, FS_SKY), pool: program(VS_POOL, FS_POOL, ['aPos']), rack: program(VS_RACK, FS_RACK, ['aPos']),
-      water: program(VS_WATER, FS_WATER, ['aXZ']), caus: program(VS_CAUS, FS_CAUS, ['aXZ']), sim: program(VS_FULL, FS_SIM)
-    };
-    if (Object.values(P).some(x => !x)) { giveUp(); return; }
+    // ---------- Escena ----------
+    const X0 = -6, X1 = 4.6, X2 = 8.4, Z0 = -5.4, Z1 = 3.6, HH = 3.2;   // límites: oeste, tabique de la sala eléctrica, este, fondo, frente y alto
+    const RZ1 = -.03, RZ2 = 2.925;                                      // eje de las filas R1 (fondo) y R2 (frente)
+    const PUFFS = [];                                                   // vapor de la torre
+    function buildScene() {
+      const steel = mat([.6, .62, .66], 1, .3, 3), steelD = mat([.16, .17, .2], .85, .42, 3), steelL1 = mat([.2, .21, .25], .85, .4, 1, 1), shell3 = mat([.12, .13, .16], .8, .45, 3, 1),
+        black = mat([.018, .019, .024], .2, .55), rubber = mat([.012, .013, .017], 0, .72, 0, 2), pipeS = mat([.66, .68, .72], 1, .22, 3, 2), pipeCold = mat([.55, .74, .92], .55, .35, 0, 2),
+        blueAl = mat([.04, .26, .95], .85, .28), redAl = mat([.92, .08, .06], .85, .28), blueAlP = mat([.04, .26, .95], .85, .28, 0, 2), redAlP = mat([.92, .08, .06], .85, .28, 0, 2),
+        copper = mat([.95, .54, .31], 1, .32, 3, 3), nickel = mat([.5, .52, .56], 1, .36, 9, 3), gold = mat([.86, .66, .22], 1, .32), pcb = mat([.008, .034, .022], 0, .42, 2),
+        subM = mat([.1, .13, .12], .2, .5), cableM = mat([.05, .2, .95], 0, .27), cableK = mat([.02, .02, .03], 0, .35), busbar = mat([.88, .48, .28], 1, .26, 3),
+        die = mat([.5, .3, .1], 0, .5, 0, 4), heat = mat([.3, .32, .36], .9, .35, 7), floorM = mat([.012, .02, .036], .55, .3, 5, 0, 'C'), rackM = mat([.016, .02, .03], .7, .42, 1, 0, 'C'),
+        rackD = mat([.008, .01, .016], .5, .6, 0, 0, 'C'), cduM = mat([.14, .16, .2], .75, .4, 3, 0, 'C');
+      const emiB = mat([.1, .45, 1], 0, .5, 6), emiC = mat([.2, .9, 1], 0, .5, 6, 0, 'C'), emiW = mat([1, .97, .9], 0, .5, 6, 0, 'C'), emiBc = mat([.1, .45, 1], 0, .5, 6, 0, 'C');
+      const yB = yb + .0085;
+      // materiales de la sala
+      const wallM = mat([.8, .81, .83], 0, .9, 0, 0, 'C'), wallB = mat([.12, .5, .85], 0, .7, 0, 0, 'C'), ceilM = mat([.9, .91, .92], 0, .9, 0, 0, 'C'),
+        flN = mat([.62, .64, .67], .15, .38, 5, 0, 'C'), flC = mat([.5, .64, .8], .15, .38, 8, 0, 'C'), flH = mat([.8, .62, .46], .15, .38, 5, 0, 'C'), flE = mat([.44, .46, .5], .1, .5, 0, 0, 'C'),
+        rkS = mat([.05, .055, .066], .6, .5), rkD = mat([.055, .06, .072], .65, .42, 1), rkDr = mat([.045, .05, .06], .65, .42, 1), mesh = mat([.6, .62, .66], 1, .38, 3),
+        fib = mat([1, .52, .06], 0, .45), cabY = mat([.9, .72, .1], 0, .4), busM = mat([.82, .34, .12], .6, .35), signC = mat([.1, .6, 1], 0, .5, 6, 0, 'C'), signH = mat([1, .5, .08], 0, .5, 6, 0, 'C'),
+        glass = mat([.55, .78, .9], 0, .04, 0, 5, 'G'), frameM = mat([.1, .11, .13], .6, .4, 0, 0, 'C'), conc = mat([.58, .58, .56], 0, .9, 0, 0, 'C'), groundM = mat([.42, .46, .38], 0, .95, 0, 0, 'C'),
+        asph = mat([.22, .23, .25], 0, .9, 0, 0, 'C'), twB = mat([.52, .62, .7], .1, .6), twD = mat([.2, .24, .28], .3, .55), twL = mat([.34, .4, .45], .3, .5),
+        pipeBl = mat([.18, .42, .95], .4, .35, 0, 2), pipeRd = mat([.88, .2, .1], .4, .35, 0, 2), insul = mat([.82, .84, .86], .1, .55),
+        upsM = mat([.84, .86, .89], .3, .45), upsD = mat([.04, .045, .055], .4, .45), batM = mat([.1, .11, .13], .6, .45), batV = mat([.04, .045, .055], .5, .5, 1), swR = mat([.7, .12, .1], .4, .45),
+        cduA = mat([.84, .86, .89], .3, .45), extM = mat([.8, .05, .04], .5, .4), emiG = mat([.2, 1, .45], 0, .5, 6, 0, 'C'), emiO = mat([1, .55, .1], 0, .5, 6, 0, 'C');
 
-    // ---------- Geometría ----------
-    const emptyVAO = gl.createVertexArray();
-    function vaoWith(verts, idx, size) {
-      const v = gl.createVertexArray(); gl.bindVertexArray(v);
-      const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, verts, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, size, gl.FLOAT, false, 0, 0);
-      const e = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, e); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.STATIC_DRAW);
-      gl.bindVertexArray(null); return { v, n: idx.length };
-    }
-    const T = 0.35;
-    const poolG = vaoWith(new Float32Array([
-      -1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, 1,
-      -1, -1, -1, -1, -1, 1, -1, T, 1, -1, T, -1,
-      1, -1, -1, 1, -1, 1, 1, T, 1, 1, T, -1,
-      -1, -1, -1, 1, -1, -1, 1, T, -1, -1, T, -1,
-      -1, -1, 1, 1, -1, 1, 1, T, 1, -1, T, 1]),
-      new Uint16Array([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12, 13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19]), 3);
-    const boxG = vaoWith(new Float32Array([-1, -1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1]),
-      new Uint16Array([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 4, 7, 0, 7, 3, 1, 5, 6, 1, 6, 2, 3, 2, 6, 3, 6, 7, 0, 1, 5, 0, 5, 4]), 3);
-    let gridG = null;
-    function buildGrid(N) {
-      const v = new Float32Array((N + 1) * (N + 1) * 2); let k = 0;
-      for (let j = 0; j <= N; j++) for (let i = 0; i <= N; i++) { v[k++] = -1 + 2 * i / N; v[k++] = -1 + 2 * j / N; }
-      const idx = new Uint32Array(N * N * 6); k = 0;
-      for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) { const a = j * (N + 1) + i, b = a + 1, c = a + N + 1, d = c + 1; idx[k++] = a; idx[k++] = c; idx[k++] = b; idx[k++] = b; idx[k++] = c; idx[k++] = d; }
-      gridG = vaoWith(v, idx, 2);
+      // ---- cascarón: piso, paredes, techo ----
+      const wlen = Z1 - Z0 + .2, cw = X2 - X0;
+      const segs = [[Z0, -2, flN], [-2, -.5, flH], [-.5, .445, flN], [.445, 2.45, flC], [2.45, Z1, flN]];
+      for (const [a, b, m] of segs) box(m, (X0 + X1) / 2, -.02, (a + b) / 2, X1 - X0, .04, b - a, '-y');
+      box(flE, (X1 + X2) / 2, -.02, (Z0 + Z1) / 2, X2 - X1, .04, Z1 - Z0, '-y');
+      box(ceilM, (X0 + X2) / 2, HH + .05, (Z0 + Z1) / 2, cw + .4, .1, wlen);
+      box(wallM, X0 - .1, HH / 2, (Z0 + Z1) / 2, .2, HH, wlen); box(wallM, X2 + .1, HH / 2, (Z0 + Z1) / 2, .2, HH, wlen);
+      box(wallM, (X0 + X2) / 2, HH / 2, Z1 + .1, cw + .4, HH, .2);
+      box(wallB, (X0 + X1) / 2, .55, Z1 - .0, X1 - X0, .12, .02, null, 0, 'C'); box(wallB, X0 + .01, .55, 0, .02, .12, Z1 - Z0 - .1, null, 0, 'C');
+      // pared del fondo con ventanal (x 0..4.2, y .5..3.1)
+      box(wallM, (X0 + 0) / 2, HH / 2, Z0 - .1, 0 - X0, HH, .2); box(wallM, (4.2 + X2) / 2, HH / 2, Z0 - .1, X2 - 4.2, HH, .2);
+      box(wallM, 2.1, .25, Z0 - .1, 4.2, .5, .2); box(wallM, 2.1, (3.1 + HH) / 2, Z0 - .1, 4.2, HH - 3.1, .2);
+      for (const x of [0, 1.4, 2.8, 4.2]) box(frameM, x, 1.8, Z0 - .1, .07, 2.6, .12);
+      box(frameM, 2.1, .52, Z0 - .1, 4.2, .05, .12); box(frameM, 2.1, 3.08, Z0 - .1, 4.2, .05, .12);
+      box(glass, 2.1, 1.8, Z0 - .1, 4.2, 2.6, .012);
+      // tabique de la sala eléctrica (puerta abierta z .6..2.6)
+      box(wallM, X1, HH / 2, (Z0 + .6) / 2, .2, HH, .6 - Z0); box(wallM, X1, HH / 2, (2.6 + Z1) / 2, .2, HH, Z1 - 2.6); box(wallM, X1, (2.6 + HH) / 2, 1.6, .2, HH - 2.6, 2);
+      for (const z of [.6, 2.6]) box(frameM, X1, 1.3, z, .24, 2.6, .05);
+      box(wallB, X1 - .11, 2.45, 1.6, .02, .2, 2, null, 0, 'C');
+      // luminarias del techo (franjas LED)
+      for (const z of [-3.6, -1.25, .2, 1.55, 2.95]) for (let x = X0 + 1; x < X1 - .5; x += 1.5) box(emiW, x, HH - .01, z, 1.2, .03, .16, null, 2.6, 'C');
+      for (const z of [-3.2, -.3, 2.2]) for (let x = X1 + 1; x < X2 - .5; x += 1.5) box(emiW, x, HH - .01, z, 1.2, .03, .16, null, 2.6, 'C');
+      // cartelería: pasillo frío (azul) y pasillo caliente (naranja)
+      for (const [x, z, sm] of [[-.7, 1.55, signC], [-.7, -1.25, signH], [2.6, 1.55, signC]]) { box(sm, x, 2.7, z, .03, .22, .9, null, 1.6, 'C'); for (const dz of [-.35, .35]) box(frameM, x, 2.95, z + dz, .012, .5, .012); }
+
+      // ---- racks (dos filas enfrentadas) ----
+      const NX = [-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];       // 14 racks por fila, cada .62 m
+      function rackStd(xc, slot) {
+        const hgt = 2.05;
+        box(rkS, -.296, hgt / 2, 0, .008, hgt - .04, .94); box(rkS, .296, hgt / 2, 0, .008, hgt - .04, .94); box(rkS, 0, hgt - .01, 0, .6, .02, .95);
+        box(frameM, 0, .02, 0, .6, .04, .95);
+        if (!slot) {
+          box(rkDr, 0, 1.0, -.47, .58, 1.96, .012);
+          box(rkD, 0, 1.0, .47, .58, 1.96, .012); box(steel, .245, 1.0, .485, .016, .32, .02);
+          box(emiBc, -.272, 1.0, .478, .01, 1.7, .004, null, 1.1 + rnd() * .5, 'C');
+          for (let k = 0; k < 6; k++) { const yy = .25 + rnd() * 1.6, o = (rnd() - .5) * .4; led([o, yy, .45], .02, rnd() < .7 ? [.2, .6, 1] : [.2, 1, .5], null, rnd() < .5 ? 0 : 1 + rnd() * 3); }
+          for (let k = 0; k < 3; k++) { const yy = .3 + rnd() * 1.5; led([(rnd() - .5) * .4, yy, -.45], .018, [1, .55, .15], null, 0); }
+        }
+      }
+      for (const i of NX) { if (i === 0) continue; setXF(0, i * .62, 0, RZ1); rackStd(0, false); }
+      setXF(0, 0, 0, RZ1); rackStd(0, true); clrXF();
+      for (const i of NX) { setXF(Math.PI, i * .62, 0, RZ2); rackStd(0, false); }
+      clrXF();
+      // panel de relleno sobre la fila (techo de contención de aire) y refuerzo del fondo del pasillo caliente
+      box(frameM, X0 + .02, 1.1, RZ1, .04, 2.2, .96); box(frameM, X0 + .02, 1.1, RZ2, .04, 2.2, .96);
+
+      // ---- bandejas portacables y fibra sobre el pasillo frío; barra de energía sobre la fila ----
+      const TZc = 1.55;
+      for (const dz of [-.25, .25]) box(mesh, (X0 + X1) / 2, 2.37, TZc + dz, X1 - X0 - .4, .05, .03);
+      for (let x = X0 + .3; x < X1 - .3; x += .32) box(mesh, x, 2.36, TZc, .02, .02, .5);
+      for (let j = 0; j < 3; j++) tube(j === 1 ? cabY : cableM, [[X0 + .3, 2.42, TZc - .12 + j * .12], [X1 - .3, 2.42, TZc - .12 + j * .12]], .022, { seg: 8, step: .6, minN: 2 });
+      tube(fib, [[X0 + .3, 2.5, TZc + .46], [X1 + .0, 2.5, TZc + .46]], .04, { seg: 10, step: .6, minN: 2 });
+      for (const x of [-4.6, -3.4, -2.2, -1.0, 0.0, 1.2, 2.4, 3.6]) {
+        tube(cableM, [[x, 2.42, TZc - .12], [x, 2.38, 1.0], [x + .04, 2.2, .6], [x, 2.06, .3]], .013, { seg: 8, minN: 6 });
+        tube(cableM, [[x + .1, 2.42, TZc + .12], [x + .1, 2.38, 2.0], [x + .06, 2.2, 2.4], [x + .1, 2.06, 2.6]], .013, { seg: 8, minN: 6 });
+      }
+      // barra de energía (busway) sobre la fila R1, entra a la sala eléctrica
+      box(busM, (X0 + X2 - .5) / 2, 2.52, .85, X2 - X0 - .5, .13, .16);
+      for (const i of NX) { const x = i * .62; box(busM, x, 2.52, .72, .12, .12, .1); tube(cableK, [[x, 2.47, .72], [x, 2.3, .6], [x, 2.06, .35]], .012, { seg: 8, minN: 5 }); }
+      // matafuego
+      cyl(extM, [X1 - .3, .15, Z1 - .12], [X1 - .3, .6, Z1 - .12], .06, { seg: 12 });
+
+      // ---- rack de servicio: bastidor abierto, colectores y bandejas ----
+      for (const [px, pz] of [[-.295, .44], [.295, .44], [-.295, -.5], [.295, -.5]]) box(black, px, 1.0, pz, .03, 2.0, .03);
+      for (const sx of [-1, 1]) { cyl(pipeS, [sx * .15, .06, -.47], [sx * .15, 1.97, -.47], .017, { seg: 16, T: sx < 0 ? .05 : .96 }); for (const yy of [.06, 1.97]) cyl(sx < 0 ? blueAlP : redAlP, [sx * .15, yy - .013, -.47], [sx * .15, yy + .013, -.47], .02, { seg: 16, T: sx < 0 ? .05 : .96 }); }
+      box(busbar, 0, 1.0, -.47, .04, 1.9, .006);
+      for (let k = -8; k <= 12; k++) {
+        const y0 = yb + .09 * k, idx = k === 0 ? 0 : 1;
+        for (const [sx, cA] of [[-1, blueAl], [1, redAl]]) {
+          cyl(pipeS, [sx * .15, y0 + .042, -.456], [sx * .15, y0 + .042, -.4], .0095, { seg: 10, T: sx < 0 ? .05 : .96 });
+          cyl(cA, [sx * .15, y0 + .042, -.428], [sx * .15, y0 + .042, -.398], idx ? .0125 : .0145, { seg: 14 });
+          cyl(steel, [sx * .15, y0 + .042, -.41], [sx * .15, y0 + .042, -.404], idx ? .0138 : .0158, { seg: 14 });
+        }
+        box(busbar, 0, y0 + .04, -.43, .04, .03, .02);
+        if (!idx) continue;
+        box(steelL1, 0, y0 + .04, .395, .46, .08, .012);
+        box(shell3, 0, y0 + .04, -.01, .46, .08, .79, '+z');
+        for (let j = 0; j < 4; j++) { box(black, .06 + j * .035, y0 + .028, .402, .028, .014, .006); led([.06 + j * .035 + .008, y0 + .036, .408], .011, j % 2 ? [.2, 1, .5] : [.2, .6, 1], null, 2 + rnd() * 4); }
+        for (let j = 0; j < 3; j++) led([-.2 + j * .02, y0 + .056, .408], .011, [.2, 1, .5], null, j ? 0 : 1.4);
+        if (k % 2 === 0 || k < -4) for (let j = 0; j < 2; j++) {
+          const px = .06 + j * .035 + rnd() * .01, off = j * .012;
+          tube(cableM, [[px, y0 + .028, .405], [px, y0 + .028, .5], [px - .04, y0 - .02, .56 + off], [-.3 - j * .03 - rnd() * .04, y0 - .12, .62 + off], [-.46 - .02 * j, .03, .6]], .0048, { T0: 0, seg: 6, step: .02 });
+        }
+      }
+      // ---- carro de servicio con la bandeja abierta ----
+      const cartM = mat([.1, .11, .13], .7, .4, 3), cartT = mat([.7, .72, .76], .8, .3, 3), wheelM = mat([.02, .02, .025], 0, .6);
+      box(cartT, 0, yb - .022, TZ + .015, .56, .04, .93); box(cartT, 0, .22, TZ + .015, .54, .02, .9);
+      for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+        const px = sx * .25, pz = TZ + .015 + sz * .42;
+        cyl(cartM, [px, .1, pz], [px, yb - .04, pz], .018, { seg: 10 });
+        box(cartM, px, .095, pz, .05, .02, .06); cyl(wheelM, [px - .02, .05, pz], [px + .02, .05, pz], .05, { seg: 14 });
+      }
+
+      // ---- bandeja abierta (vista ampliada) ----
+      setXF(0, 0, 0, TZ);
+      // ---- bandeja abierta ----
+      box(steel, 0, yb + .0015, -.0, .46, .003, .8, null);                               // base
+      box(steelL1, -.2315, yb + .0425, 0, .003, .085, .8); box(steelL1, .2315, yb + .0425, 0, .003, .085, .8);   // laterales
+      box(steelL1, 0, yb + .0425, -.402, .46, .085, .004);                               // trasera
+      box(steelL1, 0, yb + .0425, .402, .46, .085, .012);                                // frente perforado
+      box(steel, -.2315, yb + .0875, 0, .006, .004, .8); box(steel, .2315, yb + .0875, 0, .006, .004, .8);
+      for (const sx of [-1, 1]) { box(steel, sx * .205, yb + .06, .42, .012, .012, .04); box(steel, sx * .205, yb + .06, .446, .03, .012, .012); }   // manijas
+      // placa base
+      box(pcb, 0, yb + .0055 + .0025, -.05, .42, .005, .64);
+      for (let k = 0; k < 14; k++) { const px = -.19 + rnd() * .38, pz = -.34 + rnd() * .55; if (Math.abs(Math.abs(px) - .11) < .07 && Math.abs(pz + .02) < .13) continue; cyl(mat([.12, .12, .14], .7, .4), [px, yB, pz], [px, yB + .006 + rnd() * .006, pz], .0035 + rnd() * .002, { seg: 8 }); }
+      // grupos de módulos: CPU + 2 GPU por lado, cada uno con su placa fría
+      const yp = yb + .058;                                      // altura de caños y mangueras
+      const plates = []; for (const sx of [-1, 1]) { const cx = sx * .11; plates.push([cx, .14, .075, sx], [cx, -.02, .095, sx], [cx, -.19, .095, sx]); }
+      for (const [cx, zc, s, sx] of plates) {
+        box(subM, cx, yB + .0025, zc, s + .028, .005, s + .028); box(gold, cx, yB + .0052, zc, s + .02, .0008, s + .02);
+        box(copper, cx, yB + .005 + .0095, zc, s, .019, s, null, .5);
+        const top = yB + .024; box(nickel, cx, top + .002, zc, s * .96, .004, s * .96, null, .5);
+        box(die, cx, yB + .013, zc, s * .55, .003, s * .55, null, 1);
+        for (const [ax, az] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) { const px = cx + ax * s * .43, pz = zc + az * s * .43; cyl(steel, [px, top + .004, pz], [px, top + .0085, pz], .0034, { seg: 8, g: grp.A }); cyl(steelD, [px, top + .0085, pz], [px, top + .0095, pz], .0052, { seg: 8, g: grp.A }); }
+        const ox = cx + sx * .028, ix = cx - sx * .028, yf = top + .02;
+        for (const fx of [ox, ix]) { cyl(nickel, [fx, top + .004, zc], [fx, yf, zc], .0075, { seg: 12, g: grp.A }); cyl(steel, [fx, yf - .006, zc], [fx, yf - .002, zc], .0098, { seg: 12 }); }
+        // manguera de entrada (desde el caño lateral) y de salida (hacia el caño central de retorno)
+        const P0 = [sx * .195, yp, zc];
+        tube(rubber, [P0, [sx * .178, yp + .006, zc], [ox + sx * .022, yf + .018, zc], [ox, yf + .012, zc], [ox, yf - .005, zc]], .0078, { T0: .06, T1: .12, seg: 10 });
+        tube(rubber, [[ix, yf - .005, zc], [ix, yf + .012, zc], [ix * .55, yf + .02, zc], [ix * .15, yp + .008, zc], [0, yp, zc]], .0078, { T0: .82, T1: .93, seg: 10 });
+        // fijación de las mangueras
+        for (const fx of [ox, ix]) box(blueAl, fx, yf + .004, zc, .004, .004, .004, null, 0, grp.A);
+      }
+      // caños internos de la bandeja
+      tube(pipeS, [[-.195, yp, -.33], [-.195, yp, .26]], .0085, { T0: .05, T1: .1, seg: 12 }); tube(pipeS, [[.195, yp, -.33], [.195, yp, .26]], .0085, { T0: .05, T1: .1, seg: 12 });
+      tube(pipeS, [[0, yp, .26], [0, yp, -.2]], .0095, { T0: .95, T1: 1, seg: 12 });
+      for (const sx of [-1, 1]) cyl(sx < 0 ? blueAlP : redAlP, [sx * .195, yp, .262], [sx * .195, yp, .268], .0098, { seg: 12, T: .1 });
+      const clampM = mat([.03, .032, .04], .6, .45);
+      for (const zz of [-.27, -.12, .03, .18]) for (const px of [-.195, .195]) cyl(clampM, [px, yp, zz - .003], [px, yp, zz + .003], .0108, { seg: 12 });
+      for (const zz of [-.15, .0, .15]) cyl(clampM, [0, yp, zz - .003], [0, yp, zz + .003], .0118, { seg: 12 });
+      // hacia los acoples traseros
+      tube(rubber, [[0, yp, -.2], [.07, yp + .008, -.28], [.15, yp - .004, -.34], [.15, yb + .042, -.385]], .0105, { T0: .96, T1: 1, seg: 10 });
+      tube(rubber, [[-.15, yb + .042, -.385], [-.15, yp - .004, -.34], [-.195, yp, -.33]], .0105, { T0: .05, T1: .06, seg: 10 });
+      tube(rubber, [[-.195, yp, -.33], [-.19, yp + .028, -.348], [0, yp + .038, -.356], [.19, yp + .028, -.348], [.195, yp, -.33]], .0082, { T0: .06, T1: .07, seg: 10 });
+      // tarjeta de red (NIC) refrigerada, delante de los módulos
+      box(pcb, 0, yB + .0025, .225, .13, .005, .09); box(copper, 0, yB + .005 + .007, .225, .1, .014, .07, null, .35); box(nickel, 0, yB + .021, .225, .096, .004, .066, null, .35);
+      for (const fx of [-.03, .03]) cyl(nickel, [fx, yB + .022, .225], [fx, yB + .036, .225], .0065, { seg: 10 });
+      tube(rubber, [[-.195, yp, .225], [-.15, yp + .008, .225], [-.05, yB + .06, .225], [-.03, yB + .048, .225], [-.03, yB + .034, .225]], .0072, { T0: .07, T1: .1, seg: 10 });
+      tube(rubber, [[.03, yB + .034, .225], [.03, yB + .048, .225], [.015, yB + .06, .225], [0, yp, .225]], .0072, { T0: .8, T1: .9, seg: 10 });
+      // VRM / disipadores y memoria
+      for (let k = 0; k < 6; k++) box(heat, -.0 + (k % 2 ? .03 : -.03), yB + .009, -.3 + Math.floor(k / 2) * .055, .05, .018, .04);
+      for (const sx of [-1, 1]) for (let k = 0; k < 4; k++) { box(mat([.05, .06, .07], .5, .4), sx * .178, yB + .007, .15 - k * .038, .016, .014, .03); box(gold, sx * .178, yB + .0145, .15 - k * .038, .014, .0008, .026); }
+      // puertos delanteros (OSFP) y cables azules como en la referencia
+      for (let j = 0; j < 6; j++) {
+        const px = .02 + j * .03; box(steel, px, yb + .03, .4, .026, .016, .01); box(black, px, yb + .03, .403, .02, .01, .006);
+        led([px + .011, yb + .042, .412], .011, j % 2 ? [.2, 1, .5] : [.2, .6, 1], null, 2 + j * .6);
+        const route = [[px, yb + .03, .41], [px, yb + .03, .54], [px - .03, yb - .01, .6], [-.14 - j * .018, yb - .12, .66 + j * .006], [-.3 - j * .012, yb - .33, .6], [-.38, .02, .5 + j * .01]];
+        tube(cableM, route, .0052, { seg: 8 });
+      }
+      for (let j = 0; j < 3; j++) { const px = -.19 + j * .03; box(steel, px, yb + .03, .4, .026, .016, .01); box(black, px, yb + .03, .403, .02, .01, .006); tube(cableK, [[px, yb + .03, .41], [px, yb + .03, .5], [px - .05, yb - .04, .58], [-.4, yb - .3, .52]], .0048, { seg: 8 }); }
+      led([-.21, yb + .068, .408], .012, [.2, 1, .5], null, 0); led([-.19, yb + .068, .408], .012, [1, .65, .1], null, 1.7); led([-.17, yb + .068, .408], .012, [.2, .6, 1], null, 2.6);
+      // pared de ventiladores (8 × 40 mm) — los rotores giran
+      for (let i = 0; i < 8; i++) {
+        const fx = -.1925 + i * .055, fy = yb + .028, fz = .325;
+        box(black, fx - .0235, fy, fz, .006, .046, .03); box(black, fx + .0235, fy, fz, .006, .046, .03); box(black, fx, fy + .0215, fz, .052, .006, .03); box(black, fx, fy - .0215, fz, .052, .006, .03);
+        FANS.push([fx, fy, fz + TZ, i % 2 ? 1 : -1, 1, 0]);
+      }
+      clrXF();
+      // rotor de ventilador (origen local, eje z)
+      const fm = mat([.05, .055, .07], .3, .45), hubM = mat([.1, .1, .12], .8, .35);
+      cyl(hubM, [0, 0, -.007], [0, 0, .007], .0085, { seg: 14, g: grp.R });
+      for (let b = 0; b < 9; b++) {
+        const a = b / 9 * 6.2832, c = Math.cos(a), s = Math.sin(a), tx = -s, ty = c;
+        const q = (r, t, z) => [c * r + tx * t, s * r + ty * t, z];
+        const p = [q(.007, -.0045, -.004), q(.0195, -.0085, .003), q(.0195, .0085, -.003), q(.007, .0045, .004)];
+        const n = nrm(cross(sub(p[1], p[0]), sub(p[3], p[0]))), ii = p.map(pp => vtx(grp.R, pp, n, fm, 0, 0)); grp.R.i.push(ii[0], ii[1], ii[2], ii[0], ii[2], ii[3]);
+      }
+
+      // ---- sala de bombas: CDU (unidad de distribución de refrigerante) ----
+      const cx0 = -2.0, cz0 = -3.7;
+      box(cduA, cx0, .95, cz0, .95, 1.9, .8, '-y'); box(upsD, cx0, 1.93, cz0, .97, .03, .82);
+      box(upsD, cx0 - .15, 1.42, cz0 + .402, .5, .34, .008); box(emiC, cx0 - .15, 1.42, cz0 + .408, .46, .3, .002, null, .5, 'C');
+      for (let k = 0; k < 14; k++) { const hh = .03 + .17 * (.5 + .5 * Math.sin(k * .7 + 1)) * (.6 + rnd() * .4); box(emiW, cx0 - .33 + k * .0245, 1.28 + hh / 2, cz0 + .412, .014, hh, .002, null, 1.6, 'C'); }
+      for (let k = 0; k < 3; k++) { cyl(mat([.8, .82, .85], 1, .3), [cx0 + .2 + k * .11, 1.42, cz0 + .402], [cx0 + .2 + k * .11, 1.42, cz0 + .418], .04); box(emiW, cx0 + .2 + k * .11, 1.42, cz0 + .419, .06, .004, .004, null, 1.2, 'C'); }
+      box(mat([.05, .055, .065], .5, .5, 1), cx0, .55, cz0 + .402, .85, .75, .006);
+      for (let k = 0; k < 2; k++) { const vx = cx0 - .2 + k * .4; cyl(mat([.7, .72, .76], 1, .3), [vx, 1.0, cz0 + .402], [vx, 1.0, cz0 + .46], .035); box(k ? mat([.9, .08, .06], .3, .5) : mat([.05, .3, .95], .3, .5), vx, 1.0, cz0 + .47, .09, .025, .025); }
+      for (let k = 0; k < 6; k++) led([cx0 - .4 + k * .05, .2, cz0 + .41], .02, k % 3 ? [.2, 1, .5] : [.2, .6, 1], null, 2 + k);
+      // colectores del lado primario (hacia los racks) y secundario (hacia la torre)
+      tube(pipeBl, [[cx0 + .35, 1.93, cz0], [cx0 + .35, 2.2, cz0 - .1], [cx0 + .9, 2.2, cz0 - .1]], .04, { T0: .08, seg: 12, step: .04 });
+      tube(pipeBl, [[cx0 + .5, .12, cz0 + .15], [cx0 + .8, .045, cz0 + .5], [-.15, .045, -2.2], [-.15, .045, -1.0], [-.15, .1, -.5]], .026, { T0: .05, T1: .06, seg: 12, step: .04 });
+      tube(pipeRd, [[.15, .1, -.5], [.15, .045, -1.0], [.15, .045, -2.6], [-1.0, .045, -2.9], [cx0 + .45, .5, cz0 + .35]], .026, { T0: .96, T1: .98, seg: 12, step: .04 });
+      // circuito secundario CDU → torre: sale por el costado, corre por la pared y atraviesa el ventanal hacia la torre
+      tube(pipeRd, [[cx0 + .47, .95, cz0 - .1], [cx0 + .9, .95, cz0 - .5], [-.4, .6, -4.7], [0.9, .4, Z0 + .22], [1.0, .4, Z0 - .5], [1.0, .4, -7.45]], .05, { T0: .93, seg: 14, step: .06 });
+      tube(pipeBl, [[cx0 + .47, .6, cz0 - .1], [cx0 + .9, .6, cz0 - .5], [-.4, .3, -4.7], [1.4, .17, Z0 + .22], [1.5, .17, Z0 - .5], [1.5, .17, -7.45]], .05, { T0: .08, seg: 14, step: .06 });
+      for (const [xx, yy] of [[-.9, .6], [-.9, .32]]) cyl(steelD, [xx, yy - .08, -4.8], [xx, yy + .08, -4.8], .08, { seg: 12 });
+      // ---- torre de refrigeración (afuera, detrás del ventanal) ----
+      box(groundM, 0, -.05, -17, 70, .1, 24); box(asph, 2.0, -.045, -6.7, 10, .1, 2.6);
+      const tz = -8.6;
+      box(conc, 2.0, .2, tz, 3.4, .4, 2.8); box(twD, 2.0, 1.45, tz, 3.0, 2.1, 2.4);
+      for (let k = 0; k < 14; k++) { const yy = .65 + k * .14; box(twL, 2.0, yy, tz + 1.21, 3.04, .06, .03); box(twL, .51, yy, tz, .03, .06, 2.44); box(twL, 3.49, yy, tz, .03, .06, 2.44); }
+      for (const x of [.5, 2.0, 3.5]) box(twB, x, 1.5, tz + 1.2, .08, 2.2, .08);
+      box(twB, 2.0, 2.55, tz, 3.1, .1, 2.5);
+      for (const fx of [1.25, 2.75]) {
+        cyl(twB, [fx, 2.6, tz], [fx, 3.25, tz], .62, { seg: 28, caps: false }); cyl(twD, [fx, 3.2, tz], [fx, 3.28, tz], .66, { seg: 28, caps: false });
+        cyl(twD, [fx, 2.92, tz], [fx, 2.93, tz], .6, { seg: 24 }); for (let b = 0; b < 4; b++) { const a = b * 1.5708; box(twD, fx + Math.cos(a) * .3, 3.22, tz + Math.sin(a) * .3, b % 2 ? .02 : .6, .02, b % 2 ? .6 : .02); }
+        FANS.push([fx, 3.0, tz, fx < 2 ? 1 : -1, 27, 1]);
+        for (let p = 0; p < 26; p++) PUFFS.push([fx + (rnd() - .5) * .5, 3.3, tz + (rnd() - .5) * .5, rnd(), .6 + rnd() * .8]);
+      }
+      // conexiones del circuito a la base de la torre
+      for (const [x, m] of [[1.0, pipeRd], [1.5, pipeBl]]) { tube(m, [[x, m === pipeRd ? .4 : .17, -7.45], [x, m === pipeRd ? .4 : .17, -7.9], [x, m === pipeRd ? 2.0 : .5, -8.1]], .05, { T0: m === pipeRd ? .93 : .08, seg: 12, step: .06 }); }
+      // edificios y horizonte
+      for (const [x, z, w, h, d, c] of [[-14, -26, 10, 7, 6, .74], [-2, -34, 14, 5, 6, .8], [16, -30, 12, 9, 6, .7], [34, -38, 16, 6, 6, .78], [-34, -36, 14, 11, 6, .72]]) box(mat([c, c + .03, c + .06], 0, .9, 0, 0, 'C'), x, h / 2, z, w, h, d);
+
+      // ---- sala eléctrica: UPS, baterías y tablero ----
+      for (let i = 0; i < 10; i++) {
+        const z = -4.7 + i * .86, ups = i < 3;
+        if (ups) {
+          box(upsM, 7.75, .98, z, .8, 1.96, .78, '-y'); box(upsD, 7.35, 1.5, z, .01, .36, .5); box(emiC, 7.343, 1.5, z, .004, .3, .44, null, .55, 'C');
+          for (let k = 0; k < 8; k++) { const hh = .04 + .16 * (.5 + .5 * Math.sin(k * 1.1 + i)); box(emiG, 7.34, 1.36 + hh / 2, z - .17 + k * .05, .004, hh, .03, null, 1.4, 'C'); }
+          box(batV, 7.348, .5, z, .008, .8, .66); led([7.34, 1.78, z + .3], .02, [.2, 1, .5], null, 0); led([7.34, 1.78, z + .22], .02, [1, .6, .1], null, 1.3);
+        } else {
+          box(batM, 7.75, .98, z, .8, 1.96, .78, '-y'); box(batV, 7.348, 1.0, z, .008, 1.84, .7);
+          box(frameM, 7.345, 1.0, z, .01, 1.9, .012);
+          for (let k = 0; k < 4; k++) led([7.34, .5 + k * .35, z + .3], .016, k === 1 ? [1, .6, .1] : [.2, 1, .5], null, k === 1 ? 1.2 : 0);
+        }
+      }
+      // tablero general y transformador de salida
+      box(swR, 5.2, 1.0, -4.3, .5, 2.0, 1.0); box(upsD, 5.46, 1.4, -4.3, .01, .4, .5); box(emiO, 5.455, 1.4, -4.3, .004, .3, .4, null, .5, 'C'); box(upsM, 5.2, 1.0, -3.0, .5, 2.0, 1.0);
+      box(busM, 8.2, 2.4, .85, .4, .5, .5);
     }
 
-    // ---------- Texturas / calidad ----------
-    const QUAL = { perf: { dpr: 1, sim: 128, mesh: 96, caus: 256 }, bal: { dpr: 1.5, sim: 192, mesh: 144, caus: 512 }, ultra: { dpr: 2, sim: 256, mesh: 208, caus: 1024 } };
-    let qname = 'bal', Q = QUAL[qname], scale = 1; // en celular también arranca en Equilibrado (los efectos de lluvia y bajo el agua se apagan solo en Rendimiento); si va lento, el gobernador baja la resolución
-    let simTex = [null, null], simFbo = [null, null], simN = 0, ping = 0, causTex = null, causFbo = null, causN = 0;
-    function mkTex(n, filter) {
-      const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, n, n, 0, gl.RGBA, gl.HALF_FLOAT, null);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
+    // ---------- Shaders ----------
+    const HEAD = '#version 300 es\nprecision highp float;\n';
+    const VS = HEAD + `layout(location=0) in vec3 aP; layout(location=1) in vec3 aN; layout(location=2) in vec3 aC; layout(location=3) in vec2 aM; layout(location=4) in vec3 aX; layout(location=5) in float aT;
+uniform mat4 uVP,uModel,uLVP,uLVP2; out vec3 vW,vN,vC; out vec2 vM; out vec3 vX; out float vT; out vec4 vL,vL2;
+void main(){ vec4 w=uModel*vec4(aP,1.); vW=w.xyz; vN=mat3(uModel)*aN; vC=aC; vM=aM; vX=aX; vT=aT; vL=uLVP*w; vL2=uLVP2*w; gl_Position=uVP*w; }`;
+    const VS_SH = HEAD + `layout(location=0) in vec3 aP; uniform mat4 uLVP,uModel; void main(){ gl_Position=uLVP*uModel*vec4(aP,1.); }`;
+    const FS_SH = HEAD + `out vec4 o; void main(){ o=vec4(1.); }`;
+    const FS = HEAD + `precision highp sampler2DShadow;
+in vec3 vW,vN,vC; in vec2 vM; in vec3 vX; in float vT; in vec4 vL,vL2;
+uniform vec3 uEye,uKey,uKeyC,uFog,uSky; uniform float uTime,uXr,uLight; uniform sampler2DShadow uSh,uSh2; uniform vec2 uShTx,uShTx2,uRes; out vec4 o;
+float h21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+vec3 coolant(float t){ return mix(vec3(.08,.75,1.),vec3(1.,.38,.04),smoothstep(.12,.95,t)); }
+vec3 envC(vec3 d,float r){
+  float up=d.y*.5+.5;
+  vec3 c=mix(vec3(.09,.10,.12),vec3(.62,.65,.70),smoothstep(.25,.9,up));
+  float strip=smoothstep(.86,.95,abs(sin(d.x*4.+d.z*1.3)))*smoothstep(.45,.85,d.y);
+  c+=vec3(1.,.97,.9)*strip*2.6*(1.-r*.7);
+  c+=vec3(.05,.22,.6)*pow(1.-abs(d.y),4.)*.35;
+  return mix(c,vec3(.36,.39,.44),r*.5);
+}
+float pcf(sampler2DShadow s,vec3 p,vec2 tx,float b){ float r=0.; for(int j=-1;j<=1;j++) for(int i=-1;i<=1;i++) r+=textureLod(s,vec3(p.xy+vec2(float(i),float(j))*tx,p.z-b),0.); return r/9.; }
+float shadowAll(){
+  vec3 p1=vL.xyz/vL.w*.5+.5, p2=vL2.xyz/vL2.w*.5+.5;
+  float e=min(min(p1.x,1.-p1.x),min(p1.y,1.-p1.y)); float m=smoothstep(0.,.08,e)*step(p1.z,1.);
+  float s2=1., s1=1.;
+  if(m<.999 && p2.x>0.&&p2.x<1.&&p2.y>0.&&p2.y<1.&&p2.z<1.) s2=pcf(uSh2,p2,uShTx2,.0007);
+  if(m>.001) s1=pcf(uSh,clamp(p1,vec3(0.),vec3(1.)),uShTx,.0006);
+  return mix(s2,s1,m);
+}
+vec3 aces(vec3 x){ return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.); }
+void main(){
+  vec3 N=normalize(vN); vec3 Vv=uEye-vW; float dist=length(Vv); vec3 V=Vv/dist; if(dot(N,V)<0.) N=-N;
+  vec3 alb=vC; float met=vM.x, rou=vM.y; vec3 emi=vec3(0.); int pat=int(vX.x+.5); int lay=int(vX.z+.5); vec3 an=abs(N);
+  if(pat==1){ vec2 q=an.y>.6?vW.xz:(an.x>.6?vW.zy:vW.xy); q*=150.; q.x+=.5*mod(floor(q.y),2.); float d=length(fract(q)-.5); float lod=smoothstep(4.,1.4,dist); float hole=smoothstep(.33,.27,d)*lod; alb*=1.-.9*hole-.18*(1.-lod); rou=mix(rou,.8,hole); met*=1.-hole*.6; }
+  else if(pat==2){ vec2 q=vW.xz*260.; vec2 c=floor(q); float r1=h21(c), r2=h21(c+7.3); float lod=1.-smoothstep(.5,1.4,dist); float tr=step(.62,r1)*(r2>.5?step(.8,fract(q.x)):step(.8,fract(q.y))); float pad=step(.985,r1)*step(length(fract(q)-.5),.3)*lod; alb+=vec3(.55,.34,.1)*tr*.55*lod+vec3(.8,.62,.2)*pad; alb+=vec3(.02,.05,.03)*(r1-.5); rou=mix(rou,.3,tr*lod); met=max(met,tr*lod*.6); }
+  else if(pat==3){ float br=h21(vec2(floor(vW.z*900.),floor(vW.y*30.)))*.5+h21(vec2(floor(vW.x*900.),floor(vW.y*30.)+3.))*.5; alb*=.9+.2*br; rou+=(br-.5)*.12; }
+  else if(pat==5||pat==8){ vec2 q=vW.xz/.6; vec2 f=abs(fract(q)-.5); float edge=smoothstep(.482,.5,max(f.x,f.y)); alb*=1.-edge*.55; rou=mix(rou,.7,edge);
+    if(pat==8){ float pt=step(.5,h21(floor(q)+3.)); vec2 pq=fract(q*8.)-.5; float lod=smoothstep(6.,2.,dist); float ph=smoothstep(.32,.26,length(pq))*pt*(1.-edge)*lod; alb*=1.-.75*ph; } }
+  else if(pat==6){ emi=vC*vT*(vT>2.?uLight:1.); alb*=.05; }
+  else if(pat==7){ if(an.y>.7){ float fn=smoothstep(.3,.5,abs(fract(vW.x*260.)-.5)); alb*=mix(.25,1.,fn); } }
+  else if(pat==9){ if(an.y>.7){ float ln=smoothstep(.2,.14,abs(fract(vW.z*180.)-.5)); emi+=coolant(vT)*ln*uXr*1.6; alb*=1.-.4*ln*uXr; } }
+  float a=1.;
+  if(lay==1){ a=1.-.92*uXr+.35*uXr*pow(1.-max(dot(N,V),0.),2.); emi+=vec3(.08,.35,.9)*pow(1.-max(dot(N,V),0.),2.)*.7*uXr; }
+  else if(lay==2){ float pu=smoothstep(.15,1.,sin(vX.y*60.-uTime*5.5)); emi+=coolant(vT)*(.3+1.7*pu)*uXr; alb*=1.-.75*uXr; }
+  else if(lay==3){ a=1.-.7*uXr; }
+  else if(lay==4){ a=uXr; if(a<.02) discard; emi+=vec3(1.,.4,.06)*(2.1+.5*sin(uTime*3.+vW.x*40.))*uXr; alb*=.1; }
+  else if(lay==5){ a=.1+.4*pow(1.-max(dot(N,V),0.),3.); alb=vec3(.5,.7,.82); }
+  float nv=max(dot(N,V),0.); vec3 F0=mix(vec3(.04),alb,met); vec3 dif=alb*(1.-met);
+  vec3 L=normalize(uKey); float ndl=max(dot(N,L),0.); vec3 Hh=normalize(L+V); float nh=max(dot(N,Hh),0.);
+  float ar=max(rou*rou,.05), a2=ar*ar, dd=nh*nh*(a2-1.)+1.; float D=a2/(3.14159*dd*dd);
+  vec3 F=F0+(1.-F0)*pow(1.-max(dot(Hh,V),0.),5.);
+  bool ext=vW.z<-5.5;
+  float sh=(ndl>0.&&!ext)?shadowAll():1.;
+  float ao=(.55+.45*smoothstep(0.,.45,vW.y))*(.8+.2*smoothstep(3.2,2.4,vW.y));
+  vec3 amb=mix(vec3(.30,.31,.34),vec3(.74,.76,.80),N.y*.5+.5)*ao;
+  if(ext){ amb=mix(vec3(.35,.36,.34),vec3(.8,.85,.9),N.y*.5+.5); }
+  vec3 col=dif*amb*uLight*(ext?1.:1.);
+  col+=(dif*ndl*.8+F*D*ndl*.5)*uKeyC*sh*(ext?3.2:2.0*uLight);
+  vec3 R=reflect(-V,N); vec3 fe=F0+(max(vec3(1.-rou),F0)-F0)*pow(1.-nv,5.); col+=envC(R,rou)*fe*(.8+.5*(1.-rou))*ao*(.35+.65*uLight);
+  float away=smoothstep(1.4,3.4,length(vW-vec3(0.,.9,.9)));
+  if(lay!=2&&lay!=3&&lay!=4) col*=1.-.62*uXr*away;
+  col+=emi;
+  float fg=ext?1.-exp(-max(dist-3.,0.)*.04):1.-exp(-dist*dist*.0009);
+  col=mix(col,ext?uSky:uFog,fg*.9);
+  col=pow(aces(col*.95),vec3(1./2.2));
+  vec2 sc=gl_FragCoord.xy/uRes-.5; col*=1.-dot(sc,sc)*.55;
+  o=vec4(col,a);
+}`;
+    const VS_PT = HEAD + `layout(location=0) in vec3 aP; layout(location=1) in vec4 aC; layout(location=2) in vec2 aB; uniform mat4 uVP; uniform float uTime,uPx; out vec3 vC; out float vB;
+void main(){ gl_Position=uVP*vec4(aP,1.); vC=aC.rgb; vB=aB.y>0.?(.3+.7*step(0.,sin(uTime*aB.y+aB.x))):1.; gl_PointSize=clamp(aC.w*uPx/gl_Position.w,2.,34.); }`;
+    const FS_PT = HEAD + `in vec3 vC; in float vB; out vec4 o; void main(){ float d=length(gl_PointCoord-.5)*2.; float a=exp(-d*d*4.)*vB; o=vec4(vC*a*1.5,a); }`;
+    const VS_PF = HEAD + `layout(location=0) in vec3 aP; layout(location=1) in vec2 aS; uniform mat4 uVP; uniform float uTime,uPx; out float vA;
+void main(){ float ph=fract(aS.x+uTime*aS.y*.045); vec3 p=aP+vec3(ph*2.4*(.7+aS.y*.4)+sin(aS.x*40.+ph*4.)*.18,ph*3.4,sin(aS.x*70.+ph*3.)*.22);
+  gl_Position=uVP*vec4(p,1.); vA=ph; gl_PointSize=clamp(uPx*(.55+ph*2.2)/gl_Position.w,2.,260.); }`;
+    const FS_PF = HEAD + `in float vA; out vec4 o; void main(){ float d=length(gl_PointCoord-.5)*2.; float a=smoothstep(1.,.15,d)*(1.-vA)*smoothstep(0.,.06,vA)*.34; o=vec4(mix(vec3(.84,.88,.94),vec3(1.),1.-vA),a); }`;
+
+    // ---------- GL ----------
+    let P = {}, V = {}, shTex = null, shTex2 = null, shFbo = null, shFbo2 = null, SH = 2048, SH2 = 2048, nLed = 0, ledVao = null, nPuff = 0, puffVao = null;
+    function compile(vs, fs) {
+      const mk = (t, s) => { const h = gl.createShader(t); gl.shaderSource(h, s); gl.compileShader(h); if (!gl.getShaderParameter(h, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(h)); return h; };
+      const p = gl.createProgram(); gl.attachShader(p, mk(gl.VERTEX_SHADER, vs)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+      const cache = {}; return { p, u: (n) => cache[n] !== undefined ? cache[n] : (cache[n] = gl.getUniformLocation(p, n)) };
+    }
+    function vao(g) {
+      const vb = gl.createBuffer(), ib = gl.createBuffer(), va = gl.createVertexArray(); gl.bindVertexArray(va);
+      gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.v), gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(g.i), gl.STATIC_DRAW);
+      const S = 60; [[0, 3, 0], [1, 3, 12], [2, 3, 24], [3, 2, 36], [4, 3, 44], [5, 1, 56]].forEach(([l, n, o]) => { gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, n, gl.FLOAT, false, S, o); });
+      gl.bindVertexArray(null); return { va, n: g.i.length };
+    }
+    function mkShadow(size) {
+      const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex); gl.texStorage2D(gl.TEXTURE_2D, 1, gl.DEPTH_COMPONENT24, size, size);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      const f = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, f); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0);
-      gl.viewport(0, 0, n, n); gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT);
-      return [t, f];
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_COMPARE_MODE, gl.COMPARE_REF_TO_TEXTURE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_COMPARE_FUNC, gl.LEQUAL);
+      const fb = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, tex, 0); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      return [tex, fb];
     }
-    function applyQuality() {
-      Q = QUAL[qname];
-      for (let i = 0; i < 2; i++) { if (simTex[i]) { gl.deleteTexture(simTex[i]); gl.deleteFramebuffer(simFbo[i]); } [simTex[i], simFbo[i]] = mkTex(Q.sim, gl.LINEAR); }
-      simN = Q.sim; ping = 0;
-      if (causTex) { gl.deleteTexture(causTex); gl.deleteFramebuffer(causFbo); }
-      [causTex, causFbo] = mkTex(Q.caus, gl.LINEAR); causN = Q.caus;
-      buildGrid(Q.mesh);
-      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      resize();
-    }
-    let cw = 0, ch = 0;
-    function resize() {
-      const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
-      const d = Math.min(window.devicePixelRatio || 1, Q.dpr) * scale;
-      const nw = Math.max(2, Math.round(w * d)), nh = Math.max(2, Math.round(h * d));
-      if (nw !== cv.width || nh !== cv.height) { cv.width = nw; cv.height = nh; }
-      cw = nw; ch = nh;
-    }
-
-    // ---------- Escenas ----------
-    const SCENES = {
-      manana: { az: 40, el: 30, top: [.36, .58, .92], hor: [.98, .84, .74], sun: [1, .82, .62], amb: .55, cg: 1.15, abs: [.55, .16, .09], deep: [.04, .3, .44], sp: .9, glow: .7, cloud: .65 },
-      mediodia: { az: 35, el: 64, top: [.28, .52, .95], hor: [.8, .92, 1], sun: [1, .97, .9], amb: .55, cg: 1.35, abs: [.5, .14, .08], deep: [.04, .34, .5], sp: .9, glow: .6, cloud: .75 },
-      atardecer: { az: 215, el: 14, top: [.17, .2, .46], hor: [1, .52, .3], sun: [1, .55, .28], amb: .42, cg: 1.0, abs: [.6, .2, .12], deep: [.05, .16, .32], sp: 1.1, glow: 1.1, cloud: .5 },
-      noche: { az: 60, el: 36, top: [.01, .03, .1], hor: [.07, .12, .27], sun: [.55, .66, .95], amb: .27, cg: .6, abs: [.6, .2, .12], deep: [.01, .05, .13], sp: .6, glow: 2.4, cloud: .03 }
-    };
-    const cur = { top: [0, 0, 0], hor: [0, 0, 0], sun: [0, 0, 0], abs: [0, 0, 0], deep: [0, 0, 0], amb: 0, cg: 0, sp: 0, glow: 0, cloud: 0 };
-    let sceneKey = 'mediodia', lightAz = SCENES.mediodia.az, lightEl = SCENES.mediodia.el, lightAzCur = lightAz, lightElCur = lightEl, first = true;
-    function easeScene(k) {
-      const s = SCENES[sceneKey];
-      for (const n of ['top', 'hor', 'sun', 'abs', 'deep']) for (let i = 0; i < 3; i++) cur[n][i] += (s[n][i] - cur[n][i]) * k;
-      for (const n of ['amb', 'cg', 'sp', 'glow', 'cloud']) cur[n] += (s[n] - cur[n]) * k;
-      lightAzCur += (lightAz - lightAzCur) * k; lightElCur += (lightEl - lightElCur) * k;
+    function init() {
+      if (ready || failed) return ready;
+      try {
+        gl = cv.getContext('webgl2', { antialias: true, alpha: false, powerPreference: 'high-performance' });
+        if (!gl) throw new Error('no webgl2');
+        buildScene();
+        P.main = compile(VS, FS); P.sh = compile(VS_SH, FS_SH); P.pt = compile(VS_PT, FS_PT); P.pf = compile(VS_PF, FS_PF);
+        for (const k of ['C', 'A', 'B', 'R', 'G']) V[k] = vao(grp[k]);
+        const mx = gl.getParameter(gl.MAX_TEXTURE_SIZE), coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+        SH = Math.min(coarse ? 1024 : 2048, mx); SH2 = Math.min(coarse ? 1024 : 2048, mx);
+        [shTex, shFbo] = mkShadow(SH); [shTex2, shFbo2] = mkShadow(SH2);
+        nLed = leds.length; const f = new Float32Array(nLed * 9); leds.forEach((l, i) => f.set(l, i * 9));
+        const lb = gl.createBuffer(); ledVao = gl.createVertexArray(); gl.bindVertexArray(ledVao); gl.bindBuffer(gl.ARRAY_BUFFER, lb); gl.bufferData(gl.ARRAY_BUFFER, f, gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 36, 0); gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 4, gl.FLOAT, false, 36, 12); gl.enableVertexAttribArray(2); gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 36, 28);
+        nPuff = PUFFS.length; const pf = new Float32Array(nPuff * 5); PUFFS.forEach((p, i) => pf.set(p, i * 5));
+        const pb = gl.createBuffer(); puffVao = gl.createVertexArray(); gl.bindVertexArray(puffVao); gl.bindBuffer(gl.ARRAY_BUFFER, pb); gl.bufferData(gl.ARRAY_BUFFER, pf, gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 20, 0); gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 20, 12); gl.bindVertexArray(null);
+        cv.addEventListener('webglcontextlost', (e) => { e.preventDefault(); failed = true; ready = false; stopLoop(); giveUp(); });
+        buildHotspots(); ready = true; shadowDone = false; resize();
+      } catch (err) { failed = true; ready = false; try { console.warn('sala', err); } catch (_) { } giveUp(); }
+      return ready;
     }
 
     // ---------- Cámara ----------
-    const PRESETS = {
-      esquina: { yaw: .8, pitch: .6, dist: 4.25, tx: 0, ty: -.33, tz: 0 },
-      aerea: { yaw: .55, pitch: 1.3, dist: 4.9, tx: 0, ty: -.15, tz: 0 },
-      lateral: { yaw: .15, pitch: .2, dist: 5.0, tx: 0, ty: -.3, tz: 0 },
-      racks: { yaw: -.35, pitch: .38, dist: 3.0, tx: 0, ty: -.6, tz: 0 }
-    };
-    const SUB = { yaw: .5, pitch: .13, dist: .95, tx: 0, ty: -.2, tz: -.05 };
-    const sm = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-    const pitchLo = () => cam.dist < 1.6 ? -.13 : .08;
-    const ZMIN = .7, ZMAX = 4.5; // alcance del zoom (proporcional a la referencia: min 1,4 y max 6 en una pileta del doble de tamaño)
-    let zT = null, pendY = 0, pendP = 0; // pendY/pendP: giro pendiente (amortiguación de OrbitControls, factor .25)
-    const cam = Object.assign({}, PRESETS.esquina); let tween = null, sub = false;
-    function goTo(p, ms, ease) {
-      zT = null; pendY = pendP = 0;
-      if (reduce) { Object.assign(cam, p); tween = null; return; }
-      tween = { from: Object.assign({}, cam), to: Object.assign({}, p), t0: performance.now(), ms: ms || 1300, ease: ease || 'p3' };
-    }
-    function stepOrbit(dt) {
-      if (tween || (!pendY && !pendP)) return;
-      const k = 1 - Math.pow(.75, dt * 60);
-      cam.yaw += pendY * k; cam.pitch = Math.max(pitchLo(), Math.min(1.37, cam.pitch + pendP * k));
-      pendY *= 1 - k; pendP *= 1 - k; if (Math.abs(pendY) < 1e-5) pendY = 0; if (Math.abs(pendP) < 1e-5) pendP = 0;
-    }
-    function stepTween(now) {
-      if (!tween && zT != null) { cam.dist += (zT - cam.dist) * .16; if (Math.abs(zT - cam.dist) < .001) { cam.dist = zT; zT = null; } const lo = pitchLo(); if (cam.pitch < lo) cam.pitch += (lo - cam.pitch) * .2; }
-      if (!tween) return;
-      let k = Math.min(1, (now - tween.t0) / tween.ms); const pw = tween.ease === 'p4' ? 4 : tween.ease === 'p2' ? 2 : 3; const e = k < .5 ? Math.pow(2, pw - 1) * Math.pow(k, pw) : 1 - Math.pow(-2 * k + 2, pw) / 2;
-      for (const n in tween.to) cam[n] = tween.from[n] + (tween.to[n] - tween.from[n]) * e;
-      if (k >= 1) tween = null;
-    }
-    const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
-    const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-    function camBasis() {
-      const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch), asp = ch ? cw / ch : 1.6, dd = cam.dist * (1 + (Math.max(1, .95 / asp) - 1) * sm(1.2, 2.4, cam.dist)), ty = cam.ty - .42 * (1 - sm(1.2, 4.0, cam.dist));
-      const eye = [cam.tx + dd * cp * Math.sin(cam.yaw), ty + dd * sp, cam.tz + dd * cp * Math.cos(cam.yaw)];
-      const f = norm([cam.tx - eye[0], ty - eye[1], cam.tz - eye[2]]);
-      const r = norm(cross(f, [0, 1, 0])), u = cross(r, f);
-      return { eye, f, r, u };
-    }
-    const FOV_AIR = .78, FOV_UW = 1.2; let fov = FOV_AIR, TANF = Math.tan(fov / 2), fovTw = null; // al sumergirse el campo de visión se abre (55° → 85° en la referencia)
-    const q2io = (k) => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    function fovTo(to, ms, delay) { if (reduce) { fov = to; TANF = Math.tan(fov / 2); fovTw = null; return; } fovTw = { from: fov, to, t0: performance.now() + (delay || 0), ms }; }
-    function stepFov(now) { if (!fovTw) return; const k = (now - fovTw.t0) / fovTw.ms; if (k < 0) return; const kk = Math.min(1, k); fov = fovTw.from + (fovTw.to - fovTw.from) * q2io(kk); TANF = Math.tan(fov / 2); if (kk >= 1) fovTw = null; }
-    function viewProj(b, asp) {
-      const n = .05, fa = 40, fy = 1 / TANF;
-      const pm = [fy / asp, 0, 0, 0, 0, fy, 0, 0, 0, 0, (fa + n) / (n - fa), -1, 0, 0, 2 * fa * n / (n - fa), 0];
-      const e = b.eye, r = b.r, u = b.u, f = b.f;
-      const vm = [r[0], u[0], -f[0], 0, r[1], u[1], -f[1], 0, r[2], u[2], -f[2], 0,
-        -(r[0] * e[0] + r[1] * e[1] + r[2] * e[2]), -(u[0] * e[0] + u[1] * e[1] + u[2] * e[2]), (f[0] * e[0] + f[1] * e[1] + f[2] * e[2]), 1];
-      const o = new Float32Array(16);
-      for (let c = 0; c < 4; c++) for (let rr = 0; rr < 4; rr++) { let s = 0; for (let k = 0; k < 4; k++) s += pm[k * 4 + rr] * vm[c * 4 + k]; o[c * 4 + rr] = s; }
-      return o;
-    }
-    function pointerRay(cx, cy) {
-      const r = cv.getBoundingClientRect(), nx = ((cx - r.left) / r.width) * 2 - 1, ny = 1 - ((cy - r.top) / r.height) * 2, b = camBasis(), asp = r.width / r.height;
-      const d = norm([b.f[0] + b.r[0] * nx * TANF * asp + b.u[0] * ny * TANF, b.f[1] + b.r[1] * nx * TANF * asp + b.u[1] * ny * TANF, b.f[2] + b.r[2] * nx * TANF * asp + b.u[2] * ny * TANF]);
-      return { o: b.eye, d };
-    }
-    function planeHit(cx, cy) {
-      const { o, d } = pointerRay(cx, cy); if (Math.abs(d[1]) < 1e-4) return null;
-      const t = -o[1] / d[1]; if (t <= 0) return null;
-      const x = o[0] + d[0] * t, z = o[2] + d[2] * t; if (Math.abs(x) > .98 || Math.abs(z) > .98) return null;
-      return [x * .5 + .5, z * .5 + .5];
-    }
-
-    // ---------- Simulación ----------
-    const pending = [];
-    function addDrop(u, v, r, s) { if (pending.length < 96) pending.push(u, v, r, s); }
-    function stepSim() {
-      const n = Math.min(8, pending.length / 4), arr = new Float32Array(32); for (let i = 0; i < n * 4; i++) arr[i] = pending[i];
-      pending.splice(0, n * 4);
-      const p = P.sim; gl.useProgram(p.p); gl.bindFramebuffer(gl.FRAMEBUFFER, simFbo[1 - ping]); gl.viewport(0, 0, simN, simN);
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, simTex[ping]);
-      gl.uniform1i(p.u('uS'), 0); gl.uniform2f(p.u('uSize'), simN, simN); gl.uniform4fv(p.u('uD[0]'), arr); gl.uniform1i(p.u('uN'), n);
-      gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.TRIANGLES, 0, 3); ping = 1 - ping;
-    }
-    const RACKS = new Float32Array([0, -.64, 0, 90, 90, 90, 90, 90, 90]);
-    const OBJS = {
-      servidores: { pos: [-.42, -.67, .08, 0, -.67, -.06, .42, -.67, .1], n: 3, shape: 0, half: [.15, .33, .19] },
-      servidor: { pos: [0, -.64, 0, 90, 90, 90, 90, 90, 90], n: 1, shape: 0, half: [.2, .36, .24] },
-      esfera: { pos: [0, -.75, 0, 90, 90, 90, 90, 90, 90], n: 1, shape: 1, half: [.25, .25, .25] }
-    };
-    let objKey = 'servidor', objN = 1, objShape = 0, objHalf = OBJS.servidor.half;
-    // color / luminosidad / rugosidad del agua (el tono por defecto no cambia nada)
-    const cfg = { hue: 190, lum: .8, rough: 0 };
-    function hsv(h, s2, v) { const f = (n) => { const k = (n + h / 60) % 6; return v - v * s2 * Math.max(0, Math.min(k, 4 - k, 1)); }; return [f(5), f(3), f(1)]; }
-    const tintOf = (h) => { const c = hsv(h, 1, 1); return [.62 + .38 * c[0], .62 + .38 * c[1], .62 + .38 * c[2]]; };
-    const TINT0 = tintOf(190);
-    function tintNow() { const t = tintOf(cfg.hue); return [Math.min(1.3, t[0] / TINT0[0]), Math.min(1.3, t[1] / TINT0[1]), Math.min(1.3, t[2] / TINT0[2])]; }
-    function lightVec() {
-      const a = lightAzCur * Math.PI / 180, e = lightElCur * Math.PI / 180;
-      return [Math.cos(e) * Math.sin(a), Math.sin(e), Math.cos(e) * Math.cos(a)];
-    }
-    function setCommon(p, b, time, L) {
-      gl.uniform3fv(p.u('uEye'), b.eye); gl.uniform3fv(p.u('uLight'), L); gl.uniform1f(p.u('uTime'), time);
-      gl.uniform2f(p.u('uTexel'), 1 / simN, 1 / simN);
-      gl.uniform3fv(p.u('uSkyTop'), cur.top); gl.uniform3fv(p.u('uSkyHor'), cur.hor); gl.uniform3fv(p.u('uSunCol'), cur.sun); gl.uniform1f(p.u('uSunPow'), cur.sp);
-      gl.uniform3fv(p.u('uAbs'), cur.abs); gl.uniform3fv(p.u('uDeep'), cur.deep);
-      gl.uniform1f(p.u('uAmb'), cur.amb); gl.uniform1f(p.u('uCG'), cur.cg); gl.uniform1f(p.u('uGlow'), cur.glow);
-      gl.uniform3f(p.u('uHalf'), objHalf[0], objHalf[1], objHalf[2]); gl.uniform3fv(p.u('uRack[0]'), RACKS); gl.uniform3fv(p.u('uTint'), tintNow()); gl.uniform1f(p.u('uLum'), cfg.lum / .8); gl.uniform1f(p.u('uRough'), cfg.rough); gl.uniform1i(p.u('uShape'), objShape); gl.uniform1f(p.u('uCloud'), cur.cloud);
-      gl.uniform1i(p.u('uWater'), 0); gl.uniform1i(p.u('uCaus'), 1);
-    }
-    function drawCaustics(L) {
-      const p = P.caus; gl.useProgram(p.p); gl.bindFramebuffer(gl.FRAMEBUFFER, causFbo); gl.viewport(0, 0, causN, causN);
-      gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, simTex[ping]);
-      gl.uniform1i(p.u('uWater'), 0); gl.uniform3fv(p.u('uLight'), L); gl.uniform2f(p.u('uTexel'), 1 / simN, 1 / simN);
-      gl.bindVertexArray(gridG.v); gl.drawElements(gl.TRIANGLES, gridG.n, gl.UNSIGNED_INT, 0); gl.disable(gl.BLEND);
-    }
-    function render(time) {
-      const post = postActive(); if (post) ensurePost();
-      RACKS[1] = -.6 + Math.sin(time * .5) * .045; // el servidor flota suavemente (como el Float de la referencia)
-      const b = camBasis(), L = lightVec(), asp = cw / ch, vp = viewProj(b, asp);
-      drawCaustics(L);
-      gl.bindFramebuffer(gl.FRAMEBUFFER, post ? msFbo : null); gl.viewport(0, 0, cw, ch);
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, simTex[ping]); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, causTex);
-      gl.disable(gl.DEPTH_TEST); gl.depthMask(false);
-      let p = P.sky; gl.useProgram(p.p); setCommon(p, b, time, L);
-      gl.uniform3fv(p.u('uF'), b.f); gl.uniform3fv(p.u('uR'), b.r); gl.uniform3fv(p.u('uU'), b.u); gl.uniform1f(p.u('uTan'), TANF); gl.uniform1f(p.u('uAsp'), asp);
-      gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.TRIANGLES, 0, 3);
-      gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.clear(gl.DEPTH_BUFFER_BIT);
-      p = P.pool; gl.useProgram(p.p); setCommon(p, b, time, L); gl.uniformMatrix4fv(p.u('uVP'), false, vp);
-      gl.bindVertexArray(poolG.v); gl.drawElements(gl.TRIANGLES, poolG.n, gl.UNSIGNED_SHORT, 0);
-      p = P.rack; gl.useProgram(p.p); setCommon(p, b, time, L); gl.uniformMatrix4fv(p.u('uVP'), false, vp);
-      gl.bindVertexArray(boxG.v);
-      gl.uniform3f(p.u('uHalf'), objHalf[0], objHalf[1], objHalf[2]);
-      for (let i = 0; i < objN; i++) { gl.uniform3f(p.u('uC'), RACKS[i * 3], RACKS[i * 3 + 1], RACKS[i * 3 + 2]); gl.drawElements(gl.TRIANGLES, boxG.n, gl.UNSIGNED_SHORT, 0); }
-      p = P.water; gl.useProgram(p.p); setCommon(p, b, time, L); gl.uniformMatrix4fv(p.u('uVP'), false, vp);
-      gl.bindVertexArray(gridG.v); gl.drawElements(gl.TRIANGLES, gridG.n, gl.UNSIGNED_INT, 0);
-      if (post) {
-        gl.bindFramebuffer(gl.READ_FRAMEBUFFER, msFbo); gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, resFbo);
-        gl.blitFramebuffer(0, 0, cw, ch, 0, 0, cw, ch, gl.COLOR_BUFFER_BIT, gl.NEAREST);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, cw, ch); gl.disable(gl.DEPTH_TEST);
-        const q = postProg; gl.useProgram(q.p); gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, resTex);
-        gl.uniform1i(q.u('uScene'), 2); gl.uniform2f(q.u('uRes'), cw, ch); gl.uniform1f(q.u('uTime'), rain.tm); gl.uniform1f(q.u('uInitT'), rain.ini);
-        gl.uniform1f(q.u('uUw'), uwF); gl.uniform1f(q.u('uQ'), qname === 'perf' ? 0 : qname === 'bal' ? 1 : 2);
-        gl.uniform1f(q.u('uRain'), rainVis() ? 1 : 0); gl.uniform1f(q.u('uDrop'), rain.drop); gl.uniform1f(q.u('uAppP'), rain.appP); gl.uniform1f(q.u('uAppD'), rain.appD);
-        gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.TRIANGLES, 0, 3);
-        gl.activeTexture(gl.TEXTURE0); gl.enable(gl.DEPTH_TEST);
+    const DEF = { t: [0, 1.15, 1.4], d: 5.2, yaw: -1.45, pitch: .1 };
+    const OVER = { t: [0, 1.2, .9], d: 6.2, yaw: -1.2, pitch: .25 };
+    const cam = Object.assign({}, OVER, { t: OVER.t.slice() }), tgt = Object.assign({}, OVER, { t: OVER.t.slice() });
+    let stiff = 9, W = 1, H = 1, dpr = 1, scale = 1, qMax = 1.5, xr = 0, xrT = 0, fanA = 0, shadowDone = false, ema = 0, nFr = 0, lum = .72, showPins = true, mob = 1;
+    const FOV = .76;
+    function eyeOf(c) { const cp = Math.cos(c.pitch); return [c.t[0] + c.d * cp * Math.sin(c.yaw), c.t[1] + c.d * Math.sin(c.pitch), c.t[2] + c.d * cp * Math.cos(c.yaw)]; }
+    // el ojo nunca atraviesa paredes, racks ni piso
+    let free = false;
+    function confine(e) {
+      if (free) return e;
+      let x = clamp(e[0], X0 + .25, X2 - .25), y = clamp(e[1], .14, HH - .12), z = clamp(e[2], Z0 + .3, Z1 - .25);
+      if (x > X1 - .3 && x < X1 + .3 && (z < .75 || z > 2.45)) x = x < X1 ? X1 - .3 : X1 + .3;
+      if (x > 7.2 && y < 2.1) x = 7.2;
+      if (x > -4.9 && x < 4.3 && y < 2.15) {
+        if (z > RZ1 - .55 && z < RZ1 + .5) z = z < RZ1 - .03 ? RZ1 - .55 : RZ1 + .5;
+        if (z > 2.4 && z < 3.5) z = 2.4;
       }
+      if (x > -2.6 && x < -1.4 && z > -4.25 && z < -3.2 && y < 2.0) { if (Math.abs(x + 2) > Math.abs(z + 3.7) * .9) x = x < -2 ? -2.6 : -1.4; else z = z < -3.7 ? -4.25 : -3.2; }
+      return [x, y, z];
+    }
+    function setPose(p, soft) {
+      tw = null;
+      const yaw = p.yaw == null ? tgt.yaw : p.yaw; let dy = yaw - cam.yaw; dy -= Math.round(dy / 6.2832) * 6.2832; tgt.yaw = cam.yaw + dy;
+      tgt.t = p.t ? p.t.slice() : tgt.t; tgt.d = p.d == null ? tgt.d : p.d * (p.d > 1.8 ? mob : 1); tgt.pitch = p.pitch == null ? tgt.pitch : p.pitch; stiff = soft || 3.4;
+      if (reduce) { Object.assign(cam, { t: tgt.t.slice(), d: tgt.d, yaw: tgt.yaw, pitch: tgt.pitch }); }
+    }
+    // navegación manual en primera persona: se mira desde el mismo lugar y se camina hacia donde se mira
+    const FPD = .6;                        // distancia "mirada" fija en modo manual (el ojo es lo que importa)
+    const dirOf = (s) => { const cp = Math.cos(s.pitch); return [-cp * Math.sin(s.yaw), -Math.sin(s.pitch), -cp * Math.cos(s.yaw)]; };
+    function toFP() {                      // pasa a modo ojo conservando exactamente dónde está el ojo y hacia dónde mira
+      for (const s of [cam, tgt]) { if (Math.abs(s.d - FPD) < 1e-4) continue; const e = eyeOf(s); s.d = FPD; s.t = sub(e, mul(dirOf(s), -FPD)); }
+    }
+    function lookBy(dyaw, dpitch) {        // gira sobre el lugar (el ojo no se mueve)
+      toFP();
+      for (const s of [cam, tgt]) { const e = eyeOf(s); s.yaw += dyaw; s.pitch = clamp(s.pitch + dpitch, -1.3, 1.45); s.t = sub(e, mul(dirOf(s), -FPD)); }
+    }
+    function walk(f, r, u, horiz) {        // adelante / derecha / arriba en metros; el ojo se desliza contra paredes y racks
+      toFP(); let fw = dirOf(tgt); if (horiz) fw = nrm([fw[0], 0, fw[2]]);
+      const rt = nrm(cross(dirOf(tgt), [0, 1, 0])), e0 = eyeOf(tgt);
+      const e1 = confine(add(e0, add(add(mul(fw, f), mul(rt, r)), [0, u, 0])));
+      tgt.t = sub(e1, mul(dirOf(tgt), -FPD));
+    }
+    function zoomBy(f) { walk((1 - f) * 3, 0, 0, false); }
+    const clampT = () => { tgt.t[0] = clamp(tgt.t[0], -7, 9); tgt.t[1] = clamp(tgt.t[1], .05, 3.2); tgt.t[2] = clamp(tgt.t[2], -10.5, 4); tgt.d = clamp(tgt.d, .16, 14); tgt.pitch = clamp(tgt.pitch, -1.3, 1.45); };
+    function resize() {
+      if (!gl) return; const r = sec.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, qMax) * scale; W = Math.max(2, Math.round(r.width * dpr)); H = Math.max(2, Math.round(r.height * dpr));
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; } mob = r.width / Math.max(1, r.height) < .8 ? 1.2 : 1;
     }
 
-    // ---------- UI ----------
-    const $ = (id) => document.getElementById(id);
-    const tip = $('sim-tip');
-    function mark(group, key) { sec.querySelectorAll('[data-' + group + ']').forEach(b => { if (b.tagName !== 'BUTTON') return; const on = b.getAttribute('data-' + group) === key; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); }
-    function openPanel(k) {
-      sec.classList.toggle('pn', !!k);
-      ['esc', 'cfg'].forEach(n => { const pn = $('sim-p-' + n), bt = $('sim-b-' + n), on = n === k; pn.classList.toggle('open', on); pn.setAttribute('aria-hidden', on ? 'false' : 'true'); bt.setAttribute('aria-expanded', on ? 'true' : 'false'); });
-    }
-    ['esc', 'cfg'].forEach(n => $('sim-b-' + n).addEventListener('click', () => openPanel($('sim-p-' + n).classList.contains('open') ? null : n)));
-    sec.querySelectorAll('.sim-panel [data-close]').forEach(b => b.addEventListener('click', () => openPanel(null)));
-    const DIVE_ICON = { in: $('sim-dive').querySelector('svg').outerHTML, out: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="15" height="12" rx="2.5"/><path d="M20 14.5l7-3.5v10l-7-3.5"/></svg>' };
-    // "sub" refleja si el ojo de la cámara está bajo el agua (se actualiza solo con el zoom o con el botón)
-    function syncSub(on) {
-      if (on === sub) return;
-      sub = on; sec.classList.toggle('is-sub', on);
-      const b = $('sim-dive'); b.querySelector('span').textContent = on ? 'Superficie' : 'Sumergirse'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      b.querySelector('svg').outerHTML = on ? DIVE_ICON.out : DIVE_ICON.in;
-      if (!on) { startWet(); if (fov > FOV_AIR + .01 && !fovTw) fovTo(FOV_AIR, 1200, 0); } // al salir del agua, la "pantalla" queda mojada
-    }
-    function setSub(on) { goTo(on ? SUB : PRESETS.esquina, on ? 1500 : 1600, on ? 'p2' : 'p4'); fovTo(on ? FOV_UW : FOV_AIR, 1200, on ? 400 : 0); hideTip(); }
-    $('sim-dive').addEventListener('click', () => setSub(!sub));
-    function setScene(k) { if (!SCENES[k]) return; sceneKey = k; lightAz = SCENES[k].az; lightEl = SCENES[k].el; sec.setAttribute('data-scene', k); mark('scene', k); const a = $('sim-az'), e = $('sim-el'); if (a) a.value = lightAz; if (e) e.value = lightEl; }
-    sec.querySelectorAll('button[data-scene]').forEach(b => b.addEventListener('click', () => setScene(b.getAttribute('data-scene'))));
-    function setObj(k) {
-      const o = OBJS[k]; if (!o) return; objKey = k; objN = o.n; objShape = o.shape; objHalf = o.half; RACKS.set(o.pos); mark('obj', k);
-    }
-    $('sim-az').addEventListener('input', (e) => { lightAz = +e.target.value; });
-    $('sim-el').addEventListener('input', (e) => { lightEl = +e.target.value; });
-    function setQuality(k) { if (!QUAL[k]) return; qname = k; scale = 1; sec.querySelectorAll('input[name="simq"]').forEach(r => { r.checked = r.value === k; }); applyQuality(); frames = 0; ema = 0; gov = false; }
-    sec.querySelectorAll('input[name="simq"]').forEach(r => r.addEventListener('change', () => { if (r.checked) setQuality(r.value); }));
-    $('sim-lum').addEventListener('input', (e) => { cfg.lum = e.target.value / 100; });
-    $('sim-rough').addEventListener('input', (e) => { cfg.rough = e.target.value / 100; });
-    // rueda de color del agua
-    const wheel = $('sim-wheel'), wc = $('sim-wheel-c'), wh = $('sim-wheel-h');
-    function paintWheel() {
-      const c = hsv(cfg.hue, .6, 1); wc.style.background = 'rgb(' + c.map(v => Math.round(v * 255)).join(',') + ')';
-      const a = cfg.hue * Math.PI / 180, R = 50 * .79; wh.style.left = (50 + Math.cos(a) * R) + '%'; wh.style.top = (50 + Math.sin(a) * R) + '%';
-      const hc = hsv(cfg.hue, 1, 1); wh.style.background = 'rgb(' + hc.map(v => Math.round(v * 255)).join(',') + ')'; wheel.setAttribute('aria-valuenow', Math.round(cfg.hue));
-    }
-    function wheelAt(e) { const r = wheel.getBoundingClientRect(); const x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height / 2); cfg.hue = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360; paintWheel(); }
-    let wd = false;
-    wheel.addEventListener('pointerdown', (e) => { const r = wheel.getBoundingClientRect(); if (Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2)) < r.width * .5 * .56) return; wd = true; try { wheel.setPointerCapture(e.pointerId); } catch (_) { } wheelAt(e); });
-    wheel.addEventListener('pointermove', (e) => { if (wd) wheelAt(e); });
-    wheel.addEventListener('pointerup', () => { wd = false; }); wheel.addEventListener('pointercancel', () => { wd = false; });
-    wheel.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowUp') cfg.hue = (cfg.hue + 6) % 360; else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') cfg.hue = (cfg.hue + 354) % 360; else return; e.preventDefault(); paintWheel(); });
-    paintWheel();
-    let tipOn = true;
-    function hideTip() { if (!tipOn) return; tipOn = false; if (tip) tip.classList.add('off'); }
-    setTimeout(hideTip, 14000);
-
-    // ---------- Post-proceso: efectos bajo el agua y gotas refractivas en la "pantalla" (como la referencia) ----------
-    const postProg = program(VS_FULL, FS_POST);
-    let msFbo = null, msC = null, msD = null, resFbo = null, resTex = null, pW = 0, pH = 0;
-    function ensurePost() {
-      if (msFbo && pW === cw && pH === ch) return;
-      if (msFbo) { gl.deleteFramebuffer(msFbo); gl.deleteRenderbuffer(msC); gl.deleteRenderbuffer(msD); gl.deleteFramebuffer(resFbo); gl.deleteTexture(resTex); }
-      const smp = Math.min(4, gl.getParameter(gl.MAX_SAMPLES) || 0);
-      msC = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, msC); gl.renderbufferStorageMultisample(gl.RENDERBUFFER, smp, gl.RGBA8, cw, ch);
-      msD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, msD); gl.renderbufferStorageMultisample(gl.RENDERBUFFER, smp, gl.DEPTH_COMPONENT24, cw, ch);
-      msFbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, msFbo);
-      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.RENDERBUFFER, msC); gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, msD);
-      gl.activeTexture(gl.TEXTURE2); resTex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, resTex);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, cw, ch, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      resFbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, resFbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, resTex, 0);
-      gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.activeTexture(gl.TEXTURE0); pW = cw; pH = ch;
-    }
-    // Línea de tiempo de la lluvia sobre la lente: al salir del agua las gotas aparecen (1,6 s, barrido) y se van secando (~5,8 s); al entrar se apagan rápido
-    const rain = { drop: 0, appP: 0, appD: 0, tm: 0, ini: 0, f: 0, l: 0, on: false };
-    let uwF = 0;
-    function startWet() { if (reduce || qname === 'perf' || !postProg) return; rain.on = true; rain.f = 0; rain.l = 0; rain.ini = rain.tm; rain.drop = 1; rain.appP = 0; rain.appD = 0; }
-    function stepPost(dt) {
-      rain.tm += dt; uwF += ((sub ? 1 : 0) - uwF) * Math.min(1, dt * 7);
-      if (sub) { rain.on = false; if (rain.drop > 0 || rain.appP > 0 || rain.appD > 0) { rain.drop = Math.max(0, rain.drop - dt * 2.5); rain.appP = Math.max(0, rain.appP - dt * 2.5); rain.appD = Math.max(0, rain.appD - dt * 2.5); } }
-      else if (rain.on) {
-        const I = rain.f + dt;
-        if (I <= 1.6) { rain.appD = Math.min(1, I / 1.6); rain.appP = Math.min(1, I / 1); rain.f = I; }
-        else { const E = rain.l + dt; rain.drop = Math.max(0, Math.min(1.25, 1 - (E - 1.6) / 4.2)); rain.l = E; if (rain.drop <= 0) rain.on = false; }
+    // ---------- Render ----------
+    const KEY = nrm([-.3, 1, .25]);
+    function drawFans(p) {
+      gl.bindVertexArray(V.R.va);
+      for (const f of FANS) {
+        const a = fanA * f[3] * (f[4] > 1 ? .12 : 1), c = Math.cos(a), s = Math.sin(a), S = f[4] || 1;
+        const M = f[5] ? new Float32Array([c * S, 0, -s * S, 0, -s * S, 0, -c * S, 0, 0, S, 0, 0, f[0], f[1], f[2], 1]) : new Float32Array([c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, f[0], f[1], f[2], 1]);
+        gl.uniformMatrix4fv(p.u('uModel'), false, M); gl.drawElements(gl.TRIANGLES, V.R.n, gl.UNSIGNED_INT, 0);
       }
+      gl.uniformMatrix4fv(p.u('uModel'), false, IDM);
     }
-    const rainVis = () => qname !== 'perf' && rain.drop > .002 && rain.appP > .002;
-    const postActive = () => !!postProg && (uwF > .004 || rainVis());
-
-    // Modo de control: por defecto "Cámara" (arrastrar gira, rueda o pellizco acerca); el botón del celular alterna con "Agua" (el dedo hace olas y no mueve la cámara)
-    let ctrl = true;
-    const modeBtn = $('sim-mode');
-    const MODE_ICON = { water: modeBtn.querySelector('svg').outerHTML, cam: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="15" height="12" rx="2.5"/><path d="M20 14.5l7-3.5v10l-7-3.5"/></svg>' };
-    function syncMode() { modeBtn.querySelector('span').textContent = ctrl ? 'Cámara' : 'Agua'; modeBtn.querySelector('svg').outerHTML = ctrl ? MODE_ICON.cam : MODE_ICON.water; modeBtn.setAttribute('aria-pressed', ctrl ? 'false' : 'true'); modeBtn.setAttribute('aria-label', 'Modo de control: ' + (ctrl ? 'mover la cámara' : 'tocar el agua') + '. Tocá para cambiar'); cv.style.cursor = ctrl ? '' : 'crosshair'; }
-    modeBtn.addEventListener('click', () => { ctrl = !ctrl; syncMode(); });
-    syncMode();
-    // ---------- Zoom continuo: la cámara baja de a poco hasta meterse en el agua ----------
-    function zoomBy(f) { if (tween) return; hideTip(); zT = Math.max(ZMIN, Math.min(ZMAX, (zT == null ? cam.dist : zT) * f)); }
-    cv.addEventListener('wheel', (e) => { if (!ctrl) return; e.preventDefault(); const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY; zoomBy(Math.exp(Math.max(-120, Math.min(120, dy)) * .0016)); }, { passive: false });
-
-    // ---------- Puntero ----------
-    // Estela del puntero: cada movimiento sobre el agua hunde la superficie; cuanto más rápido, más grande y profunda la ola.
-    // Se interpola entre posiciones para que un barrido rápido deje una estela continua y no gotas sueltas.
-    let lastW = null;
-    function wake(cx, cy) {
-      const h = planeHit(cx, cy);
-      if (!h) { lastW = null; return; }
-      if (!lastW) { lastW = h; addDrop(h[0], h[1], .02, .008); return; }
-      const dx = h[0] - lastW[0], dy = h[1] - lastW[1], dist = Math.hypot(dx, dy); if (dist < .0015) return;
-      const D = Math.min(1.2, dist * 20), r = Math.min(.055, .024 + D * .05), str = Math.min(.075, .022 + D * .09);
-      const n = Math.min(6, Math.max(1, Math.round(dist / (r * .55))));
-      for (let i = 1; i <= n; i++) { const t = i / n; addDrop(lastW[0] + dx * t, lastW[1] + dy * t, r * (.9 + Math.random() * .2), str * (.85 + Math.random() * .3) / Math.pow(n, .4)); }
-      lastW = h;
+    const LC1 = [0, .6, TZ], LC2 = [1.2, 1.0, -.9];
+    const LVP1 = mm(ortho(-1.4, 1.4, -1.4, 1.4, .5, 12), look(add(LC1, mul(KEY, 6)), LC1, [0, 0, -1])), LVP2 = mm(ortho(-9.6, 9.6, -9.6, 9.6, 1, 34), look(add(LC2, mul(KEY, 16)), LC2, [0, 0, -1]));
+    function render(t) {
+      const eye = eyeOf(cam), VP = mm(persp(FOV, W / H, .03, 80), look(eye, cam.t, [0, 1, 0]));
+      if (!shadowDone) {
+        gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.disable(gl.BLEND); gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(2, 4); gl.useProgram(P.sh.p); gl.uniformMatrix4fv(P.sh.u('uModel'), false, IDM);
+        for (const [fb, sz, m] of [[shFbo, SH, LVP1], [shFbo2, SH2, LVP2]]) {
+          gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.viewport(0, 0, sz, sz); gl.clearDepth(1); gl.clear(gl.DEPTH_BUFFER_BIT); gl.uniformMatrix4fv(P.sh.u('uLVP'), false, m);
+          for (const k of ['A', 'B']) { gl.bindVertexArray(V[k].va); gl.drawElements(gl.TRIANGLES, V[k].n, gl.UNSIGNED_INT, 0); }
+        }
+        gl.disable(gl.POLYGON_OFFSET_FILL); gl.bindFramebuffer(gl.FRAMEBUFFER, null); shadowDone = true;
+      }
+      gl.viewport(0, 0, W, H); gl.clearColor(.62, .78, .93, 1); gl.clearDepth(1); gl.depthMask(true); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE); gl.disable(gl.BLEND);
+      const p = P.main; gl.useProgram(p.p);
+      gl.uniformMatrix4fv(p.u('uVP'), false, VP); gl.uniformMatrix4fv(p.u('uLVP'), false, LVP1); gl.uniformMatrix4fv(p.u('uLVP2'), false, LVP2); gl.uniformMatrix4fv(p.u('uModel'), false, IDM);
+      gl.uniform3fv(p.u('uEye'), eye); gl.uniform3fv(p.u('uKey'), KEY); gl.uniform3f(p.u('uKeyC'), 1, .96, .9); gl.uniform3f(p.u('uFog'), .55, .6, .67); gl.uniform3f(p.u('uSky'), .62, .78, .93);
+      gl.uniform1f(p.u('uTime'), t); gl.uniform1f(p.u('uXr'), xr); gl.uniform1f(p.u('uLight'), lum); gl.uniform2f(p.u('uShTx'), 1 / SH, 1 / SH); gl.uniform2f(p.u('uShTx2'), 1 / SH2, 1 / SH2); gl.uniform2f(p.u('uRes'), W, H);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, shTex); gl.uniform1i(p.u('uSh'), 0); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, shTex2); gl.uniform1i(p.u('uSh2'), 1); gl.activeTexture(gl.TEXTURE0);
+      for (const k of ['C', 'A']) { gl.bindVertexArray(V[k].va); gl.drawElements(gl.TRIANGLES, V[k].n, gl.UNSIGNED_INT, 0); }
+      drawFans(p);
+      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(xr < .02);
+      gl.bindVertexArray(V.B.va); gl.drawElements(gl.TRIANGLES, V.B.n, gl.UNSIGNED_INT, 0);
+      gl.depthMask(false); gl.bindVertexArray(V.G.va); gl.drawElements(gl.TRIANGLES, V.G.n, gl.UNSIGNED_INT, 0);
+      const px = H / (2 * Math.tan(FOV / 2));
+      gl.useProgram(P.pf.p); gl.uniformMatrix4fv(P.pf.u('uVP'), false, VP); gl.uniform1f(P.pf.u('uTime'), t); gl.uniform1f(P.pf.u('uPx'), px); gl.bindVertexArray(puffVao); gl.drawArrays(gl.POINTS, 0, nPuff);
+      gl.blendFunc(gl.ONE, gl.ONE); gl.useProgram(P.pt.p);
+      gl.uniformMatrix4fv(P.pt.u('uVP'), false, VP); gl.uniform1f(P.pt.u('uTime'), t); gl.uniform1f(P.pt.u('uPx'), px);
+      gl.bindVertexArray(ledVao); gl.drawArrays(gl.POINTS, 0, nLed); gl.depthMask(true); gl.disable(gl.BLEND); gl.bindVertexArray(null);
+      return VP;
     }
-    cv.addEventListener('pointerleave', () => { lastW = null; });
-    const ptrs = new Map(); let drag = null, pinch0 = 0;
-    const pdist = () => { const a = [...ptrs.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); };
-    cv.addEventListener('pointerdown', (e) => {
-      if (e.button > 0) return; try { cv.setPointerCapture(e.pointerId); } catch (_) { }
-      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (ptrs.size === 2) { pinch0 = pdist(); drag = null; return; }
-      drag = { x: e.clientX, y: e.clientY, t: performance.now(), moved: 0 }; if (ctrl) { cv.classList.add('grab'); tween = null; } if (e.pointerType !== 'mouse') lastW = null;
-    });
-    cv.addEventListener('pointermove', (e) => {
-      if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (ptrs.size === 2) { const d = pdist(); if (ctrl && pinch0 > 0 && d > 0) { zoomBy(Math.pow(pinch0 / d, 1.3)); } pinch0 = d; return; }
-      if (drag) {
-        const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
-        if (ctrl) { pendY -= dx * .0065; pendP += dy * .0055; zT = null; tween = null; }
-        if (e.pointerType === 'mouse' || !ctrl) wake(e.clientX, e.clientY);
-      } else if (e.pointerType === 'mouse') { wake(e.clientX, e.clientY); }
-    });
-    const up = (e) => {
-      ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch0 = 0;
-      if (!drag) return; cv.classList.remove('grab');
-      if (drag.moved < 7 && performance.now() - drag.t < 400) { const h = planeHit(e.clientX, e.clientY); if (h) addDrop(h[0], h[1], .055, .035); }
-      hideTip(); drag = null;
-    };
-    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', (e) => { ptrs.delete(e.pointerId); pinch0 = 0; drag = null; cv.classList.remove('grab'); });
-    cv.addEventListener('keydown', (e) => {
-      const k = e.key; let used = true;
-      if (k === 'ArrowLeft') cam.yaw -= .12; else if (k === 'ArrowRight') cam.yaw += .12; else if (k === 'ArrowUp') cam.pitch = Math.min(1.37, cam.pitch + .08); else if (k === 'ArrowDown') cam.pitch = Math.max(pitchLo(), cam.pitch - .08);
-      else if (k === '+' || k === '=') zoomBy(.85); else if (k === '-' || k === '_') zoomBy(1.18);
-      else if (k === ' ' || k === 'Enter') addDrop(.2 + Math.random() * .6, .2 + Math.random() * .6, .055, .035); else used = false;
-      if (used) { e.preventDefault(); tween = null; zT = null; hideTip(); }
-    });
-    mark('q', qname); sec.querySelectorAll('input[name="simq"]').forEach(r => { r.checked = r.value === qname; });
 
+    // ---------- Puntos de información, tarjeta y recorrido ----------
+    const hsEls = []; let openI = -1, tourI = 0;
+    function buildHotspots() {
+      ITEMS.forEach((h, i) => {
+        if (!h.pin) { hsEls.push(null); return; }
+        const b = document.createElement('button'); b.type = 'button'; const num = /^\d$/.test(h.pin); b.className = 'srv-hs' + (num ? ' srv-hs--t' : ' srv-hs--s'); if (num) b.innerHTML = '<i>' + h.pin + '</i><span>' + h.name + '</span>'; else b.textContent = h.pin; b.setAttribute('aria-label', h.name + ' · ' + h.h); b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', (e) => { e.stopPropagation(); goItem(i); }); hsBox.appendChild(b); hsEls.push(b);
+      });
+    }
+    function openCard(i) {
+      openI = i; const h = ITEMS[i];
+      card.querySelector('.srv-k').textContent = h.k; card.querySelector('h3').textContent = h.h; card.querySelector('.srv-b').textContent = h.b; card.querySelector('.srv-s').innerHTML = h.s ? 'Fuentes: ' + h.s : '';
+      card.classList.add('open'); card.setAttribute('aria-hidden', 'false'); hsEls.forEach((b, j) => b && b.setAttribute('aria-pressed', j === i ? 'true' : 'false'));
+    }
+    function closeCard() { openI = -1; card.classList.remove('open'); card.setAttribute('aria-hidden', 'true'); hsEls.forEach(b => b && b.setAttribute('aria-pressed', 'false')); }
+    function goItem(i) {
+      const h = ITEMS[i]; closePanels(); openCard(i); flyTo(h.pose);
+      const ti = TOUR.indexOf(h); if (ti >= 0) { tourI = ti; } updStep();
+    }
+    function goStop(n) { tourI = (n + TOUR.length) % TOUR.length; goItem(ITEMS.indexOf(TOUR[tourI])); }
+    const $prev = $('srv-prev'), $next = $('srv-next'), $sl = $('srv-stepl');
+    function updStep() { const it = openI >= 0 ? ITEMS[openI] : null; const isStop = it && it.tour; $sl.textContent = isStop ? (tourI + 1) + ' / ' + TOUR.length + ' · ' + it.name : (it ? it.name : 'Recorrido guiado'); list.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', isStop && j === tourI ? 'step' : 'false')); }
+    card.querySelector('.srv-x').addEventListener('click', () => { closeCard(); updStep(); });
+    $prev.addEventListener('click', () => goStop(openI >= 0 && ITEMS[openI].tour ? tourI - 1 : TOUR.length - 1));
+    $next.addEventListener('click', () => goStop(openI >= 0 && ITEMS[openI].tour ? tourI + 1 : 0));
+    function placeHotspots(VP, eye) {
+      const w = cv.clientWidth, h = cv.clientHeight;
+      ITEMS.forEach((s, i) => {
+        const el = hsEls[i]; if (!el) return;
+        const a = s.anchor, cw = VP[3] * a[0] + VP[7] * a[1] + VP[11] * a[2] + VP[15];
+        const dist = len(sub(eye, a));
+        const isTrayPin = /^[A-E]$/.test(s.pin), inTray = openI >= 0 && (ITEMS[openI].id === 'bandeja' || /^[A-E]$/.test(ITEMS[openI].pin || ''));
+        const farHide = isTrayPin ? (!inTray && dist > s.near * mob) : (s.near && dist > s.near * mob);
+        const nearHide = s.id === 'bandeja' ? (inTray || dist < s.hideNear * mob) : (s.hideNear && dist < s.hideNear * mob);
+        if (!showPins || cw <= .05 || farHide || nearHide) { el.style.visibility = 'hidden'; return; }
+        const x = (VP[0] * a[0] + VP[4] * a[1] + VP[8] * a[2] + VP[12]) / cw, y = (VP[1] * a[0] + VP[5] * a[1] + VP[9] * a[2] + VP[13]) / cw;
+        const facing = dot(nrm(sub(eye, a)), nrm(s.face));
+        const vis = Math.abs(x) < 1.02 && Math.abs(y) < 1.02 && facing > -.2 && dist > .12;
+        el.style.visibility = vis ? 'visible' : 'hidden'; if (!vis) return;
+        el.style.transform = 'translate(' + ((x * .5 + .5) * w).toFixed(1) + 'px,' + ((1 - (y * .5 + .5)) * h).toFixed(1) + 'px) translate(-50%,-50%)';
+        el.style.opacity = String(Math.max(.3, Math.min(1, facing * 3 + .5, dist / .5)).toFixed(2));
+      });
+    }
+
+    // ---------- Rutas de cámara ----------
+    // El ojo no puede cruzar racks ni tabiques: entre zonas la cámara pasa por la puerta de la sala eléctrica o por arriba de los racks.
+    const zoneOf = (e) => e[0] > X1 + .1 ? 'elec' : (e[2] < -.58 ? 'hot' : 'aisle');
+    const DOOR_E = { t: [6, 1.25, 1.6], d: 1.6, yaw: -1.5708, pitch: .1 }, DOOR_W = { t: [3, 1.25, 1.6], d: 1.6, yaw: 1.5708, pitch: .1 };
+    const HI1 = { t: [-1.2, 1.4, -1.5], d: 3.2, yaw: .21, pitch: .47 }, HI2 = { t: [-2, 1.5, -3.6], d: 3.0, yaw: .46, pitch: .447 };
+    const IN_E = { t: [7.4, 1.2, .5], d: 1.9, yaw: -1.5708, pitch: .1 };
+    const VIA = { 'aisle>elec': [DOOR_E, IN_E], 'elec>aisle': [IN_E, DOOR_W], 'aisle>hot': [HI1, HI2], 'hot>aisle': [HI2, HI1], 'elec>hot': [IN_E, DOOR_W, HI1, HI2], 'hot>elec': [HI2, HI1, DOOR_E, IN_E] };
+    let tw = null;   // viaje de cámara en curso: {pts, i, u, dest}
+    const stateOf = (p) => (p = mob > 1 && p.m ? Object.assign({}, p, p.m) : p, { t: p.t.slice(), d: p.d * (p.d > 1.8 ? mob : 1), yaw: p.yaw, pitch: p.pitch });
+    function flyTo(pose) {
+      const fin = stateOf(pose);
+      if (reduce) { tw = null; Object.assign(cam, { t: fin.t.slice(), d: fin.d, yaw: fin.yaw, pitch: fin.pitch }); Object.assign(tgt, { t: fin.t.slice(), d: fin.d, yaw: fin.yaw, pitch: fin.pitch }); return; }
+      const z0 = zoneOf(eyeOf(tw ? tw.dest : cam)), z1 = zoneOf(eyeOf(fin));
+      const via = z0 === z1 ? [] : (VIA[z0 + '>' + z1] || []);
+      const pts = [{ t: cam.t.slice(), d: cam.d, yaw: cam.yaw, pitch: cam.pitch }].concat(via.map(stateOf), [fin]);
+      for (let k = 1; k < pts.length; k++) { let dy = pts[k].yaw - pts[k - 1].yaw; dy -= Math.round(dy / 6.2832) * 6.2832; pts[k].yaw = pts[k - 1].yaw + dy; }
+      for (let k = 1; k < pts.length; k++) { const a = pts[k - 1], b = pts[k]; b.dur = clamp(.75 + (len(sub(eyeOf(a), eyeOf(b))) + len(sub(a.t, b.t)) * .5 + Math.abs(a.yaw - b.yaw) * .8) * .2, .9, 2.2); }
+      tw = { pts, i: 1, u: 0, dest: fin };
+    }
+    function tweenStep(dt) {
+      const a = tw.pts[tw.i - 1], b = tw.pts[tw.i], n = tw.pts.length - 1; tw.u = Math.min(1, tw.u + dt / b.dur);
+      const u = tw.u; let e = n === 1 ? (u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2) : (tw.i === 1 ? u * u : tw.i === n ? 1 - (1 - u) * (1 - u) : u);
+      for (let k = 0; k < 3; k++) cam.t[k] = a.t[k] + (b.t[k] - a.t[k]) * e;
+      cam.d = a.d + (b.d - a.d) * e; cam.yaw = a.yaw + (b.yaw - a.yaw) * e; cam.pitch = a.pitch + (b.pitch - a.pitch) * e;
+      if (tw.u >= 1) { if (tw.i >= n) { tw = null; } else { tw.i++; tw.u = 0; } }
+      tgt.t = cam.t.slice(); tgt.d = cam.d; tgt.yaw = cam.yaw; tgt.pitch = cam.pitch;
+      if (!tw) { const f = b; tgt.t = f.t.slice(); tgt.d = f.d; tgt.yaw = f.yaw; tgt.pitch = f.pitch; }
+    }
     // ---------- Bucle ----------
-    let raf = 0, visible = false, tPrev = 0, acc = 0, frames = 0, ema = 0, gov = true;
-    const T0 = performance.now();
-    // Gotas ambientales (como en la referencia): a veces un racimo de gotitas, a veces una gota grande, a veces una chica
-    let amb = .6;
-    const rnd = (a, b) => a + Math.random() * (b - a);
-    function ambient() {
-      const q = Math.random(), x = rnd(.1, .9), y = rnd(.1, .9);
-      if (q < .4) { const n = 2 + ((Math.random() * 3) | 0); for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, d = rnd(.025, .075); addDrop(x + Math.cos(a) * d, y + Math.sin(a) * d, rnd(.02, .03), rnd(.014, .024)); } }
-      else if (q < .7) addDrop(x, y, rnd(.055, .08), rnd(.03, .05));
-      else addDrop(x, y, rnd(.022, .034), rnd(.012, .02));
+    let collided = false;
+    function camUpdate(dt) {
+      if (tw) tweenStep(dt);
+      else {
+        const k = 1 - Math.exp(-dt * stiff); clampT();
+        cam.d += (tgt.d - cam.d) * k; cam.yaw += (tgt.yaw - cam.yaw) * k; cam.pitch += (tgt.pitch - cam.pitch) * k; for (let i = 0; i < 3; i++) cam.t[i] += (tgt.t[i] - cam.t[i]) * k;
+      }
+      // colisión: si el ojo toca un rack, una pared o el piso, se lo deja apoyado contra ese límite y se lo desliza (no se traba ni salta al otro lado)
+      const e0 = eyeOf(cam), e1 = confine(e0); collided = false;
+      if (Math.abs(e1[0] - e0[0]) + Math.abs(e1[1] - e0[1]) + Math.abs(e1[2] - e0[2]) > 1e-3) {
+        collided = Math.abs(e1[0] - e0[0]) + Math.abs(e1[1] - e0[1]) + Math.abs(e1[2] - e0[2]) > .03; const dx = e1[0] - cam.t[0], dy = e1[1] - cam.t[1], dz = e1[2] - cam.t[2], dd = Math.hypot(dx, dy, dz) || 1;
+        cam.d = Math.max(.12, dd); cam.pitch = Math.asin(clamp(dy / dd, -1, 1)); cam.yaw += ((Math.atan2(dx, dz) - cam.yaw + 9.4248) % 6.2832) - 3.1416;
+      }
     }
     function frame(ts) {
-      raf = requestAnimationFrame(frame);
-      const dt = Math.min(.1, (ts - tPrev) / 1000 || .016); tPrev = ts;
-      if (!reduce) { amb -= dt; if (amb <= 0) { amb = 1.6 + Math.random() * 2.4; ambient(); } }
-      for (let k = Math.max(1, Math.min(4, Math.round(dt * 120))); k > 0; k--) stepSim();
-      stepTween(ts); stepFov(ts); stepOrbit(dt); syncSub(camBasis().eye[1] < -.01); stepPost(dt); easeScene(first ? 1 : 1 - Math.exp(-dt * 4)); first = false;
-      render((ts - T0) / 1000);
-      frames++; if (frames > 40) ema = ema ? ema * .96 + dt * .04 : dt;
-      if (gov && frames === 150) {
-        if (ema > .03) { const lower = qname === 'ultra' ? 'bal' : null; if (lower) setQuality(lower); else if (scale > .55) { scale *= .8; resize(); frames = 0; ema = 0; } else gov = false; }
-        else gov = false;
-      }
+      raf = requestAnimationFrame(frame); const dt = Math.min(.1, (ts - tPrev) / 1000 || .016); tPrev = ts; tAcc += dt;
+      keyMove(dt); camUpdate(dt); xr += (xrT - xr) * (1 - Math.exp(-dt * 5)); if (!reduce) fanA += dt * 14;
+      const VP = render(tAcc); placeHotspots(VP, eyeOf(cam));
+      nFr++; if (nFr > 20) ema = ema ? ema * .92 + dt * .08 : dt;
+      if (nFr === 60 && ema > .026 && scale > .5 && quality !== 'ultra') { scale *= .85; resize(); nFr = 0; ema = 0; }
     }
-    function start() { if (raf) return; tPrev = performance.now(); raf = requestAnimationFrame(frame); }
-    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
-    cv.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stop(); giveUp(); });
-    gl.enable(gl.DEPTH_TEST);
-    easeScene(1); setScene('mediodia'); easeScene(1);
-    applyQuality();
-    for (let i = 0; i < 3; i++) setTimeout(() => addDrop(.3 + i * .2, .4 + (i % 2) * .2, .055, .03), 250 + i * 400);
-    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(cv); else window.addEventListener('resize', resize);
-    // solo corre mientras su página está abierta
-    const pageEl = document.getElementById('simulador-modal');
-    let wasVis = false;
-    const syncRun = () => {
-      visible = !pageEl || !pageEl.classList.contains('opacity-0'); if (visible && !document.hidden) start(); else stop();
-      if (!visible) wasVis = false;
-      if (visible && !wasVis) {
-        wasVis = true; resize(); rain.on = false;
-        if (!reduce) { // como la referencia: arranca bajo el agua, sube a la superficie en 2,5 s (power4) y el agua recibe una ráfaga de gotas
-          Object.assign(cam, SUB); goTo(PRESETS.esquina, 2500, 'p4');
-          for (let i = 0; i < 10; i++) setTimeout(() => addDrop(rnd(.1, .9), rnd(.1, .9), rnd(.09, .13), rnd(.035, .055)), 60 + i * 90);
-        }
+    function startLoop() { if (raf) return; tPrev = performance.now(); raf = requestAnimationFrame(frame); }
+    function stopLoop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+
+    // ---------- Controles ----------
+    const $x = $('srv-xray'), list = $('srv-list'), list2 = $('srv-list2'), pTour = $('srv-p-tour'), pCfg = $('srv-p-cfg'), bTour = $('srv-b-tour'), bCfg = $('srv-b-cfg'), tip = $('sim-tip');
+    let quality = 'bal', lockT = 0, booting = false, wasVis = false;
+    const live = () => ready && !pageEl.classList.contains('opacity-0');
+    function mkStop(i, n) { const h = ITEMS[i], b = document.createElement('button'); b.type = 'button'; b.className = 'srv-stop'; b.innerHTML = '<b>' + n + '</b><span>' + h.name + '<small>' + h.h + '</small></span>'; b.addEventListener('click', () => { if (h.tour) tourI = TOUR.indexOf(h); goItem(i); }); return b; }
+    TOUR.forEach((h, n) => list.appendChild(mkStop(ITEMS.indexOf(h), n + 1)));
+    ITEMS.forEach((h, i) => { if (h.pin && !h.tour && h.id !== 'bandeja') list2.appendChild(mkStop(i, h.pin)); });
+    function setXr(on) { xrT = on ? 1 : 0; $x.setAttribute('aria-pressed', on ? 'true' : 'false'); $x.querySelector('.lg').textContent = on ? 'Ver la sala real' : 'Ver el flujo del líquido'; $x.querySelector('.sm').textContent = on ? 'Sala' : 'Flujo'; }
+    $x.addEventListener('click', () => setXr(xrT < .5));
+    function closePanels(keep) {
+      for (const [p, b] of [[pTour, bTour], [pCfg, bCfg]]) { p.classList.remove('open'); p.setAttribute('aria-hidden', 'true'); b.setAttribute('aria-expanded', 'false'); }
+      if (!keep) sec.classList.remove('pn');
+    }
+    function openPanel(p, b) { const was = p.classList.contains('open'); closePanels(true); if (was) { sec.classList.remove('pn'); return; } p.classList.add('open'); p.setAttribute('aria-hidden', 'false'); b.setAttribute('aria-expanded', 'true'); sec.classList.add('pn'); }
+    bTour.addEventListener('click', () => openPanel(pTour, bTour)); bCfg.addEventListener('click', () => openPanel(pCfg, bCfg));
+    sec.querySelectorAll('.sim-panel [data-close]').forEach(b => b.addEventListener('click', () => closePanels()));
+    $('srv-go').addEventListener('click', () => { goStop(0); });
+    function setQuality(q) { quality = q; qMax = q === 'perf' ? 1 : q === 'ultra' ? 2 : 1.5; scale = q === 'perf' ? .7 : 1; ema = 0; nFr = 0; resize(); document.querySelectorAll('input[name="srvq"]').forEach(r => { r.checked = r.value === q; }); }
+    document.querySelectorAll('input[name="srvq"]').forEach(r => r.addEventListener('change', () => { if (r.checked) setQuality(r.value); }));
+    const lumEl = $('srv-lum'); const setLum = (v) => { lum = .12 + (v / 100) * 1.08; }; lumEl.addEventListener('input', () => setLum(+lumEl.value)); setLum(+lumEl.value);
+    $('srv-pins').addEventListener('change', (e) => { showPins = e.target.checked; });
+    if (window.matchMedia && matchMedia('(pointer: coarse)').matches) setQuality('perf'); else setQuality('bal');
+
+    // ---------- Arranque / ciclo de vida ----------
+    function intro() {
+      closePanels(); closeCard(); setXr(false); xr = 0; fanA = 0;
+      Object.assign(cam, OVER, { t: OVER.t.slice() }); Object.assign(tgt, OVER, { t: OVER.t.slice() });
+      resize(); goStop(0); lockT = performance.now() + 900; if (tip) tip.classList.remove('off');
+    }
+    function boot() {
+      if (ready || failed || booting) return; booting = true; const ld = $('sim-load');
+      if (ld) { ld.classList.remove('off'); ld.innerHTML = '<p style="color:#fff;font-size:.9rem;margin:0">Preparando la sala…</p>'; }
+      setTimeout(() => { if (init() && ld) ld.classList.add('off'); booting = false; sync(); }, 40);
+    }
+    function sync() {
+      const vis = !pageEl.classList.contains('opacity-0');
+      if (!vis) { wasVis = false; stopLoop(); return; }
+      if (!ready) { boot(); return; }
+      if (!document.hidden) startLoop();
+      if (!wasVis) { wasVis = true; intro(); }
+    }
+    if ('MutationObserver' in window) new MutationObserver(sync).observe(pageEl, { attributes: true, attributeFilter: ['class'] });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stopLoop(); else sync(); });
+    if ('ResizeObserver' in window) new ResizeObserver(() => { if (ready) resize(); }).observe(sec);
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !live()) return;
+      if (pTour.classList.contains('open') || pCfg.classList.contains('open')) { e.stopImmediatePropagation(); closePanels(); }
+      else if (openI >= 0) { e.stopImmediatePropagation(); closeCard(); updStep(); }
+    });
+
+    // ---------- Puntero ----------
+    const ptrs = new Map(); let drag = null, pinch = null;
+    const plain = () => { stiff = 9; if (tw) { tw = null; tgt.t = cam.t.slice(); tgt.d = cam.d; tgt.yaw = cam.yaw; tgt.pitch = cam.pitch; } if (tip) tip.classList.add('off'); };
+    cv.addEventListener('pointerdown', (e) => {
+      if (!live()) return; try { cv.setPointerCapture(e.pointerId); } catch (_) { }
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); plain();
+      if (ptrs.size === 2) { const a = [...ptrs.values()]; pinch = { d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y), cx: (a[0].x + a[1].x) / 2, cy: (a[0].y + a[1].y) / 2 }; drag = null; return; }
+      drag = { x: e.clientX, y: e.clientY, pan: e.button === 2 || e.shiftKey, moved: 0 }; cv.classList.add('grab');
+    });
+    function panBy(dx, dy) { walk(0, dx * .004, -dy * .004, false); }
+    cv.addEventListener('pointermove', (e) => {
+      if (!live() || !ptrs.has(e.pointerId)) return; const prev = ptrs.get(e.pointerId); ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (ptrs.size === 2 && pinch) {
+        if (performance.now() < lockT) return; const a = [...ptrs.values()], d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y), cx = (a[0].x + a[1].x) / 2, cy = (a[0].y + a[1].y) / 2;
+        if (d > 0 && pinch.d > 0) zoomBy(Math.pow(pinch.d / d, 1.2)); panBy(cx - pinch.cx, cy - pinch.cy); pinch = { d, cx, cy }; plain(); return;
       }
-    };
-    if (pageEl && 'MutationObserver' in window) new MutationObserver(syncRun).observe(pageEl, { attributes: true, attributeFilter: ['class'] });
-    syncRun();
-    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (visible) start(); });
-    window.__simDbg = () => { gl.bindFramebuffer(gl.FRAMEBUFFER, simFbo[ping]); const px = new Float32Array(simN * simN * 4); gl.readPixels(0, 0, simN, simN, gl.RGBA, gl.FLOAT, px); gl.bindFramebuffer(gl.FRAMEBUFFER, null); let mx = 0, mn = 0; for (let i = 0; i < px.length; i += 4) { mx = Math.max(mx, px[i]); mn = Math.min(mn, px[i]); } return { mx, mn, frames, ema, simN, qname, scale }; };
-    window.__sim = { cam, goTo, setScene, setSub, setQuality, setObj, openPanel, zoomBy, startWet, addDrop, PRESETS, rain, get fov() { return fov; }, get uw() { return uwF; }, setGov: (v) => { gov = v; }, get sub() { return sub; } };
+      if (!drag) return; const dx = e.clientX - prev.x, dy = e.clientY - prev.y; drag.moved += Math.abs(dx) + Math.abs(dy);
+      if (drag.pan) panBy(dx, dy); else lookBy(-dx * .0034, dy * .003); plain();
+    });
+    const up = (e) => { ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null; if (!ptrs.size) { drag = null; cv.classList.remove('grab'); } };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up); cv.addEventListener('contextmenu', (e) => e.preventDefault());
+    cv.addEventListener('wheel', (e) => { if (!live()) return; e.preventDefault(); if (performance.now() < lockT) return; const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY; plain(); zoomBy(Math.exp(clamp(dy, -120, 120) * .0013)); }, { passive: false });
+    // teclado: flechas/WASD caminan y giran, Q/E bajan y suben, Mayús acelera
+    const held = new Set(), KEYMAP = { arrowup: 'f', w: 'f', arrowdown: 'b', s: 'b', a: 'l', d: 'r', arrowleft: 'tl', arrowright: 'tr', q: 'dn', e: 'up', pageup: 'up', pagedown: 'dn' };
+    const typing = (t) => t && (/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName) || t.isContentEditable);
+    document.addEventListener('keydown', (e) => {
+      if (!live() || typing(e.target) || e.ctrlKey || e.metaKey || e.altKey) return; const k = e.key.toLowerCase();
+      if (k === '+' || k === '=') { plain(); zoomBy(.85); e.preventDefault(); return; } if (k === '-' || k === '_') { plain(); zoomBy(1.18); e.preventDefault(); return; }
+      if (KEYMAP[k]) { held.add(KEYMAP[k]); plain(); e.preventDefault(); }
+    });
+    document.addEventListener('keyup', (e) => { const m = KEYMAP[e.key.toLowerCase()]; if (m) held.delete(m); });
+    window.addEventListener('blur', () => held.clear());
+    function keyMove(dt) {
+      if (!held.size) return; const sp = (dt > .1 ? .1 : dt) * 2.2, h = (x) => held.has(x) ? 1 : 0;
+      const f = h('f') - h('b'), r = h('r') - h('l'), u = h('up') - h('dn'), t = h('tr') - h('tl');
+      if (t) lookBy(-t * dt * 1.6, 0); if (f || r || u) walk(f * sp, r * sp, u * sp * .6, true);
+    }
+    window.__srv = { stop: stopLoop, step: (dt, n) => { for (let i = 0; i < n; i++) { keyMove(dt); camUpdate(dt); } }, confine, zoomBy, get collided() { return collided; }, get queueLen() { return tw ? tw.pts.length - tw.i : 0; }, setFree: (v) => { free = !!v; }, snap: () => { if (tw) { const f = tw.dest; tw = null; tgt.t = f.t.slice(); tgt.d = f.d; tgt.yaw = f.yaw; tgt.pitch = f.pitch; } cam.t = tgt.t.slice(); cam.d = tgt.d; cam.yaw = tgt.yaw; cam.pitch = tgt.pitch; }, get ok() { return !failed; }, get ready() { return ready; }, cam, tgt, setPose, goItem, goStop, closeCard, setXray: setXr, ITEMS, TOUR, init, boot, setQuality, openPanel: (n) => n === 'cfg' ? openPanel(pCfg, bCfg) : openPanel(pTour, bTour), eye: () => eyeOf(cam), get stats() { return { verts: grp.A.n + grp.B.n + grp.C.n + grp.G.n, leds: nLed, scale, W, H }; } };
   })();
 
   // ---- Hero: agua simulada (WebGL) + gotas en pantalla ----
@@ -4056,12 +4066,13 @@ void main(){
       const sp = document.createElement('span'); sp.className = 'sw'; sp.setAttribute('aria-hidden', 'true'); sp.textContent = w;
       sub.appendChild(sp); if (i < arr.length - 1) sub.appendChild(document.createTextNode(' '));
     });
-    document.documentElement.classList.add('hx-rv');
+    document.documentElement.classList.add('hx-rv'); window.__hxRv = true;
     if (coarse && hint) hint.querySelector('.hx-hint-t').textContent = 'Deslizá el dedo por el texto';
     const items = [].concat(Array.from(h1.querySelectorAll('.letter')), Array.from(sub.querySelectorAll('.sw')), [btns])
-      .map(el => ({ el, on: false, l: 0, r: 0, t: 0, b: 0 }));
+      .map(el => ({ el, on: false, l: 0, r: 0, t: 0, b: 0, gate: !el.classList.contains('letter') }));
     const total = items.length;
-    let shown = 0, done = false;
+    const titleTotal = items.filter(it => !it.gate).length;
+    let shown = 0, done = false, titleShown = 0;
     function measure() {
       const sx = window.scrollX, sy = window.scrollY;
       items.forEach(it => { const r = it.el.getBoundingClientRect(); it.l = r.left + sx; it.r = r.right + sx; it.t = r.top + sy; it.b = r.bottom + sy; });
@@ -4072,14 +4083,14 @@ void main(){
       if (cue) cue.classList.remove('is-off');
     }
     function mark(it) {
-      if (it.on) return; it.on = true; it.el.classList.add('on'); shown++;
+      if (it.on) return; it.on = true; it.el.classList.add('on'); shown++; if (!it.gate) titleShown++;
       if (!done && shown / total > 0.5) finish();
     }
     function revealAll() { let k = 0; items.forEach(it => { if (!it.on) setTimeout(() => mark(it), (k++) * 24); }); finish(); }
     function reach(cx, cy) {
       const x = cx + window.scrollX, y = cy + window.scrollY, R = window.innerWidth < 700 ? 46 : 78;
       for (const it of items) {
-        if (it.on) continue;
+        if (it.on || (it.gate && titleShown < titleTotal)) continue; // el texto chico y los botones salen recién cuando el título ya se reveló
         const dx = Math.max(it.l - x, 0, x - it.r), dy = Math.max(it.t - y, 0, y - it.b);
         if (dx * dx + dy * dy < R * R) mark(it);
       }
@@ -4910,7 +4921,7 @@ void main(){
   const searchResults = document.getElementById('search-results');
 
   const searchIndex = [
-    { title: 'Simulador 3D del agua', id: 'simulador', snippet: 'Explorá una pileta con racks de servidores bajo el agua: girá la cámara, sumergite y cambiá la luz.' },
+    { title: 'Simulador 3D: sala de servidores', id: 'simulador', snippet: 'Recorré una sala de servidores en 3D: racks, refrigeración líquida, energía, conectividad y la torre donde se evapora el agua.' },
     { title: 'Calculadora de consumo', id: 'calculadora', snippet: 'Calculá cuánta agua y electricidad gastás con texto o imágenes.' },
     // { title: 'A escala global', id: 'escala-global', snippet: 'Cuánta agua consume ChatGPT en el mundo, por hora, día, mes y año.' }, — modal retirado (30/09), reactivar junto con el resto.
     { title: 'Cuestionario: ¿qué tan grande es tu huella?', id: 'quiz', snippet: 'Respondé 5 preguntas y descubrí tu resultado.' },
