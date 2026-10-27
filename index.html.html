@@ -381,7 +381,7 @@
   #por-que-importa .mf-p--sm { font-size: clamp(1.7rem, 4.6vw, 3.4rem); line-height: 1.18; max-width: 52rem; }
   #por-que-importa .mf-links { display: flex; justify-content: center; }
   #por-que-importa .mf-links > div { justify-content: center; }
-  html.mf-js #por-que-importa { height: 580vh; padding: 0; }
+  html.mf-js #por-que-importa { height: 640vh; padding: 0; }
   html.mf-js #por-que-importa .mf-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 1.5rem; overflow: hidden; }
   html.mf-js #por-que-importa .mf-kicker { position: absolute; top: 6.5rem; left: 0; right: 0; margin: 0; }
   html.mf-js #por-que-importa .mf-p, html.mf-js #por-que-importa .mf-links { position: absolute; margin: 0; left: 50%; width: calc(100% - 3rem); translate: -50% 0; opacity: var(--o, 0); filter: blur(calc((1 - var(--o, 0)) * 14px)); transform: translateY(calc((1 - var(--o, 0)) * 22px)); will-change: opacity, filter, transform; }
@@ -5367,9 +5367,10 @@ void main(){
         const sm = (x) => x * x * (3 - 2 * x);
         const z0 = sm(clamp((p - 0.3) / 0.22)), e1 = sm(clamp((p - 0.42) / 0.22));
         const o0 = clamp((p - 0.04) / 0.12) * (1 - clamp((z0 - 0.35) / 0.65));
-        const o1 = clamp((p - 0.46) / 0.14);
+        const z1 = sm(clamp((p - 0.84) / 0.15));
+        const o1 = clamp((p - 0.46) / 0.14) * (1 - clamp((z1 - 0.35) / 0.65));
         if (phrases[0]) { phrases[0].style.setProperty('--zz', z0.toFixed(4)); phrases[0].style.setProperty('--zy', z0.toFixed(4)); }
-        if (phrases[1]) { phrases[1].style.setProperty('--zz', (-(1 - e1) * 0.5).toFixed(4)); phrases[1].style.setProperty('--zy', '0'); }
+        if (phrases[1]) { phrases[1].style.setProperty('--zz', (-(1 - e1) * 0.5 + z1).toFixed(4)); phrases[1].style.setProperty('--zy', z1.toFixed(4)); }
         [o0, o1].forEach((o, i) => {
           if (phrases[i]) {
             phrases[i].style.setProperty('--o', o.toFixed(3));
