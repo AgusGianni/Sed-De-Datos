@@ -2,6 +2,19 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
+<style id="sd-loader-css">
+/* Pantalla de carga (solo logo): se muestra de inmediato y se oculta cuando las fuentes y el hero están listos */
+html.sd-loading { overflow: hidden; }
+#sd-loader { position: fixed; inset: 0; z-index: 2147483000; display: flex; align-items: center; justify-content: center; background: #F7F4EE; opacity: 1; visibility: visible; animation: sd-failsafe 0s linear 7s forwards; }
+#sd-loader.sd-out { opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility 0s linear .45s; }
+#sd-loader svg { width: 72px; height: 72px; overflow: visible; }
+#sd-loader .sdl-c { transform-box: fill-box; transform-origin: center; animation: sd-pulse 1.4s ease-in-out infinite; }
+#sd-loader .sdl-c:nth-of-type(2) { animation-delay: .18s; }
+#sd-loader .sdl-c:nth-of-type(3) { animation-delay: .36s; }
+@keyframes sd-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.78); opacity: .65; } }
+@keyframes sd-failsafe { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { #sd-loader .sdl-c { animation: none; } #sd-loader.sd-out { transition: none; } }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#06264A">
 <title>Sed de Datos — El costo oculto de la inteligencia artificial</title>
@@ -31,7 +44,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bowlby+One&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link data-sd-fonts href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bowlby+One&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bowlby+One&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"></noscript>
 <style>
   html { scroll-behavior: smooth; }
   body { background: #F7F4EE; }
@@ -55,7 +69,7 @@
      contenido a su propia capa de apilamiento por arriba, salvo los
      elementos que ya son fixed por diseño (panel de nav, overlay, botón
      de volver arriba) y los scripts. */
-  body > *:not(#dot-canvas):not(#scroll-drop):not(#contacto-rapido):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#fuentes-modal):not(#fuentes-overlay):not(#nosotros-modal):not(#nosotros-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(#escala-global-modal):not(#escala-global-overlay):not(#fake-news-modal):not(#fake-news-overlay):not(#trampa-escala-modal):not(#trampa-escala-overlay):not(#ciclo-agua-modal):not(#ciclo-agua-overlay):not(#prioridad-agua-modal):not(#prioridad-agua-overlay):not(#simulador-modal):not(#simulador-overlay):not(.sd-div):not(script) {
+  body > *:not(#sd-loader):not(#dot-canvas):not(#scroll-drop):not(#contacto-rapido):not(#nav-overlay):not(#nav-panel):not(#back-to-top):not(header):not(#fuentes-modal):not(#fuentes-overlay):not(#nosotros-modal):not(#nosotros-overlay):not(#geopolitica-modal):not(#geopolitica-overlay):not(#refrigeracion-modal):not(#refrigeracion-overlay):not(#directa-indirecta-modal):not(#directa-indirecta-overlay):not(#cajasnegras-modal):not(#cajasnegras-overlay):not(#todos-articulos-modal):not(#todos-articulos-overlay):not(#sesgo-origen-modal):not(#sesgo-origen-overlay):not(#patagonia-modal):not(#patagonia-overlay):not(#guia-accion-modal):not(#guia-accion-overlay):not(#generacion-prompt-modal):not(#generacion-prompt-overlay):not(#escala-global-modal):not(#escala-global-overlay):not(#fake-news-modal):not(#fake-news-overlay):not(#trampa-escala-modal):not(#trampa-escala-overlay):not(#ciclo-agua-modal):not(#ciclo-agua-overlay):not(#prioridad-agua-modal):not(#prioridad-agua-overlay):not(#simulador-modal):not(#simulador-overlay):not(.sd-div):not(script) {
     position: relative;
     z-index: 1;
   }
@@ -979,6 +993,50 @@ body .srv-card h3 { font-family: 'Bebas Neue', 'Oswald', 'Arial Narrow', Impact,
 </style>
 </head>
 <body class="font-sans text-ink antialiased">
+
+<!-- Pantalla de carga: solo el logo -->
+<div id="sd-loader" role="status" aria-label="Cargando Sed de Datos">
+  <svg viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <circle class="sdl-c" cx="8" cy="8" r="6" fill="#2952E3"/>
+    <circle class="sdl-c" cx="8" cy="22" r="4" fill="#2952E3"/>
+    <circle class="sdl-c" cx="22" cy="15" r="3" fill="#2952E3"/>
+    <path d="M8 8L8 22M8 8L22 15" stroke="#2952E3" stroke-width="1.5"/>
+  </svg>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, el = document.getElementById('sd-loader');
+  if (!el) return;
+  root.classList.add('sd-loading');
+  var t0 = performance.now(), done = false;
+  function finish() {
+    if (done) return; done = true;
+    el.classList.add('sd-out'); root.classList.remove('sd-loading');
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 600);
+  }
+  var fonts = new Promise(function (res) {
+    var l = document.querySelector('link[data-sd-fonts]');
+    var go = function () {
+      if (!document.fonts || !document.fonts.load) return res();
+      Promise.all(['1em "Bowlby One"', '1em Inter', '700 1em Inter', 'italic 1em Newsreader', '1em "IBM Plex Mono"'].map(function (f) {
+        return document.fonts.load(f).catch(function () {});
+      })).then(res, res);
+    };
+    if (!l) return res();
+    if (l.sheet) go(); else { l.addEventListener('load', go); l.addEventListener('error', res); }
+  });
+  var loaded = new Promise(function (res) {
+    if (document.readyState !== 'loading') res(); else document.addEventListener('DOMContentLoaded', res);
+  });
+  Promise.all([fonts, loaded]).then(function () {
+    var frames = new Promise(function (res) { requestAnimationFrame(function () { requestAnimationFrame(res); }); });
+    return Promise.race([frames, new Promise(function (r) { setTimeout(r, 300); })]);
+  }).then(function () {
+    setTimeout(finish, Math.max(0, 450 - (performance.now() - t0)));
+  });
+  setTimeout(finish, 5000); // tope de seguridad: nunca queda trabado
+})();
+</script>
 
 <!-- Enlace de salto -->
 <a href="#contenido" class="skip-link">Saltar al contenido</a>
