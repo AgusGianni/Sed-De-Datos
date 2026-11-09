@@ -26,7 +26,7 @@ html.sd-loading { overflow: hidden; }
 <meta property="og:locale" content="es_AR">
 <meta property="og:title" content="Sed de Datos — El costo oculto de la inteligencia artificial">
 <meta property="og:description" content="Calculá cuánta agua y electricidad gasta tu uso de IA, entendé de dónde sale ese costo y probá administrar tu propio centro de datos en SequIA.">
-<meta property="og:image" content="https://seddedatos.com.ar/og-image.png">
+<meta property="og:image" content="https://seddedatos.com.ar/og-image.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://seddedatos.com.ar/">
@@ -35,7 +35,7 @@ html.sd-loading { overflow: hidden; }
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sed de Datos — El costo oculto de la inteligencia artificial">
 <meta name="twitter:description" content="Calculá cuánta agua y electricidad gasta tu uso de IA y probá administrar tu propio centro de datos en SequIA.">
-<meta name="twitter:image" content="https://seddedatos.com.ar/og-image.png">
+<meta name="twitter:image" content="https://seddedatos.com.ar/og-image.png?v=2">
 
 <link rel="canonical" href="https://seddedatos.com.ar/">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -1444,7 +1444,7 @@ void main(){
       <p class="font-mono text-xs text-white/60 tracking-widest mb-3">POR QUÉ SED DE DATOS.</p>
       <h2 data-wreveal class="reveal text-2xl sm:text-3xl italic font-serif leading-snug mb-5 text-white">Sed de Datos está para mostrar el costo ambiental oculto de usar inteligencia artificial.</h2>
       <p data-ep="1" class="text-white/70 leading-relaxed">
-        Cada vez que envías un prompt, miles de procesadores en centros de datos consumen <span class="mk" style="--mk:rgba(255,106,0,.55)">electricidad</span> y requieren <span class="mk" style="--mk:rgba(255,106,0,.55)">millones de litros de agua</span> para refrigerarse. Ese impacto <span class="mk" style="--mk:rgba(79,214,255,.4)">no se ve en la pantalla</span>, pero existe. Creamos este espacio para dimensionar esa huella invisible con datos rigurosos y herramientas al alcance de todos.
+        Cada vez que enviás un prompt, miles de procesadores en centros de datos consumen <span class="mk" style="--mk:rgba(255,106,0,.55)">electricidad</span> y requieren <span class="mk" style="--mk:rgba(255,106,0,.55)">millones de litros de agua</span> para refrigerarse. Ese impacto <span class="mk" style="--mk:rgba(79,214,255,.4)">no se ve en la pantalla</span>, pero existe. Creamos este espacio para dimensionar esa huella invisible con datos rigurosos y herramientas al alcance de todos.
       </p>
     </div>
     <div class="ep-mf relative" data-ep="2">
@@ -1625,7 +1625,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
             <span class="text-muted">5 min</span>
           </div>
           <h3 class="hover-title font-semibold text-lg leading-snug pr-14">Agua directa vs. agua indirecta</h3>
-          <p class="text-muted text-sm mt-2 leading-relaxed pr-12">La cara oculta de la energía: el segundo grifo, más grande y silencioso, que casi nunca se contabiliza.</p>
+          <p class="text-muted text-sm mt-2 leading-relaxed pr-12">La cara oculta de la energía: el segundo grifo, a menudo igual de grande o mayor, y mucho más silencioso, que casi nunca se contabiliza.</p>
           <a href="#" id="open-directa-indirecta-article" aria-label="Leer artículo completo" class="absolute bottom-5 right-5 sd-btn sd-icon sd-btn--primary">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg>
           </a>
@@ -1771,6 +1771,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
               <div><p id="eq-phone" class="font-serif font-bold text-xl leading-none">0</p><p class="text-[11px] text-muted mt-1 leading-tight">cargas de celular</p></div>
             </div>
           </div>
+          <p class="text-[11px] text-muted leading-snug mt-4">Texto: 0,34 Wh por consulta (OpenAI) y 15 ml de agua directa (UC Riverside; rango de 10 a 25 ml). Agua indirecta: 1,5 L por kWh. Imagen: valores ilustrativos de referencia (≈55 Wh y ≈3,5 L de agua directa por imagen) que cambian mucho según el modelo y la resolución. Son estimaciones, no mediciones; el detalle está en <a href="#fuentes" class="text-accent hover:underline">Fuentes</a> y en las preguntas frecuentes.</p>
         </div>
 
         <!-- Tarjeta lisa: abre el simulador 3D (página aparte, como los artículos) -->
@@ -2090,7 +2091,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
           ¿El sitio guarda o comparte mis datos personales?
           <svg class="faq-plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6472" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </summary>
-        <p class="text-muted text-sm leading-relaxed mt-3 px-5">No. El sitio no pide registro ni recolecta datos personales. Lo único que se guarda es tu progreso en la Calculadora o el Cuestionario, y queda almacenado localmente en tu propio navegador.</p>
+        <p class="text-muted text-sm leading-relaxed mt-3 px-5">No. El sitio no pide registro ni recolecta datos personales. Lo único que se guarda es tu progreso en la Calculadora o el Cuestionario, y queda almacenado localmente en tu propio navegador. La única excepción es el formulario "Sugerí una fuente": si lo usás, lo que escribas (el nombre o las iniciales son opcionales) llega por mail al equipo de Sed de Datos y se usa solo para revisar tu sugerencia.</p>
       </details>
       <details class="faq-row hidden" data-cat="sitio">
         <summary class="font-semibold text-base cursor-pointer list-none flex items-center justify-between gap-4 bg-surface2 rounded-xl px-5 py-4 hover:bg-accentbg transition">
@@ -2334,7 +2335,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       <div class="not-prose rounded-2xl p-6 sm:p-8 my-8" style="background:#06264A; border:1px solid rgba(255,255,255,0.12);">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-5 mb-5 gap-4">
           <div>
-            <h4 class="text-xl font-semibold mt-2.5 text-white">La Balanza Hídrica: Ciudad vs. Nube</h4>
+            <h3 class="text-xl font-semibold mt-2.5 text-white">La Balanza Hídrica: Ciudad vs. Nube</h3>
             <p class="text-sm text-white/50 mt-1">Compará el consumo diario de agua dulce de una población frente a un complejo de procesadores de IA.</p>
           </div>
           <div id="whb-toggle" class="flex items-center gap-1 bg-black/25 p-1 rounded-full border border-white/10 shrink-0 self-start">
@@ -2584,7 +2585,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
     <h2 class="text-2xl sm:text-3xl italic font-serif leading-snug mb-4 pr-12">Agua directa vs. agua indirecta: la cara oculta de la energía</h2>
 
     <div class="prose-article text-[15px] leading-relaxed text-ink/85 space-y-5">
-      <p>Cuando hablamos del impacto ambiental de la Inteligencia Artificial, la imagen mental más común es la de un centro de datos evaporando litros de agua para evitar que sus servidores se sobrecalienten. Sin embargo, este consumo directo es apenas la mitad de la historia. Existe <span class="mkm" style="--mk:#FFD9BF">un segundo grifo, mucho más grande y silencioso</span>, que se abre cada vez que interactuamos con un modelo de IA: <strong>el agua indirecta</strong>.</p>
+      <p>Cuando hablamos del impacto ambiental de la Inteligencia Artificial, la imagen mental más común es la de un centro de datos evaporando litros de agua para evitar que sus servidores se sobrecalienten. Sin embargo, este consumo directo es apenas la mitad de la historia. Existe <span class="mkm" style="--mk:#FFD9BF">un segundo grifo, a menudo igual de grande o mayor, y mucho más silencioso</span>, que se abre cada vez que interactuamos con un modelo de IA: <strong>el agua indirecta</strong>.</p>
       <p>El <strong>agua directa</strong> es la que se utiliza <em>in situ</em>, dentro de las instalaciones de los centros de datos. Los procesadores de alto rendimiento generan un calor masivo al procesar millones de datos. Para mantener los equipos a temperaturas seguras, las infraestructuras emplean sistemas de enfriamiento evaporativo que consumen y evaporan agua de manera constante. Es un impacto tangible, medible a nivel local y directamente vinculado al edificio donde operan los servidores.</p>
       <p>Lo que raras veces se contabiliza en el debate público es el agua consumida <em>por fuera</em> para generar la electricidad que alimenta a esos mismos servidores. Las plantas termoeléctricas (carbón, gas natural, nuclear) necesitan volúmenes gigantescos de agua para sus condensadores de vapor y sistemas de refrigeración. Incluso las centrales hidroeléctricas pierden agua por evaporación directa en los grandes embalses. Por lo tanto, <span class="mkm" style="--mk:#FFD9BF">cada megavatio-hora que consume la IA lleva implícita una enorme huella hídrica</span> que ocurre a kilómetros de distancia del centro de datos.</p>
 
@@ -2744,7 +2745,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       <p>La Inteligencia Artificial suele presentarse como una revolución global e intangible, pero su infraestructura física tiene un arraigo territorial sumamente desigual. Para comprender la magnitud de este impacto, es indispensable diferenciar entre dos regiones del sistema digital:</p>
       <ul class="list-disc pl-5 space-y-3 marker:text-accent">
         <li><strong>El Norte Global:</strong> concentra el diseño de los algoritmos, los laboratorios de desarrollo tecnológico, la toma de decisiones corporativas y los mayores beneficios económicos de la mercantilización de la inteligencia artificial. Comprende principalmente a los países más industrializados y con mayores ingresos, como Estados Unidos, Canadá, Alemania, Japón y Australia.</li>
-        <li><strong>El Sur Global:</strong> funciona frecuentemente como territorio de sacrificio e infraestructura material. Es en las periferias del sistema donde se instalan los centros de datos y las granjas de servidores que demandan energía intensiva, extraen minerales y consumen recursos hídricos locales. Comprende principalmente a los países de África, América Latina, Asia y Oceanía que han enfrentado mayores desigualdades económicas y procesos históricos de colonización y dependencia.</li>
+        <li><strong>El Sur Global:</strong> funciona frecuentemente como territorio de sacrificio e infraestructura material. Es en las periferias del sistema donde se instalan los centros de datos y las granjas de servidores que demandan energía intensiva, extraen minerales y consumen recursos hídricos locales. Comprende principalmente a los países de África, América Latina, Asia y las islas del Pacífico que han enfrentado mayores desigualdades económicas y procesos históricos de colonización y dependencia.</li>
       </ul>
       <p>Mientras el Norte Global concentra el desarrollo del software y la toma de decisiones corporativas, muchas de las cargas ambientales de esta aceleración tecnológica —el consumo intensivo de agua, la demanda de energía y la extracción de minerales— recaen en las periferias del sistema. En este contexto, investigar el impacto hídrico de la IA desde el Sur Global implica enfrentar un doble desafío: <span class="mkm" style="--mk:#FFD9BF">la escasez de datos locales y una asimetría estructural de poder</span>.</p>
 
@@ -3277,7 +3278,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
       <p>Es fácil sentir culpa cuando miramos las métricas. Saber que pedirle a la Inteligencia Artificial que redacte un correo o genere una imagen consume decenas de mililitros de agua y valiosos vatios de energía nos empuja a pensar: <em>"debería usar menos esta herramienta"</em>. Pero detenernos en la culpa individual es caer en una trampa diseñada a medida por las grandes corporaciones. El colapso ambiental de la IA <span class="mkm" style="--mk:#FFD9BF">no es culpa de tu prompt; es consecuencia de la escala</span>.</p>
 
       <h3 class="text-lg font-semibold text-ink pt-2">La IA por defecto: una infraestructura que no elegiste</h3>
-      <p>El verdadero impacto no ocurre porque un usuario explore una herramienta nueva, sino porque la industria tecnológica ha decidido imponer <span class="mkm" style="--mk:#FFD9BF">la IA generativa como la infraestructura por defecto del mundo digital</span>. Hoy, la IA está siendo incrustada en cada búsqueda web, en cada actualización de software y en cada aplicación móvil, independientemente de si el usuario la necesita o no. Una simple consulta web, que antes requería una fracción de segundo y una cantidad minúscula de energía, hoy es procesada por modelos masivos que <span class="mkm" style="--mk:#FFD9BF">multiplican el gasto energético por diez</span>.</p>
+      <p>El verdadero impacto no ocurre porque un usuario explore una herramienta nueva, sino porque la industria tecnológica ha decidido imponer <span class="mkm" style="--mk:#FFD9BF">la IA generativa como la infraestructura por defecto del mundo digital</span>. Hoy, la IA está siendo incrustada en cada búsqueda web, en cada actualización de software y en cada aplicación móvil, independientemente de si el usuario la necesita o no. Una simple consulta web, que antes requería una fracción de segundo y una cantidad minúscula de energía, hoy es procesada por modelos masivos que <span class="mkm" style="--mk:#FFD9BF">pueden multiplicar varias veces el gasto energético</span>.</p>
 
       <h3 class="text-lg font-semibold text-ink pt-2">El efecto multiplicador: de mililitros a mega centros de datos</h3>
       <p>A esto se le suma el efecto multiplicador. No estamos hablando de miles de usuarios, sino de <span class="mkm" style="--mk:#CFE0FF">miles de millones de interacciones diarias</span>. Para sostener esta arquitectura, las empresas tecnológicas están librando una carrera armamentística de infraestructura. Se están construyendo mega centros de datos del tamaño de ciudades pequeñas, demandando tanta electricidad que están poniendo en jaque las redes energéticas nacionales e impulsando la reactivación de fuentes de energía contaminantes.</p>
@@ -3317,7 +3318,7 @@ MODAL "A ESCALA GLOBAL" — retirado a pedido del usuario (30/09), se deja comen
               <div class="flex justify-between text-[10px] sm:text-[11px] text-white/50 mt-2 px-0.5">
                 <span>1 usuario</span><span>10 mil</span><span>1 millón</span><span>100 millones</span>
               </div>
-              <p id="mde-caos" class="text-xs font-bold mt-4 opacity-0 transition-opacity duration-300" style="color:#FF6A00;">⚠️ Escala fuera de control: el mismo gesto imperceptible, multiplicado por tus 100 millones de usuarios diarios, es una crisis hídrica regional.</p>
+              <p id="mde-caos" class="text-xs font-bold mt-4 opacity-0 transition-opacity duration-300" style="color:#FF6A00;">⚠️ La escala cambia el problema: un gesto imperceptible, multiplicado por 100 millones de usuarios diarios, se vuelve un consumo que hay que medir y planificar, sobre todo si se concentra en una misma cuenca.</p>
             </div>
           </div>
         </div>
@@ -5035,7 +5036,7 @@ void main(){ float ph=fract(aS.x+uTime*aS.y*.045); vec3 p=aP+vec3(ph*2.4*(.7+aS.
       { fill: 0.025, value: '15 ml', sub: 'lo que gasta tu prompt', flood: 0, towers: 0 },
       { fill: 0.22, value: '150 L', sub: '10.000 personas hicieron la misma consulta', flood: 0.08, towers: 1 },
       { fill: 0.6, value: '15.000 L (15 m³)', sub: '1 millón de consultas simultáneas', flood: 0.22, towers: 2 },
-      { fill: 1, value: '1.500.000 L (≈1.500 m³)', sub: 'más de la mitad de una pileta olímpica, por tus 100 millones de usuarios diarios', flood: 0.5, towers: 4 },
+      { fill: 1, value: '1.500.000 L (≈1.500 m³)', sub: 'más de la mitad de una pileta olímpica, por 100 millones de usuarios diarios', flood: 0.5, towers: 4 },
     ];
 
     function render(i) {
@@ -5456,18 +5457,18 @@ void main(){ float ph=fract(aS.x+uTime*aS.y*.045); vec3 p=aP+vec3(ph*2.4*(.7+aS.
     { title: 'Cuestionario: ¿qué tan grande es tu huella?', id: 'quiz', snippet: 'Respondé 5 preguntas y descubrí tu resultado.' },
     { title: 'SequIA: el simulador de Sed de Datos', id: 'jugar', snippet: 'Administrá un centro de datos de IA y tomá las decisiones que definen su huella hídrica.' },
     { title: 'Cómo refrigeran los centros de datos', id: 'refrigeracion', snippet: 'Agua, aire o inmersión: el costo ambiental de cada técnica.' },
-    { title: 'Geopolítica del Agua Digital', id: 'geopolitica', snippet: 'Dónde están los Data Centers y por qué importan las cuencas locales.' },
+    { title: 'Geopolítica del Agua Digital', id: 'geopolitica', snippet: 'Dónde están los Data Centers y por qué importan las cuencas locales: Loudoun (Virginia), Canelones (Uruguay) y Argentina.' },
     { title: 'Agua directa vs. agua indirecta', id: 'directa-indirecta', snippet: 'La cara oculta de la energía: el segundo grifo que casi nunca se contabiliza.' },
     { title: 'Cajas negras: ¿por qué es tan difícil saber cuánta agua consume la IA?', id: 'cajasnegras', snippet: 'Qué publican las grandes tecnológicas, qué falta y cómo leer sus cifras de agua.' },
     { title: 'Sesgo de origen: la huella hídrica desde el Sur Global', id: 'sesgo-origen', snippet: 'Por qué investigar el agua de la IA es distinto desde el Norte o el Sur Global.' },
-    { title: 'El centro de datos de la Patagonia', id: 'patagonia', snippet: 'Anuncios, regulación y agua: qué se sabe y qué falta saber sobre los centros de datos en la Patagonia.' },
+    { title: 'El centro de datos de la Patagonia', id: 'patagonia', snippet: 'Anuncios, regulación y agua: qué se sabe y qué falta saber sobre los centros de datos en la Patagonia, Chubut y Neuquén.' },
     { title: 'Tu huella hídrica digital: guía de acción', id: 'guia-accion', snippet: 'Hábitos concretos y qué exigirles a las empresas y los gobiernos.' },
     { title: 'Generación Prompt: de la fascinación por la velocidad al consumo responsable', id: 'generacion-prompt', snippet: 'Entre demonizar la herramienta y culpar al usuario: pensar la técnica sin extremos.' },
     { title: 'El fenómeno viral del clima: mitos sobre la IA y el ambiente', id: 'fake-news', snippet: 'Cómo circulan las fake news sobre la huella hídrica, según Tarleton Gillespie.' },
     { title: 'El problema no es tu prompt: la trampa de la escala', id: 'trampa-escala', snippet: 'La culpa individual es una trampa de diseño: el verdadero impacto es la escala.' },
     { title: 'El ciclo invisible del agua: ¿es reversible el gasto hídrico de la IA?', id: 'ciclo-agua', snippet: 'Evaporación, contaminación térmica y geopolítica del recurso. Con un balance hídrico interactivo.' },
-    { title: '¿Quién tiene prioridad sobre el agua? La IA y el conflicto por un recurso compartido', id: 'prioridad-agua', snippet: 'Centros de datos, estrés hídrico y quién decide: la competencia por el agua en el territorio.' },
-    { title: 'Fuentes y estudios', id: 'fuentes', snippet: 'Xataka, BBC Mundo, Noticias ONU, IEEE Spectrum.' },
+    { title: '¿Quién tiene prioridad sobre el agua? La IA y el conflicto por un recurso compartido', id: 'prioridad-agua', snippet: 'Centros de datos, estrés hídrico y quién decide: quién usa el agua (hogares, agricultura, industria) y cómo se reparte en el territorio.' },
+    { title: 'Fuentes y estudios', id: 'fuentes', snippet: 'Xataka, BBC Mundo, Noticias ONU, IEEE Spectrum, Google, OpenAI y UC Riverside.' },
     { title: 'Sugerí una fuente', id: 'fuentes', snippet: 'Compartí un artículo o estudio para sumar a la lista.' },
     { title: 'Nuestro proyecto', id: 'acerca', snippet: 'Quiénes hacemos Sed de Datos y por qué.' },
     { title: 'Preguntas frecuentes', id: 'faq', snippet: 'Dudas comunes sobre el tema.' },
